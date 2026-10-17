@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAWHUB | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/pawhub-global.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(191, 219, 254, 0.55), transparent 28%),
+                radial-gradient(circle at 90% 80%, rgba(254, 240, 138, 0.35), transparent 30%),
+                linear-gradient(135deg, #eff6ff, #ffffff 50%, #fefce8);
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Center container for login card */
+        .login-page-container {
+            flex: 1 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px 60px;
+            position: relative;
+            box-sizing: border-box;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* Decorative paw prints */
+        .paw {
+            position: absolute;
+            font-size: 65px;
+            opacity: 0.12;
+            user-select: none;
+            pointer-events: none;
+            animation: float 5s ease-in-out infinite;
+        }
+        .paw1 { top: 12%; left: 6%; }
+        .paw2 { bottom: 12%; right: 6%; animation-delay: 1.5s; }
+        .paw3 { top: 22%; right: 12%; font-size: 42px; animation-delay: 0.8s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            50% { transform: translateY(-12px) rotate(8deg); }
+        }
+
+        /* Main container */
+        .login-wrapper {
+            width: 900px;
+            max-width: 94%;
+            min-height: 520px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(30, 64, 175, 0.15);
+            backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Left branding section */
+        .login-brand {
+            background: linear-gradient(145deg, #dbeafe, #eff6ff 55%, #fef9c3);
+            padding: 55px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-brand::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.45);
+            top: -100px;
+            right: -100px;
+        }
+        .login-brand::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(147,197,253,0.25);
+            bottom: -80px;
+            left: -60px;
+        }
+        .brand-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .login-brand h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 38px;
+            line-height: 1.15;
+            margin: 0 0 15px;
+            color: #172554;
+            position: relative;
+            z-index: 2;
+        }
+        .login-brand h1 span {
+            color: #2563eb;
+            font-weight: 800;
+        }
+        .login-brand p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #475569;
+            margin: 0 0 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .brand-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(37, 99, 235, 0.12);
+            color: #1d4ed8;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13.5px;
+            font-weight: 700;
+            width: fit-content;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Right login form */
+        .login-section {
+            padding: 50px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+        }
+        .login-section h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 28px;
+            color: #0f172a;
+            margin: 0 0 8px;
+            font-weight: 700;
+        }
+        .login-subtitle {
+            font-size: 14.5px;
+            color: #64748b;
+            margin: 0 0 24px;
+        }
+
+        /* Form groups */
+        .input-group {
+            margin-bottom: 18px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 7px;
+        }
+        .input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            font-size: 16px;
+            pointer-events: none;
+            color: #64748b;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 13px 14px 13px 44px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14.5px;
+            font-family: inherit;
+            color: #0f172a;
+            background: #f8fafc;
+            transition: all 0.25s ease;
+        }
+        .input-box input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
+
+        /* Button */
+        .login-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.3);
+            transition: all 0.25s ease;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Quick demo pills */
+        .demo-helpers {
+            margin-top: 16px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            font-size: 12.5px;
+            color: #475569;
+        }
+        .demo-helpers span {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
+        .demo-pill-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #2563eb;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 6px;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+        }
+        .demo-pill-btn:hover {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        /* Message */
+        #message {
+            min-height: 22px;
+            font-size: 13.5px;
+            font-weight: 600;
+            margin: 14px 0 0;
+            text-align: center;
+        }
+
+        /* Register link */
+        .register-text {
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            margin: 18px 0 0;
+        }
+        .register-text a {
+            color: #2563eb;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                width: 100%;
+                max-width: 440px;
+            }
+            .login-brand {
+                padding: 35px 25px;
+                text-align: center;
+                align-items: center;
+            }
+            .login-section {
+                padding: 35px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+    <header class="pawhub-header">
+        <div class="pawhub-header-inner">
+            <!-- Logo -->
+            <a href="home.html" class="pawhub-logo">
+                <div class="pawhub-logo-box">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                        <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                        <circle cx="9.5" cy="5" r="2" fill="white"/>
+                        <circle cx="14.5" cy="5" r="2" fill="white"/>
+                        <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                    </svg>
+                </div>
+                <div class="pawhub-logo-text">
+                    <h2>PAWHUB</h2>
+                    <span>Pet Care Community</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="pawhub-nav-links">
+                <a href="home.html" class="pawhub-link">Home</a>
+                <a href="adoption.html" class="pawhub-link">Adoption</a>
+                <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+                <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+                <a href="vets.html" class="pawhub-link">Vet Finder</a>
+                <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+                <a href="community.html" class="pawhub-link">Community</a>
+                <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="pawhub-actions">
+                <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                    ✨ PawMatch
+                </button>
+                <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+                </button>
+                <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                    <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                </button>
+                <a href="register.html" class="pawhub-user-pill" style="text-decoration:none;" title="Create Account">
+                    <span class="user-avatar">👤</span>
+                    <span id="navUserName">Sign In</span>
+                </a>
+                <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="12" x2="21" y2="12"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile dropdown -->
+        <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+            <a href="home.html">Home</a>
+            <a href="adoption.html">Adoption</a>
+            <a href="marketplace.html">Marketplace</a>
+            <a href="lost-found.html">Lost &amp; Found</a>
+            <a href="vets.html">Vet Finder</a>
+            <a href="vaccination.html">Vaccination</a>
+            <a href="community.html">Community</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="register.html">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Wishlist Side Drawer -->
+    <div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+    <div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+        <div class="paw-drawer-header">
+            <h3>🐾 Saved Pets</h3>
+            <button class="paw-drawer-close" onclick="closeWishlist()">✕</button>
+        </div>
+        <div id="paw-wishlist-items" class="paw-drawer-body"></div>
+    </div>
+
+    <!-- PawMatch Modal Drawer -->
+    <div id="paw-match-modal" class="paw-match-modal" style="display:none;" onclick="if(event.target===this)closePawMatchQuiz()">
+        <div class="paw-quiz-box">
+            <button class="paw-quiz-close" onclick="closePawMatchQuiz()">✕</button>
+            <div id="paw-quiz-step-1" class="paw-quiz-step">
+                <span class="paw-quiz-badge">Question 1 of 3</span>
+                <h3>What type of living space do you have?</h3>
+                <div class="paw-quiz-options">
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">🏢 Apartment / Flat</button>
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">🏡 House with Backyard</button>
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">🌾 Farm / Large Estate</button>
+                </div>
+            </div>
+            <div id="paw-quiz-step-2" class="paw-quiz-step" style="display:none;">
+                <span class="paw-quiz-badge">Question 2 of 3</span>
+                <h3>How active is your daily lifestyle?</h3>
+                <div class="paw-quiz-options">
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'chill')">🛋️ Relaxed &amp; Calm</button>
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'moderate')">🚶 Daily Evening Walks</button>
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'active')">🏃 High Energy Runner</button>
+                </div>
+            </div>
+            <div id="paw-quiz-step-3" class="paw-quiz-step" style="display:none;">
+                <span class="paw-quiz-badge">Question 3 of 3</span>
+                <h3>What kind of pet companion are you looking for?</h3>
+                <div class="paw-quiz-options">
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">🐕 Energetic &amp; Loyal Dog</button>
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">🐱 Calm &amp; Purring Cat</button>
+                    <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">✨ Any Loving Companion</button>
+                </div>
+            </div>
+            <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="login-page-container">
+        <!-- Floating paws -->
+        <div class="paw paw1">🐾</div>
+        <div class="paw paw2">🐾</div>
+        <div class="paw paw3">🐾</div>
+
+        <!-- Login Card -->
+        <div class="login-wrapper">
+            <!-- Left Branding -->
+            <div class="login-brand">
+                <img src="images/logo1.png" alt="PAWHUB Logo" class="brand-logo" onerror="this.src='logo1.png'">
+                <h1>Welcome to<br><span>PAWHUB</span></h1>
+                <p>
+                    Your trusted place to find loving companions, care for your pets, and connect with a community that loves every paw.
+                </p>
+                <div class="brand-tag">🐾 For Every Paw</div>
+            </div>
+
+            <!-- Right Login Form -->
+            <div class="login-section">
+                <h2>Welcome Back! 👋</h2>
+                <p class="login-subtitle">Login to continue your PawHub journey.</p>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-box">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" id="email" placeholder="Enter your email" autofocus>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-box">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" placeholder="Enter your password">
+                    </div>
+                </div>
+
+                <button class="login-btn" onclick="loginUser()">
+                    Login to PAWHUB &rarr;
+                </button>
+
+                <!-- Quick Helper / Demo Credentials -->
+                <div class="demo-helpers">
+                    <span>💡 Quick Login / Test:</span>
+                    <button type="button" class="demo-pill-btn" onclick="fillDemo('demo@pawhub.com','pawhub123')">Demo Account</button>
+                    <button type="button" class="demo-pill-btn" onclick="guestLogin()">⚡ Quick Guest Login</button>
+                </div>
+
+                <p id="message"></p>
+
+                <p class="register-text">
+                    Don't have an account? <a href="register.html">Create one</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="pawhub-unified-footer">
+        <div class="pawhub-footer-container">
+            <div class="pawhub-footer-brand">
+                <div class="footer-brand-header">
+                    <div class="footer-logo-badge">🐾</div>
+                    <div>
+                        <h3>PAWHUB</h3>
+                        <span>Pet Care Community</span>
+                    </div>
+                </div>
+                <p class="footer-tagline">
+                    Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+                </p>
+                <div class="footer-status-pill">
+                    <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+                </div>
+            </div>
+            <div class="pawhub-footer-links">
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <a href="home.html">Home</a>
+                    <a href="adoption.html">Adoption Center</a>
+                    <a href="marketplace.html">Pet Marketplace</a>
+                    <a href="lost-found.html">Lost &amp; Found</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Pet Health</h4>
+                    <a href="vets.html">Find Veterinary Clinic</a>
+                    <a href="vaccination.html">Vaccination Tracker</a>
+                    <a href="pet-services.html">Pet Services</a>
+                    <a href="my-bookings.html">My Appointments</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Community &amp; You</h4>
+                    <a href="community.html">Pet Community</a>
+                    <a href="dashboard.html">User Dashboard</a>
+                    <a href="my-pets.html">My Saved Pets</a>
+                    <a href="login.html">Account Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="pawhub-footer-bottom">
+            <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+            <div class="footer-meta-links">
+                <a href="community.html">Community Guidelines</a>
+                <a href="vets.html">Emergency Care</a>
+                <a href="home.html">Back to Top &uarr;</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seed a demo user if none exists
+            var registered = [];
+            try {
+                registered = JSON.parse(localStorage.getItem('pawhub_registered_users') || '[]');
+            } catch (e) { registered = []; }
+
+            var hasDemo = registered.some(function(u) { return u.email === 'demo@pawhub.com'; });
+            if (!hasDemo) {
+                registered.push({
+                    id: 1001,
+                    name: 'Demo Pet Lover',
+                    email: 'demo@pawhub.com',
+                    password: 'pawhub123',
+                    phone: '+91 98765 43210',
+                    location: 'Bangalore, India'
+                });
+                localStorage.setItem('pawhub_registered_users', JSON.stringify(registered));
+            }
+
+            // Check if already logged in -> show banner
+            var rawUser = localStorage.getItem('loggedInUser');
+            var isAuth = localStorage.getItem('pawhub_logged_in') === 'true';
+            if (rawUser && isAuth) {
+                try {
+                    var u = JSON.parse(rawUser);
+                    var banner = document.createElement('div');
+                    banner.style.cssText = 'background:#ecfdf5; border:1.5px solid #10b981; border-radius:14px; padding:12px 16px; margin-bottom:18px; font-size:13.5px; color:#065f46; display:flex; justify-content:space-between; align-items:center;';
+                    banner.innerHTML = '<span>You are logged in as <b>' + (u.name || u.email) + '</b></span>' +
+                        '<div style="display:flex; gap:8px;">' +
+                        '<a href="home.html" style="background:#10b981; color:#fff; padding:6px 14px; border-radius:10px; text-decoration:none; font-weight:700; font-size:12.5px;">Continue &rarr;</a>' +
+                        '<button onclick="logoutNow()" style="background:#fee2e2; color:#b91c1c; border:none; padding:6px 12px; border-radius:10px; cursor:pointer; font-weight:700; font-size:12.5px;">Logout</button>' +
+                        '</div>';
+                    var section = document.querySelector('.login-section');
+                    if (section) section.insertBefore(banner, section.firstChild);
+                } catch (e) {}
+            }
+
+            // If coming from register page with prefilled email
+            var regEmail = sessionStorage.getItem('pawhub_registered_email');
+            if (regEmail) {
+                var emailInput = document.getElementById('email');
+                if (emailInput) emailInput.value = regEmail;
+                var msg = document.getElementById('message');
+                if (msg) {
+                    msg.innerText = 'Account ready! Enter your password to sign in 🐾';
+                    msg.style.color = '#16a34a';
+                }
+                sessionStorage.removeItem('pawhub_registered_email');
+            }
+        });
+
+        function fillDemo(email, pass) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = pass;
+            loginUser();
+        }
+
+        function guestLogin() {
+            var guestUser = {
+                id: Date.now(),
+                name: 'Guest Pet Lover',
+                email: 'guest@pawhub.com',
+                password: 'guest',
+                phone: '+91 99999 88888',
+                location: 'India'
+            };
+            completeLogin(guestUser, document.getElementById('message'));
+        }
+
+        function logoutNow() {
+            localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('pawhub_logged_in');
+            sessionStorage.removeItem('pawhub_redirect_after_login');
+            window.location.reload();
+        }
+
+        function loginUser() {
+            var emailVal = (document.getElementById('email').value || '').trim().toLowerCase();
+            var passVal = (document.getElementById('password').value || '').trim();
+            var msgEl = document.getElementById('message');
+
+            if (!emailVal || !passVal) {
+                msgEl.innerText = 'Please enter your email and password.';
+                msgEl.style.color = '#dc2626';
+                return;
+            }
+
+            msgEl.innerText = 'Verifying credentials... 🐾';
+            msgEl.style.color = '#2563eb';
+
+            // 1. Check registered users in localStorage
+            var registeredUsers = [];
+            try {
+                registeredUsers = JSON.parse(localStorage.getItem('pawhub_registered_users') || '[]');
+            } catch (e) { registeredUsers = []; }
+
+            var foundUser = registeredUsers.find(function(u) {
+                return u.email && u.email.toLowerCase() === emailVal;
+            });
+
+            if (foundUser) {
+                if (foundUser.password !== passVal) {
+                    msgEl.innerText = '❌ Incorrect password. Please try again.';
+                    msgEl.style.color = '#dc2626';
+                    return;
+                }
+                completeLogin(foundUser, msgEl);
+                return;
+            }
+
+            // 2. Demo fallback
+            if (emailVal === 'demo@pawhub.com' && passVal === 'pawhub123') {
+                var demoUser = {
+                    id: 1001,
+                    name: 'Demo Pet Lover',
+                    email: 'demo@pawhub.com',
+                    password: 'pawhub123',
+                    phone: '+91 98765 43210',
+                    location: 'Bangalore, India'
+                };
+                completeLogin(demoUser, msgEl);
+                return;
+            }
+
+            // 3. User not found -> helpful prompt
+            msgEl.innerHTML = '❌ Account not found. <a href="register.html" style="color:#2563eb; text-decoration:underline;">Click here to Register</a> or use Quick Guest Login.';
+            msgEl.style.color = '#dc2626';
+        }
+
+        function completeLogin(user, msgEl) {
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            localStorage.setItem('pawhub_logged_in', 'true');
+
+            if (msgEl) {
+                msgEl.innerText = '🎉 Welcome, ' + (user.name || 'Pet Lover') + '! Opening PAWHUB...';
+                msgEl.style.color = '#16a34a';
+            }
+
+            var redirect = sessionStorage.getItem('pawhub_redirect_after_login') || 'home.html';
+            sessionStorage.removeItem('pawhub_redirect_after_login');
+
+            setTimeout(function() {
+                window.location.href = redirect;
+            }, 600);
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                loginUser();
+            }
+        });
+    </script>
+</body>
+</html>

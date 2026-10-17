@@ -1,0 +1,940 @@
+/* =========================================================
+   PAWHUB PAWBOT — PREMIUM CHAT UI
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap');
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+#pawbot-root {
+    position: fixed;
+    right: 28px;
+    bottom: 25px;
+
+    z-index: 99999;
+
+    font-family: 'Outfit', sans-serif;
+}
+
+
+/* =========================================================
+   LAUNCHER
+========================================================= */
+
+.pawbot-launcher {
+    width: 68px;
+    height: 68px;
+
+    border: 4px solid rgba(255,255,255,0.95);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 30px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 10px 30px rgba(37,99,235,0.35),
+        0 0 0 8px rgba(37,99,235,0.08);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.pawbot-launcher::before {
+    content: "";
+
+    position: absolute;
+
+    width: 68px;
+    height: 68px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(96,165,250,0.6);
+
+    animation: pawbotPulse 2.2s infinite;
+}
+
+.pawbot-launcher:hover {
+    transform: translateY(-5px) scale(1.06);
+
+    box-shadow:
+        0 18px 40px rgba(37,99,235,0.42),
+        0 0 0 10px rgba(37,99,235,0.08);
+}
+
+.pawbot-launcher:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================================================
+   CHAT WINDOW
+========================================================= */
+
+.pawbot-window {
+    position: absolute;
+
+    right: 0;
+    bottom: 85px;
+
+    width: 395px;
+    height: 610px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,0.96);
+
+    border: 1px solid rgba(191,219,254,0.8);
+
+    box-shadow:
+        0 30px 80px rgba(15,23,42,0.22),
+        0 10px 35px rgba(37,99,235,0.12);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(20px)
+        scale(0.95);
+
+    transform-origin: bottom right;
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        visibility 0.28s ease;
+}
+
+.pawbot-window.open {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.pawbot-header {
+    min-height: 82px;
+
+    padding: 17px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb 0%,
+            #1d4ed8 55%,
+            #1e40af 100%
+        );
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.pawbot-header::before {
+    content: "🐾";
+
+    position: absolute;
+
+    right: 70px;
+    top: -20px;
+
+    font-size: 90px;
+
+    opacity: 0.08;
+
+    transform: rotate(15deg);
+}
+
+.pawbot-header::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #60a5fa,
+            #93c5fd,
+            #ffffff,
+            #60a5fa
+        );
+}
+
+.pawbot-header > div {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.pawbot-header strong {
+    font-family: 'Sora', sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.2px;
+}
+
+.pawbot-header span {
+    color: #dbeafe;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.3px;
+}
+
+.pawbot-header span::first-letter {
+    color: #86efac;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+#pawbot-close {
+    position: relative;
+    z-index: 5;
+
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.12);
+
+    color: white;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+#pawbot-close:hover {
+    background: rgba(255,255,255,0.23);
+
+    transform:
+        rotate(90deg)
+        scale(1.05);
+}
+
+
+/* =========================================================
+   MESSAGES AREA
+========================================================= */
+
+.pawbot-messages {
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 20px 17px;
+
+    overflow-y: auto;
+
+    scroll-behavior: smooth;
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(219,234,254,0.65),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 0% 100%,
+            rgba(239,246,255,0.85),
+            transparent 32%
+        ),
+        #f8fbff;
+}
+
+
+/* scrollbar */
+
+.pawbot-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.pawbot-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.pawbot-messages::-webkit-scrollbar-thumb {
+    background: #bfdbfe;
+
+    border-radius: 20px;
+}
+
+.pawbot-messages::-webkit-scrollbar-thumb:hover {
+    background: #93c5fd;
+}
+
+
+/* =========================================================
+   MESSAGE COMMON
+========================================================= */
+
+.pawbot-msg {
+    max-width: 84%;
+
+    margin-bottom: 14px;
+
+    display: flex;
+
+    gap: 9px;
+
+    font-size: 14px;
+
+    line-height: 1.55;
+
+    animation:
+        messageAppear 0.25s ease both;
+}
+
+
+/* =========================================================
+   BOT MESSAGE
+========================================================= */
+
+.pawbot-msg.bot {
+    align-items: flex-start;
+
+    margin-right: auto;
+}
+
+.pawbot-msg.bot > div:last-child {
+    padding: 13px 15px;
+
+    border-radius:
+        5px
+        18px
+        18px
+        18px;
+
+    color: #334155;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,0.06);
+}
+
+.pawbot-msg.bot b {
+    color: #1d4ed8;
+}
+
+
+/* =========================================================
+   BOT AVATAR
+========================================================= */
+
+.pawbot-mini-avatar {
+    flex: 0 0 auto;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #eff6ff
+        );
+
+    border: 1px solid #bfdbfe;
+
+    font-size: 18px;
+
+    box-shadow:
+        0 5px 12px rgba(37,99,235,0.10);
+}
+
+
+/* =========================================================
+   USER MESSAGE
+========================================================= */
+
+.pawbot-msg.user {
+    justify-content: flex-end;
+
+    margin-left: auto;
+
+    color: white;
+
+    text-align: left;
+}
+
+.pawbot-msg.user > div {
+    padding: 12px 16px;
+
+    border-radius:
+        18px
+        5px
+        18px
+        18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 7px 18px rgba(37,99,235,0.20);
+}
+
+
+/* =========================================================
+   LINKS INSIDE BOT
+========================================================= */
+
+.pawbot-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 10px;
+
+    padding: 8px 12px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    color: #2563eb !important;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.pawbot-link:hover {
+    background: #dbeafe;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TYPING INDICATOR
+========================================================= */
+
+.pawbot-typing-dots {
+    min-width: 70px;
+
+    padding: 14px 16px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    border-radius:
+        5px
+        18px
+        18px
+        18px;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,0.06);
+}
+
+.pawbot-typing-dots span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #60a5fa;
+
+    animation:
+        typingBounce 1.2s infinite ease-in-out;
+}
+
+.pawbot-typing-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.pawbot-typing-dots span:nth-child(3) {
+    animation-delay: 0.30s;
+}
+
+
+/* =========================================================
+   QUICK QUESTIONS
+========================================================= */
+
+.pawbot-quick {
+    padding: 11px 13px;
+
+    display: flex;
+
+    gap: 7px;
+
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e5edf9;
+    border-bottom: 1px solid #e5edf9;
+
+    scrollbar-width: none;
+}
+
+.pawbot-quick::-webkit-scrollbar {
+    display: none;
+}
+
+.pawbot-quick button {
+    flex: 0 0 auto;
+
+    padding: 8px 11px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 20px;
+
+    background: #f8fbff;
+
+    color: #2563eb;
+
+    font-family: 'Outfit', sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.pawbot-quick button:hover {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    border-color: #2563eb;
+
+    transform: translateY(-2px);
+}
+
+.pawbot-quick button:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================================================
+   INPUT AREA
+========================================================= */
+
+.pawbot-input-area {
+    min-height: 72px;
+
+    padding: 12px 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    background: white;
+}
+
+
+/* input */
+
+#pawbot-input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 46px;
+
+    padding: 0 15px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 15px;
+
+    outline: none;
+
+    background: #f8fbff;
+
+    color: #172554;
+
+    font-family: 'Outfit', sans-serif;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+#pawbot-input::placeholder {
+    color: #94a3b8;
+}
+
+#pawbot-input:focus {
+    background: white;
+
+    border-color: #60a5fa;
+
+    box-shadow:
+        0 0 0 4px rgba(96,165,250,0.12);
+}
+
+
+/* send button */
+
+.pawbot-input-area button[type="submit"] {
+    flex: 0 0 auto;
+
+    width: 46px;
+    height: 46px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: white;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,0.23);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.pawbot-input-area button[type="submit"]:hover {
+    transform:
+        translateY(-2px)
+        rotate(-3deg);
+
+    box-shadow:
+        0 12px 25px rgba(37,99,235,0.30);
+}
+
+.pawbot-input-area button[type="submit"]:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes pawbotPulse {
+
+    0% {
+        transform: scale(1);
+
+        opacity: 0.7;
+    }
+
+    70% {
+        transform: scale(1.35);
+
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.35);
+
+        opacity: 0;
+    }
+}
+
+
+@keyframes messageAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+@keyframes typingBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+
+        opacity: 0.45;
+    }
+
+    30% {
+        transform: translateY(-5px);
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    #pawbot-root {
+        right: 17px;
+        bottom: 17px;
+    }
+
+    .pawbot-launcher {
+        width: 60px;
+        height: 60px;
+
+        font-size: 26px;
+    }
+
+    .pawbot-launcher::before {
+        width: 60px;
+        height: 60px;
+    }
+
+    .pawbot-window {
+        right: -5px;
+        bottom: 75px;
+
+        width:
+            min(
+                380px,
+                calc(100vw - 28px)
+            );
+
+        height:
+            min(
+                600px,
+                calc(100vh - 105px)
+            );
+
+        border-radius: 24px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 420px) {
+
+    #pawbot-root {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    .pawbot-window {
+        right: -3px;
+
+        width:
+            calc(100vw - 24px);
+
+        height:
+            calc(100vh - 95px);
+
+        border-radius: 22px;
+    }
+
+    .pawbot-header {
+        min-height: 72px;
+
+        padding:
+            14px;
+    }
+
+    .pawbot-header strong {
+        font-size: 15px;
+    }
+
+    .pawbot-messages {
+        padding:
+            16px 12px;
+    }
+
+    .pawbot-msg {
+        font-size: 13px;
+
+        max-width: 90%;
+    }
+
+    .pawbot-mini-avatar {
+        width: 31px;
+        height: 31px;
+
+        font-size: 16px;
+    }
+
+    .pawbot-quick {
+        padding:
+            9px;
+    }
+
+    .pawbot-input-area {
+        min-height: 65px;
+
+        padding:
+            9px;
+    }
+
+    #pawbot-input {
+        height: 43px;
+
+        font-size: 13px;
+    }
+
+    .pawbot-input-area button[type="submit"] {
+        width: 43px;
+        height: 43px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pawbot-launcher::before,
+    .pawbot-msg,
+    .pawbot-typing-dots span {
+        animation: none !important;
+    }
+
+    .pawbot-window,
+    .pawbot-launcher,
+    .pawbot-quick button,
+    .pawbot-link {
+        transition: none !important;
+    }
+}

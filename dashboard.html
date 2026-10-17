@@ -1,0 +1,1873 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PAWHUB | Dashboard</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="style/dashboard.css">
+
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link active">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     MENU OVERLAY
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     QUICK PANEL OVERLAY
+===================================================== -->
+
+<div
+    id="quickPanelOverlay"
+    class="quick-panel-overlay"
+    onclick="closeQuickPanels()">
+</div>
+
+
+
+<!-- =====================================================
+     WISHLIST PANEL
+===================================================== -->
+
+<aside
+    id="wishlistPanel"
+    class="quick-panel">
+
+
+    <div class="quick-panel-header">
+
+        <div>
+
+            <span>
+                PAWHUB
+            </span>
+
+            <h2>
+                Wishlist ❤️
+            </h2>
+
+        </div>
+
+
+        <button
+            class="panel-close"
+            type="button"
+            onclick="closeQuickPanels()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="wishlistContent"
+        class="panel-content">
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     CART PANEL
+===================================================== -->
+
+<aside
+    id="cartPanel"
+    class="quick-panel">
+
+
+    <div class="quick-panel-header">
+
+        <div>
+
+            <span>
+                PAWHUB
+            </span>
+
+            <h2>
+                Shopping Cart 🛒
+            </h2>
+
+        </div>
+
+
+        <button
+            class="panel-close"
+            type="button"
+            onclick="closeQuickPanels()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="cartContent"
+        class="panel-content">
+
+    </div>
+
+
+    <div
+        id="cartPanelFooter"
+        class="cart-panel-footer">
+
+        <div>
+
+            <span>
+                Total
+            </span>
+
+            <strong id="cartTotal">
+                ₹0
+            </strong>
+
+        </div>
+
+
+        <button
+            type="button"
+            onclick="goToCheckout()">
+
+            Proceed to Checkout →
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN DASHBOARD
+===================================================== -->
+
+<main class="dashboard">
+
+
+    <!-- =================================================
+         WELCOME
+    ================================================== -->
+
+    <section class="welcome-section">
+
+
+        <div class="welcome-content">
+
+            <span class="section-label">
+                MY PAWHUB
+            </span>
+
+
+            <h1>
+
+                Hello,
+
+                <span id="userName">
+                    Pet Parent
+                </span>
+
+                👋
+
+            </h1>
+
+
+            <p>
+                Manage your pets and keep track of
+                everything that matters to you.
+            </p>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-icon">
+                🐾
+            </div>
+
+            <div>
+
+                <strong id="profileName">
+                    Pet Parent
+                </strong>
+
+                <span>
+                    PAWHUB Member
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         STATS
+    ================================================== -->
+
+    <section class="stats-grid">
+
+
+        <!-- MY PETS -->
+
+        <button
+            class="stat-card"
+            type="button"
+            onclick="window.location.href='my-pets.html'">
+
+            <div class="stat-icon blue">
+                🐾
+            </div>
+
+            <div class="stat-info">
+
+                <span>
+                    My Pets
+                </span>
+
+                <strong id="myPetsNumber">
+                    0
+                </strong>
+
+                <small>
+                    Registered pets
+                </small>
+
+            </div>
+
+        </button>
+
+
+
+        <!-- WISHLIST -->
+
+        <button
+            class="stat-card"
+            type="button"
+            onclick="openWishlist()">
+
+            <div class="stat-icon pink">
+                ❤️
+            </div>
+
+            <div class="stat-info">
+
+                <span>
+                    Wishlist
+                </span>
+
+                <strong id="wishlistNumber">
+                    0
+                </strong>
+
+                <small>
+                    Saved items
+                </small>
+
+            </div>
+
+        </button>
+
+
+
+        <!-- CART -->
+
+        <button
+            class="stat-card"
+            type="button"
+            onclick="openCart()">
+
+            <div class="stat-icon green">
+                🛒
+            </div>
+
+            <div class="stat-info">
+
+                <span>
+                    Cart
+                </span>
+
+                <strong id="cartNumber">
+                    0
+                </strong>
+
+                <small>
+                    Items in cart
+                </small>
+
+            </div>
+
+        </button>
+
+    </section>
+
+
+
+    <!-- =================================================
+         MAIN CARDS
+    ================================================== -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- =================================================
+             MY PETS
+        ================================================== -->
+
+        <div class="dashboard-card pets-card">
+
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span class="card-label">
+                        YOUR PETS
+                    </span>
+
+                    <h2>
+                        My Pets 🐾
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="window.location.href='my-pets.html'">
+
+                    View All →
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="petsContainer"
+                class="pets-container">
+
+                <div class="loading-message">
+                    Loading your pets...
+                </div>
+
+            </div>
+
+
+            <button
+                class="add-pet-btn"
+                type="button"
+                onclick="window.location.href='add-pet.html'">
+
+                + Add New Pet
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECENT BOOKINGS
+        ================================================== -->
+
+        <div class="dashboard-card bookings-card">
+
+
+            <div class="card-heading">
+
+                <div>
+
+                    <span class="card-label">
+                        APPOINTMENTS
+                    </span>
+
+                    <h2>
+                        Recent Bookings 📅
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="window.location.href='my-bookings.html'">
+
+                    View All →
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="recentBookingsContainer"
+                class="bookings-container">
+
+                <div class="loading-message">
+                    Loading bookings...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SIMPLE DASHBOARD FOOTER MESSAGE
+    ================================================== -->
+
+    <section class="dashboard-message">
+
+        <div class="message-icon">
+            ❤️
+        </div>
+
+        <div>
+
+            <strong>
+                Everything looks better with a happy paw.
+            </strong>
+
+            <p>
+                Take care of your furry friend and keep
+                their important details updated.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            onclick="window.location.href='my-pets.html'">
+
+            View My Pets →
+
+        </button>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   CURRENT USER
+===================================================== */
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser") || "null"
+    );
+
+
+/* =====================================================
+   LOGIN CHECK
+===================================================== */
+
+// Guest session preview fallback
+if (!loggedInUser || !loggedInUser.id) {
+    localStorage.setItem("loggedInUser", JSON.stringify({ id: 1, name: "Pet Parent", email: "parent@pawhub.com" }));
+}
+
+
+/* =====================================================
+   DISPLAY USER
+===================================================== */
+
+if (loggedInUser) {
+
+    const name =
+        loggedInUser.name ||
+        "Pet Parent";
+
+
+    document.getElementById(
+        "userName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent = name;
+
+}
+
+
+
+/* =====================================================
+   LOAD MY PETS
+===================================================== */
+
+async function loadMyPets() {
+
+    const container =
+        document.getElementById(
+            "petsContainer"
+        );
+
+
+    const countElement =
+        document.getElementById(
+            "myPetsNumber"
+        );
+
+
+    if (!loggedInUser) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/pets/user/" +
+                loggedInUser.id
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load pets"
+            );
+
+        }
+
+
+        const pets =
+            await response.json();
+
+
+        countElement.textContent =
+            pets.length;
+
+
+        if (
+            !pets ||
+            pets.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty-pets">
+
+                    <div class="empty-pets-icon">
+                        🐶
+                    </div>
+
+                    <strong>
+                        No pets added yet
+                    </strong>
+
+                    <span>
+                        Add your first furry friend.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /*
+         * Show first 3 pets
+         */
+
+        const visiblePets =
+            pets.slice(0, 3);
+
+
+        container.innerHTML =
+            visiblePets
+                .map(function(pet) {
+
+                    const image =
+                        pet.image ||
+                        pet.photo ||
+                        "/images/puppy1.jpg";
+
+
+                    return `
+
+                        <div
+                            class="pet-row"
+                            onclick="window.location.href='my-pets.html'">
+
+                            <img
+                                src="${escapeHTML(image)}"
+                                alt="${escapeHTML(
+                                    pet.name || "Pet"
+                                )}"
+                                onerror="this.src='/images/puppy1.jpg'">
+
+                            <div class="pet-row-info">
+
+                                <strong>
+                                    ${escapeHTML(
+                                        pet.name ||
+                                        "Unnamed Pet"
+                                    )}
+                                </strong>
+
+                                <span>
+                                    ${escapeHTML(
+                                        pet.breed ||
+                                        pet.type ||
+                                        "Pet"
+                                    )}
+                                </span>
+
+                            </div>
+
+                            <span class="pet-arrow">
+                                →
+                            </span>
+
+                        </div>
+
+                    `;
+
+                })
+                .join("");
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Pets loading error:",
+            error
+        );
+
+
+        countElement.textContent =
+            "0";
+
+
+        container.innerHTML = `
+
+            <div class="error-message">
+
+                Unable to load pets.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOAD RECENT BOOKINGS
+===================================================== */
+
+async function loadRecentBookings() {
+
+    const container =
+        document.getElementById(
+            "recentBookingsContainer"
+        );
+
+
+    if (!loggedInUser) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/bookings/user/" +
+                loggedInUser.id
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load bookings"
+            );
+
+        }
+
+
+        const bookings =
+            await response.json();
+
+
+        if (
+            !bookings ||
+            bookings.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty-bookings">
+
+                    <div class="empty-booking-icon">
+                        📅
+                    </div>
+
+                    <strong>
+                        No bookings yet
+                    </strong>
+
+                    <span>
+                        Your appointments will appear here.
+                    </span>
+
+                    <button
+                        type="button"
+                        onclick="window.location.href='pet-services.html'">
+
+                        Book a Service →
+
+                    </button>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /*
+         * Latest 3 bookings
+         */
+
+        const recentBookings =
+            bookings
+                .slice()
+                .reverse()
+                .slice(0, 3);
+
+
+        container.innerHTML =
+            recentBookings
+                .map(function(booking) {
+
+                    return `
+
+                        <div class="booking-row">
+
+                            <div class="booking-icon">
+                                ${getServiceIcon(
+                                    booking.service
+                                )}
+                            </div>
+
+
+                            <div class="booking-info">
+
+                                <strong>
+                                    ${escapeHTML(
+                                        booking.service ||
+                                        "Pet Service"
+                                    )}
+                                </strong>
+
+                                <span>
+                                    🐾
+                                    ${escapeHTML(
+                                        booking.petName ||
+                                        "Pet"
+                                    )}
+                                </span>
+
+                                <small>
+
+                                    📅
+                                    ${formatDate(
+                                        booking.serviceDate
+                                    )}
+
+                                    &nbsp; • &nbsp;
+
+                                    ⏰
+                                    ${formatTime(
+                                        booking.serviceTime
+                                    )}
+
+                                </small>
+
+                            </div>
+
+
+                            <span class="booking-status">
+                                Booked
+                            </span>
+
+                        </div>
+
+                    `;
+
+                })
+                .join("");
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Bookings loading error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="error-message">
+
+                Unable to load bookings.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SERVICE ICON
+===================================================== */
+
+function getServiceIcon(service) {
+
+    const value =
+        String(service || "")
+            .toLowerCase();
+
+
+    if (
+        value.includes("veterinary") ||
+        value.includes("vet")
+    ) {
+
+        return "🩺";
+
+    }
+
+
+    if (
+        value.includes("groom")
+    ) {
+
+        return "✂️";
+
+    }
+
+
+    if (
+        value.includes("train")
+    ) {
+
+        return "🐕";
+
+    }
+
+
+    if (
+        value.includes("board")
+    ) {
+
+        return "🏠";
+
+    }
+
+
+    return "🐾";
+
+}
+
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+
+    const date =
+        new Date(
+            value + "T00:00:00"
+        );
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return value;
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+function formatTime(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+
+    const parts =
+        String(value).split(":");
+
+
+    if (parts.length < 2) {
+        return value;
+    }
+
+
+    let hour =
+        parseInt(parts[0], 10);
+
+
+    const minute =
+        parts[1];
+
+
+    const period =
+        hour >= 12
+            ? "PM"
+            : "AM";
+
+
+    hour =
+        hour % 12 || 12;
+
+
+    return (
+        hour +
+        ":" +
+        minute +
+        " " +
+        period
+    );
+
+}
+
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function getCart() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "pawhubCart"
+            ) || "[]"
+        );
+
+    }
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+
+function updateCartCount() {
+
+    const cart =
+        getCart();
+
+
+    const count =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(
+                        item.quantity || 1
+                    );
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent = count;
+
+
+    document.getElementById(
+        "cartNumber"
+    ).textContent = count;
+
+}
+
+
+
+function openCart() {
+
+    closeMenu();
+
+
+    document.getElementById(
+        "wishlistPanel"
+    ).classList.remove("open");
+
+
+    const panel =
+        document.getElementById(
+            "cartPanel"
+        );
+
+
+    const overlay =
+        document.getElementById(
+            "quickPanelOverlay"
+        );
+
+
+    renderCart();
+
+
+    panel.classList.add("open");
+
+    overlay.classList.add("show");
+
+}
+
+
+
+function renderCart() {
+
+    const cart =
+        getCart();
+
+
+    const content =
+        document.getElementById(
+            "cartContent"
+        );
+
+
+    const footer =
+        document.getElementById(
+            "cartPanelFooter"
+        );
+
+
+    if (
+        !cart ||
+        cart.length === 0
+    ) {
+
+        content.innerHTML = `
+
+            <div class="panel-empty">
+
+                <div>
+                    🛒
+                </div>
+
+                <strong>
+                    Your cart is empty
+                </strong>
+
+                <p>
+                    Add products from Marketplace.
+                </p>
+
+                <button
+                    type="button"
+                    onclick="window.location.href='marketplace.html'">
+
+                    Go to Marketplace →
+
+                </button>
+
+            </div>
+
+        `;
+
+        footer.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    content.innerHTML =
+        cart
+            .map(function(item) {
+
+                const quantity =
+                    Number(
+                        item.quantity || 1
+                    );
+
+
+                const price =
+                    Number(
+                        item.price || 0
+                    );
+
+
+                total +=
+                    price * quantity;
+
+
+                return `
+
+                    <div class="cart-item">
+
+                        <div class="cart-item-image">
+
+                            <img
+                                src="${escapeHTML(
+                                    item.image ||
+                                    "/images/food.jpg"
+                                )}"
+                                alt="${escapeHTML(
+                                    item.name ||
+                                    "Product"
+                                )}"
+                                onerror="this.style.display='none'">
+
+                        </div>
+
+
+                        <div class="cart-item-info">
+
+                            <strong>
+                                ${escapeHTML(
+                                    item.name ||
+                                    "Product"
+                                )}
+                            </strong>
+
+                            <span>
+                                Qty: ${quantity}
+                            </span>
+
+                            <b>
+                                ₹${(
+                                    price *
+                                    quantity
+                                ).toLocaleString("en-IN")}
+                            </b>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+
+    document.getElementById(
+        "cartTotal"
+    ).textContent =
+        "₹" +
+        total.toLocaleString(
+            "en-IN"
+        );
+
+
+    footer.style.display =
+        "block";
+
+}
+
+
+
+function goToCheckout() {
+
+    const cart =
+        getCart();
+
+
+    if (
+        !cart ||
+        cart.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "checkout.html";
+
+}
+
+
+
+/* =====================================================
+   WISHLIST
+===================================================== */
+
+function getWishlist() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "pawhubWishlist"
+            ) || "[]"
+        );
+
+    }
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+
+function updateWishlistCount() {
+
+    const wishlist =
+        getWishlist();
+
+
+    document.getElementById(
+        "wishlistNumber"
+    ).textContent =
+        wishlist.length;
+
+}
+
+
+
+function openWishlist() {
+
+    closeMenu();
+
+
+    document.getElementById(
+        "cartPanel"
+    ).classList.remove("open");
+
+
+    const panel =
+        document.getElementById(
+            "wishlistPanel"
+        );
+
+
+    const overlay =
+        document.getElementById(
+            "quickPanelOverlay"
+        );
+
+
+    renderWishlist();
+
+
+    panel.classList.add("open");
+
+    overlay.classList.add("show");
+
+}
+
+
+
+function renderWishlist() {
+
+    const wishlist =
+        getWishlist();
+
+
+    const content =
+        document.getElementById(
+            "wishlistContent"
+        );
+
+
+    if (
+        !wishlist ||
+        wishlist.length === 0
+    ) {
+
+        content.innerHTML = `
+
+            <div class="panel-empty">
+
+                <div>
+                    ❤️
+                </div>
+
+                <strong>
+                    Your wishlist is empty
+                </strong>
+
+                <p>
+                    Save your favourite pets and products here.
+                </p>
+
+                <button
+                    type="button"
+                    onclick="window.location.href='marketplace.html'">
+
+                    Explore Marketplace →
+
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    content.innerHTML =
+        wishlist
+            .map(function(item) {
+
+                return `
+
+                    <div class="wishlist-item">
+
+                        <div class="wishlist-item-icon">
+                            ❤️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(
+                                    item.name ||
+                                    "Saved Item"
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    item.type ||
+                                    "Favourite"
+                                )}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+function toggleMenu() {
+
+    const panel =
+        document.getElementById(
+            "menuPanel"
+        );
+
+
+    const overlay =
+        document.getElementById(
+            "menuOverlay"
+        );
+
+
+    panel.classList.toggle(
+        "open"
+    );
+
+
+    overlay.classList.toggle(
+        "show"
+    );
+
+}
+
+
+
+function closeMenu() {
+
+    document.getElementById(
+        "menuPanel"
+    ).classList.remove("open");
+
+
+    document.getElementById(
+        "menuOverlay"
+    ).classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   CLOSE QUICK PANELS
+===================================================== */
+
+function closeQuickPanels() {
+
+    document.getElementById(
+        "wishlistPanel"
+    ).classList.remove("open");
+
+
+    document.getElementById(
+        "cartPanel"
+    ).classList.remove("open");
+
+
+    document.getElementById(
+        "quickPanelOverlay"
+    ).classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeMenu();
+
+            closeQuickPanels();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadMyPets();
+
+loadRecentBookings();
+
+updateCartCount();
+
+updateWishlistCount();
+
+
+</script>
+
+
+    <script src="style/pawhub-global.js"></script>
+</body>
+
+</html>

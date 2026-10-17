@@ -1,0 +1,2009 @@
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: "Outfit", sans-serif;
+
+    background: #f7faff;
+
+    color: #172554;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+}
+
+
+button {
+    font-family: inherit;
+}
+
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    height: 76px;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e8eef8;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: space-between !important;
+
+    padding: 0 6%;
+
+    box-shadow:
+        0 4px 18px rgba(37, 88, 249, 0.05);
+
+    position: relative;
+
+    z-index: 100;
+}
+
+
+.logo-area {
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    gap: 11px;
+
+    flex-shrink: 0;
+}
+
+
+.logo-paws {
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #5b82ff
+        );
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(37, 99, 235, 0.20);
+}
+
+
+.brand-text {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: center;
+
+    line-height: 1;
+}
+
+
+.brand-text strong {
+    font-family: "Sora", sans-serif;
+
+    font-size: 16px;
+
+    color: #172554;
+
+    font-weight: 700;
+}
+
+
+.brand-text small {
+    color: #8a98ad;
+
+    font-size: 8px;
+
+    margin-top: 5px;
+}
+
+
+.nav-icons {
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    gap: 9px;
+
+    margin-left: auto;
+
+    flex-shrink: 0;
+}
+
+
+.icon-btn {
+    width: 39px !important;
+
+    height: 39px !important;
+
+    border: 1px solid #e3eaf5;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    position: relative;
+
+    transition: 0.25s ease;
+}
+
+
+.icon-btn:hover {
+    background: #f1f6ff;
+
+    border-color: #c9d8ff;
+
+    transform: translateY(-2px);
+}
+
+
+.wishlist-nav-btn {
+    color: #ef4444 !important;
+
+    font-size: 18px !important;
+}
+
+
+.wishlist-nav-btn:hover {
+    background: #fff1f2;
+
+    border-color: #fecdd3;
+}
+
+
+.cart-nav-btn {
+    font-size: 17px !important;
+}
+
+
+#cartCount {
+    position: absolute;
+
+    top: -5px;
+
+    right: -5px;
+
+    min-width: 17px;
+
+    height: 17px;
+
+    padding: 0 4px;
+
+    border-radius: 20px;
+
+    background: #ef4444;
+
+    color: #ffffff;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 2px solid #ffffff;
+}
+
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(15, 23, 42, 0.28);
+
+    display: none;
+
+    z-index: 1000;
+}
+
+
+.menu-overlay.show {
+    display: block;
+}
+
+
+.menu-panel {
+    position: absolute;
+
+    right: 5%;
+
+    top: 88px;
+
+    width: 245px;
+
+    max-height: calc(100vh - 105px);
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 12px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(15, 23, 42, 0.18);
+}
+
+
+.menu-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 10px 12px 15px;
+
+    border-bottom: 1px solid #edf1f7;
+
+    margin-bottom: 8px;
+}
+
+
+.menu-header h3 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 15px;
+}
+
+
+.menu-header p {
+    font-size: 9px;
+
+    color: #8a98ad;
+
+    margin-top: 4px;
+}
+
+
+.menu-close {
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    background: #f1f5f9;
+
+    border-radius: 9px;
+
+    font-size: 19px;
+
+    cursor: pointer;
+}
+
+
+.menu-panel a {
+    display: block;
+
+    padding: 11px 12px;
+
+    text-decoration: none;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+
+.menu-panel a:hover {
+    background: #f1f6ff;
+
+    color: #2563eb;
+}
+
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    width: 100%;
+}
+
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.adoption-hero {
+    width: 88%;
+
+    max-width: 1250px;
+
+    min-height: 360px;
+
+    margin: 38px auto 0;
+
+    padding: 42px 55px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edf4ff,
+            #ffffff
+        );
+
+    border: 1px solid #dfe8f8;
+
+    border-radius: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 40px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 40px
+        rgba(37, 88, 249, 0.07);
+}
+
+
+.hero-content {
+    flex: 1;
+
+    max-width: 590px;
+}
+
+
+.hero-badge {
+    display: inline-block;
+
+    padding: 8px 13px;
+
+    background: #e6efff;
+
+    color: #2563eb;
+
+    border-radius: 30px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    margin-bottom: 17px;
+}
+
+
+.hero-content h1 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 42px;
+
+    line-height: 1.15;
+
+    color: #172554;
+
+    margin-bottom: 15px;
+}
+
+
+.hero-content h1 span {
+    color: #2563eb;
+}
+
+
+.hero-content p {
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    max-width: 520px;
+
+    margin-bottom: 23px;
+}
+
+
+.hero-btn {
+    border: none;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px
+        rgba(37, 99, 235, 0.22);
+
+    transition: 0.25s;
+}
+
+
+.hero-btn span {
+    margin-left: 5px;
+}
+
+
+.hero-btn:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+}
+
+
+
+/* =====================================================
+   HERO CIRCLE
+===================================================== */
+
+.hero-pet-circle {
+    width: 310px;
+
+    height: 310px;
+
+    border-radius: 50%;
+
+    background: #dce8ff;
+
+    padding: 12px;
+
+    position: relative;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 20px 45px
+        rgba(37, 99, 235, 0.15);
+}
+
+
+.hero-pet-circle::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -11px;
+
+    border: 2px dashed #9eb8ff;
+
+    border-radius: 50%;
+
+    opacity: 0.8;
+}
+
+
+.hero-circle-inner {
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.adoption-hero-image {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    display: block;
+}
+
+
+
+/* =====================================================
+   ADOPTION SECTION
+===================================================== */
+
+.adoption-section {
+    width: 88%;
+
+    max-width: 1250px;
+
+    margin: 70px auto 0;
+}
+
+
+.section-heading {
+    text-align: center;
+
+    max-width: 700px;
+
+    margin: 0 auto 27px;
+}
+
+
+.section-label {
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 9px;
+}
+
+
+.section-heading h2 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 29px;
+
+    color: #172554;
+
+    margin-bottom: 9px;
+}
+
+
+.section-heading p {
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+.filter-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 30px;
+
+    flex-wrap: wrap;
+}
+
+
+.filter-btn {
+    border: 1px solid #dce6ff;
+
+    background: #ffffff;
+
+    color: #52627a;
+
+    padding: 9px 18px;
+
+    border-radius: 50px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+
+.filter-btn:hover {
+    border-color: #a9c0ff;
+
+    color: #2563eb;
+
+    transform: translateY(-2px);
+}
+
+
+.filter-btn.active {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 8px 20px
+        rgba(38, 88, 249, 0.20);
+}
+
+
+
+/* =====================================================
+   PET GRID
+===================================================== */
+
+.pets-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+
+    padding-bottom: 10px;
+}
+
+
+.pet-card {
+    background: #ffffff;
+
+    border: 1px solid #e3eaf5;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px
+        rgba(15, 23, 42, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.pet-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 38px
+        rgba(37, 88, 249, 0.11);
+}
+
+
+
+/* =====================================================
+   PET IMAGE
+===================================================== */
+
+.pet-image {
+    width: 100%;
+
+    height: 190px;
+
+    position: relative !important;
+
+    overflow: hidden;
+
+    background: #eef4ff;
+}
+
+
+.pet-image img {
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center;
+}
+
+
+.available-badge {
+    position: absolute;
+
+    top: 10px;
+
+    left: 10px;
+
+    z-index: 10;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 3px 8px
+        rgba(22, 101, 52, 0.08);
+}
+
+
+
+/* =====================================================
+   PET WISHLIST BUTTON
+===================================================== */
+
+.pet-wishlist-btn {
+    position: absolute !important;
+
+    top: 10px !important;
+
+    right: 10px !important;
+
+    z-index: 20 !important;
+
+    width: 36px;
+
+    height: 36px;
+
+    border: 1px solid
+        rgba(255,255,255,0.85);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.96);
+
+    color: #ef4444;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 16px
+        rgba(23,37,84,0.16);
+
+    transition: 0.2s ease;
+}
+
+
+.pet-wishlist-btn:hover {
+    transform: scale(1.08);
+
+    background: #fff1f2;
+}
+
+
+.pet-wishlist-btn.saved {
+    background: #fff1f2;
+
+    color: #ef4444;
+}
+
+
+
+/* =====================================================
+   PET CONTENT
+===================================================== */
+
+.pet-content {
+    padding: 17px;
+}
+
+
+.pet-title-row {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+
+.pet-title-row h3 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 16px;
+
+    color: #172554;
+
+    margin-bottom: 4px;
+}
+
+
+.pet-type {
+    color: #7b8798;
+
+    font-size: 9px;
+}
+
+
+.gender {
+    width: 29px;
+
+    height: 29px;
+
+    border-radius: 9px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 14px;
+
+    flex-shrink: 0;
+}
+
+
+.gender.female {
+    color: #ec4899;
+
+    background: #fdf2f8;
+}
+
+
+.pet-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin: 13px 0 11px;
+
+    color: #64748b;
+
+    font-size: 8.5px;
+}
+
+
+.pet-description {
+    color: #7b8798;
+
+    font-size: 9.5px;
+
+    line-height: 1.55;
+
+    min-height: 30px;
+
+    margin-bottom: 14px;
+}
+
+
+
+/* =====================================================
+   MEET BUTTON
+===================================================== */
+
+.meet-btn {
+    width: 100%;
+
+    border: none;
+
+    background: #edf4ff;
+
+    color: #2563eb;
+
+    padding: 11px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.meet-btn span {
+    margin-left: 3px;
+}
+
+
+.meet-btn:hover {
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+
+
+/* =====================================================
+   POPUP OVERLAY
+===================================================== */
+
+.wishlist-overlay,
+.cart-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(15, 23, 42, 0.38);
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 2000;
+
+    padding: 20px;
+}
+
+
+.wishlist-overlay.show,
+.cart-overlay.show {
+    display: flex;
+}
+
+
+
+/* =====================================================
+   POPUP BOX
+===================================================== */
+
+.wishlist-box,
+.cart-box {
+    width: 100%;
+
+    max-width: 470px;
+
+    max-height: 86vh;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 70px
+        rgba(15, 23, 42, 0.23);
+
+    animation:
+        popupIn 0.2s ease;
+}
+
+
+@keyframes popupIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+
+/* =====================================================
+   POPUP HEADER
+===================================================== */
+
+.popup-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 19px 20px;
+
+    border-bottom: 1px solid #edf1f7;
+}
+
+
+.popup-header h3 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 16px;
+
+    color: #172554;
+}
+
+
+.popup-header p {
+    color: #8a98ad;
+
+    font-size: 9px;
+
+    margin-top: 4px;
+}
+
+
+.close-btn {
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.close-btn:hover {
+    background: #e2e8f0;
+
+    color: #172554;
+}
+
+
+
+/* =====================================================
+   WISHLIST TABS
+===================================================== */
+
+.wishlist-tabs {
+    display: flex;
+
+    gap: 8px;
+
+    padding: 14px 20px 10px;
+
+    border-bottom: 1px solid #edf1f7;
+}
+
+
+.wishlist-tab {
+    flex: 1;
+
+    border: 1px solid #e2e8f3;
+
+    background: #ffffff;
+
+    color: #64748b;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.wishlist-tab:hover {
+    border-color: #bfd0ff;
+
+    color: #2563eb;
+}
+
+
+.wishlist-tab.active {
+    background: #2563eb !important;
+
+    border-color: #2563eb !important;
+
+    color: #ffffff !important;
+}
+
+
+
+/* =====================================================
+   WISHLIST CONTENT
+===================================================== */
+
+.wishlist-content {
+    max-height: 420px;
+
+    overflow-y: auto;
+
+    padding: 15px 20px;
+}
+
+
+.wishlist-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #edf1f7;
+}
+
+
+.wishlist-item:last-child {
+    border-bottom: none;
+}
+
+
+.wishlist-item-image {
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    background: #eef4ff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 22px;
+}
+
+
+.wishlist-item-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.wishlist-item-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.wishlist-item-info h4 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 13px;
+
+    color: #172554;
+
+    margin-bottom: 4px;
+}
+
+
+.wishlist-item-info p {
+    color: #7b8798;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.wishlist-remove {
+    width: 30px;
+
+    height: 30px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #fff1f2;
+
+    color: #ef4444;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+.wishlist-remove:hover {
+    background: #ffe4e6;
+}
+
+
+
+/* =====================================================
+   EMPTY STATES
+===================================================== */
+
+.empty-wishlist,
+.empty-cart {
+    text-align: center;
+
+    padding: 45px 20px;
+}
+
+
+.empty-icon {
+    width: 56px;
+
+    height: 56px;
+
+    border-radius: 17px;
+
+    background: #eef4ff;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 25px;
+}
+
+
+.empty-wishlist h4,
+.empty-cart h4 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 14px;
+
+    color: #172554;
+
+    margin-bottom: 7px;
+}
+
+
+.empty-wishlist p,
+.empty-cart p {
+    color: #8a98ad;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+.cart-items {
+    max-height: 390px;
+
+    overflow-y: auto;
+
+    padding: 12px 20px;
+}
+
+
+.cart-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #edf1f7;
+}
+
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+
+.cart-item-image {
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    background: #eef4ff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 22px;
+}
+
+
+.cart-item-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.cart-item-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.cart-item-info h4 {
+    font-size: 12px;
+
+    color: #172554;
+
+    margin-bottom: 5px;
+}
+
+
+.cart-item-info p {
+    color: #64748b;
+
+    font-size: 10px;
+}
+
+
+.remove-cart {
+    width: 30px;
+
+    height: 30px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #fff1f2;
+
+    color: #ef4444;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+.cart-footer {
+    padding: 15px 20px;
+
+    border-top: 1px solid #edf1f7;
+
+    background: #fbfdff;
+}
+
+
+.cart-total-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 13px;
+
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+
+.cart-total-row strong {
+    font-family: "Sora", sans-serif;
+
+    font-size: 17px;
+
+    color: #172554;
+}
+
+
+.checkout-btn,
+.shop-btn {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 11px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.checkout-btn {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    margin-bottom: 8px;
+}
+
+
+.checkout-btn:hover {
+    background: #1d4ed8;
+}
+
+
+.shop-btn {
+    background: #edf4ff;
+
+    color: #2563eb;
+}
+
+
+.shop-btn:hover {
+    background: #dceaff;
+}
+
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    width: 100% !important;
+
+    margin-top: 75px !important;
+
+    padding: 45px 6% 22px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #172554 0%,
+            #1e3a8a 100%
+        ) !important;
+
+    color: #ffffff !important;
+
+    display: block !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+}
+
+
+.footer-container {
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 60px;
+}
+
+
+.footer-brand-section {
+    max-width: 350px;
+
+    display: grid;
+
+    grid-template-columns:
+        44px 1fr;
+
+    column-gap: 12px;
+
+    align-items: center;
+}
+
+
+.footer-brand-logo {
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #5b82ff
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,0.15);
+}
+
+
+.footer-brand-section h3 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 17px;
+
+    color: #ffffff !important;
+
+    margin: 0 0 4px 0;
+}
+
+
+.footer-brand-section p {
+    color: #9fb0cf !important;
+
+    font-size: 9px;
+
+    margin: 0;
+}
+
+
+.footer-description {
+    grid-column: 1 / -1;
+
+    color: #aab8d0 !important;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+
+    margin-top: 15px;
+}
+
+
+.footer-links {
+    display: flex;
+
+    gap: 70px;
+}
+
+
+.footer-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.footer-column h4 {
+    font-family: "Sora", sans-serif;
+
+    font-size: 11px;
+
+    color: #ffffff !important;
+
+    margin-bottom: 6px;
+}
+
+
+.footer-column a {
+    color: #aab8d0 !important;
+
+    text-decoration: none !important;
+
+    font-size: 10px;
+
+    transition: 0.2s ease;
+}
+
+
+.footer-column a:hover {
+    color: #ffffff !important;
+
+    transform: translateX(2px);
+}
+
+
+.footer-bottom {
+    width: 100%;
+
+    max-width: 1250px;
+
+    margin: 35px auto 0;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.footer-bottom p {
+    color: #8fa0bd !important;
+
+    font-size: 9px;
+
+    margin: 0;
+}
+
+
+.footer-bottom div {
+    display: flex;
+
+    gap: 20px;
+}
+
+
+.footer-bottom span {
+    color: #8fa0bd !important;
+
+    font-size: 9px;
+}
+
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+
+    .adoption-hero {
+        padding: 38px;
+
+        gap: 30px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+
+    .hero-pet-circle {
+        width: 270px;
+
+        height: 270px;
+    }
+
+
+    .pets-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .footer-links {
+        gap: 40px;
+    }
+
+}
+
+
+
+@media (max-width: 700px) {
+
+
+    .navbar {
+        height: 70px;
+
+        padding: 0 4%;
+    }
+
+
+    .logo-paws {
+        width: 40px;
+
+        height: 40px;
+
+        font-size: 20px;
+    }
+
+
+    .brand-text strong {
+        font-size: 14px;
+    }
+
+
+    .brand-text small {
+        font-size: 7px;
+    }
+
+
+    .nav-icons {
+        gap: 6px;
+    }
+
+
+    .icon-btn {
+        width: 35px !important;
+
+        height: 35px !important;
+
+        font-size: 15px;
+    }
+
+
+    .adoption-hero {
+        width: 92%;
+
+        margin-top: 25px;
+
+        padding: 28px 23px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        text-align: left;
+    }
+
+
+    .hero-content {
+        width: 100%;
+    }
+
+
+    .hero-content h1 {
+        font-size: 29px;
+    }
+
+
+    .hero-content p {
+        font-size: 12px;
+    }
+
+
+    .hero-pet-circle {
+        width: 230px;
+
+        height: 230px;
+
+        align-self: center;
+
+        margin-top: 20px;
+    }
+
+
+    .adoption-section {
+        width: 92%;
+
+        margin-top: 55px;
+    }
+
+
+    .section-heading h2 {
+        font-size: 23px;
+    }
+
+
+    .pets-grid {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+
+    .pet-image {
+        height: 210px;
+    }
+
+
+    .footer {
+        padding:
+            40px 7% 20px !important;
+    }
+
+
+    .footer-container {
+        flex-direction: column;
+
+        gap: 35px;
+    }
+
+
+    .footer-links {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 28px;
+    }
+
+
+    .footer-bottom {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+
+    .menu-panel {
+        right: 4%;
+
+        top: 80px;
+
+        width: 230px;
+    }
+
+}
+
+
+
+@media (max-width: 400px) {
+
+
+    .brand-text small {
+        display: none;
+    }
+
+
+    .brand-text strong {
+        font-size: 13px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 25px;
+    }
+
+
+    .pet-image {
+        height: 190px;
+    }
+
+
+    .footer-links {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}

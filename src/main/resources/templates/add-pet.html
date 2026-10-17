@@ -1,0 +1,787 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add My Pet | PAWHUB</title>
+
+    <link rel="stylesheet" href="style/add-pet.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Outfit:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+    <!-- Background Paws -->
+    <div class="bg-paw paw-one">🐾</div>
+    <div class="bg-paw paw-two">🐾</div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main>
+
+
+        <!-- Page Heading -->
+
+        <section class="page-heading">
+
+            <div class="heading-icon">
+                🐶
+            </div>
+
+            <div>
+
+                <span class="small-title">
+                    PET PROFILE
+                </span>
+
+                <h1>
+                    Add Your <span>Best Friend</span> 🐾
+                </h1>
+
+                <p>
+                    Tell us a little about your furry companion
+                    and create their PAWHUB profile.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             FORM CARD
+        ========================== -->
+
+        <section class="form-card">
+
+
+            <!-- LEFT PANEL -->
+
+            <div class="pet-intro">
+
+                <div class="pet-circle">
+                    🐾
+                </div>
+
+
+                <h2>
+                    Meet your new<br>
+                    <span>PAWHUB profile</span>
+                </h2>
+
+
+                <p>
+                    Add your pet's details so you can
+                    easily manage their profile and
+                    keep everything in one place.
+                </p>
+
+
+                <!-- Tips -->
+
+                <div class="tips">
+
+                    <div class="tip">
+
+                        <span>✓</span>
+
+                        Keep your pet information updated
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <span>✓</span>
+
+                        Add a photo to personalize the profile
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <span>✓</span>
+
+                        You can update details later
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 FORM AREA
+            ========================== -->
+
+            <div class="form-area">
+
+                <h2>
+                    Pet Information
+                </h2>
+
+                <p class="form-subtitle">
+                    Fill in the details below
+                </p>
+
+
+                <form id="petForm">
+
+
+                    <!-- Name + Type -->
+
+                    <div class="form-row">
+
+
+                        <div class="field">
+
+                            <label for="name">
+                                Pet Name <span>*</span>
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="field-icon">
+                                    🐾
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    placeholder="e.g. Bruno"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="field">
+
+                            <label for="type">
+                                Pet Type <span>*</span>
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="field-icon">
+                                    🐶
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="type"
+                                    placeholder="e.g. Dog, Cat"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Breed + Age -->
+
+                    <div class="form-row">
+
+
+                        <div class="field">
+
+                            <label for="breed">
+                                Breed
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="field-icon">
+                                    🐕
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="breed"
+                                    placeholder="e.g. Golden Retriever">
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="field">
+
+                            <label for="age">
+                                Age
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <span class="field-icon">
+                                    🎂
+                                </span>
+
+                                <input
+                                    type="number"
+                                    id="age"
+                                    placeholder="Age in years"
+                                    min="0">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Gender -->
+
+                    <div class="field">
+
+                        <label for="gender">
+                            Gender
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="field-icon">
+                                💗
+                            </span>
+
+                            <select id="gender">
+
+                                <option value="">
+                                    Select Gender
+                                </option>
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Description -->
+
+                    <div class="field">
+
+                        <label for="description">
+                            About Your Pet
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="Tell us something about your pet..."
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- Image -->
+
+                    <div class="field">
+
+                        <label for="image">
+                            Pet Image URL
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="field-icon">
+                                📷
+                            </span>
+
+                            <input
+                                type="text"
+                                id="image"
+                                placeholder="Paste your pet image URL">
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Submit -->
+
+                    <button
+                        type="submit"
+                        class="add-btn">
+
+                        <span>
+                            🐾
+                        </span>
+
+                        Add Pet to PAWHUB
+
+                        <strong>
+                            →
+                        </strong>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /* Notification */
+
+        function showNotification() {
+
+            alert("No new notifications 🐾");
+
+        }
+
+
+
+        /* Saved */
+
+        function showSaved() {
+
+            alert("Saved pets and items ❤️");
+
+        }
+
+
+
+        /* Menu */
+
+        function showMenu() {
+
+            alert("PAWHUB Menu ☰");
+
+        }
+
+
+
+        /* =========================
+           ADD PET
+        ========================== */
+
+        document
+            .getElementById("petForm")
+            .addEventListener(
+                "submit",
+                async function(event) {
+
+                    event.preventDefault();
+
+
+                    /* Get logged-in user */
+
+                    const loggedInUser =
+                        JSON.parse(
+                            localStorage.getItem(
+                                "loggedInUser"
+                            )
+                        );
+
+
+                    /* Login check */
+
+                    if (
+                        !loggedInUser ||
+                        !loggedInUser.id
+                    ) {
+
+                        alert(
+                            "Please login first! 🐾"
+                        );
+
+                        window.location.href =
+                            "login.html";
+
+                        return;
+                    }
+
+
+                    /* Pet details */
+
+                    const pet = {
+
+                        name:
+                            document
+                                .getElementById("name")
+                                .value,
+
+                        type:
+                            document
+                                .getElementById("type")
+                                .value,
+
+                        breed:
+                            document
+                                .getElementById("breed")
+                                .value,
+
+                        age:
+                            document
+                                .getElementById("age")
+                                .value
+                                ? parseInt(
+                                    document
+                                        .getElementById("age")
+                                        .value
+                                )
+                                : null,
+
+                        gender:
+                            document
+                                .getElementById("gender")
+                                .value,
+
+                        description:
+                            document
+                                .getElementById("description")
+                                .value,
+
+                        image:
+                            document
+                                .getElementById("image")
+                                .value,
+
+                        status:
+                            "My Pet"
+
+                    };
+
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                "/api/pets?userId=" +
+                                loggedInUser.id,
+                                {
+
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body:
+                                        JSON.stringify(pet)
+
+                                }
+                            );
+
+
+                        if (response.ok) {
+
+                            alert(
+                                "Pet added successfully! 🐶🐱❤️"
+                            );
+
+
+                            document
+                                .getElementById("petForm")
+                                .reset();
+
+                        }
+
+                        else {
+
+                            alert(
+                                "Failed to add pet. Please try again."
+                            );
+
+                        }
+
+                    }
+
+                    catch (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "Cannot connect to server. Please check Spring Boot."
+                        );
+
+                    }
+
+                }
+            );
+
+    </script>
+
+    <script src="style/pawhub-global.js"></script>
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,2827 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PAWHUB | Adoption</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- IMPORTANT -->
+    <link rel="stylesheet"
+          href="style/adoption.css?v=10">
+
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link active">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     MENU
+===================================================== -->
+
+<div id="menuOverlay"
+     class="menu-overlay"
+     onclick="closeMenu(event)">
+
+    <div class="menu-panel"
+         onclick="event.stopPropagation()">
+
+
+        <div class="menu-header">
+
+            <div>
+
+                <h3>
+                    PAWHUB
+                </h3>
+
+                <p>
+                    Pet Care Community
+                </p>
+
+            </div>
+
+
+            <button
+                class="menu-close"
+                onclick="toggleMenu()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <a href="dashboard.html">
+            🏠 Dashboard
+        </a>
+
+        <a href="adoption.html">
+            🐾 Adoption
+        </a>
+
+        <a href="marketplace.html">
+            🛍️ Marketplace
+        </a>
+
+        <a href="vets.html">
+            🩺 Vet Finder
+        </a>
+
+        <a href="pet-services.html">
+            ✨ Pet Services
+        </a>
+
+        <a href="vaccination.html">
+            💉 Vaccination
+        </a>
+
+        <a href="community.html">
+            👥 Community
+        </a>
+
+        <a href="lost-found.html">
+            🔎 Lost & Found
+        </a>
+
+        <a href="my-pets.html">
+            🐶 My Pets
+        </a>
+
+        <a href="my-bookings.html">
+            📅 My Bookings
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="adoption-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+
+            🐾 &nbsp; FIND A COMPANION
+
+        </div>
+
+
+        <h1>
+
+            Find Your
+
+            <span>
+                Forever Friend
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Every pet deserves a loving home.
+
+            Meet wonderful companions waiting
+            for their forever family.
+
+        </p>
+
+
+        <button
+            class="hero-btn"
+            onclick="document.getElementById('adoptionSection').scrollIntoView({behavior:'smooth'})">
+
+            Meet Your New Friend
+
+            <span>
+                →
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <div class="hero-pet-circle">
+
+        <div class="hero-circle-inner">
+
+            <img
+                src="images/adoption1.png"
+                alt="Dog and Cat"
+                class="adoption-hero-image">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ADOPTION SECTION
+===================================================== -->
+
+<section
+    class="adoption-section"
+    id="adoptionSection">
+
+
+    <div class="section-heading">
+
+        <div class="section-label">
+
+            ADOPTION
+
+        </div>
+
+
+        <h2>
+
+            Pets Looking for a Home
+
+        </h2>
+
+
+        <p>
+
+            Browse our adorable pets and find
+            the one that's right for you.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- FILTER -->
+
+    <div class="filter-buttons">
+
+        <button
+            class="filter-btn active"
+            onclick="filterPets('all', this)">
+
+            All Pets
+
+        </button>
+
+
+        <button
+            class="filter-btn"
+            onclick="filterPets('Dog', this)">
+
+            🐶 Dogs
+
+        </button>
+
+
+        <button
+            class="filter-btn"
+            onclick="filterPets('Cat', this)">
+
+            🐱 Cats
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PET GRID
+    ================================================== -->
+
+    <div
+        class="pets-grid"
+        id="petsGrid">
+
+
+        <!-- BUDDY -->
+
+        <article class="pet-card dog-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="1"
+                    onclick="togglePetWishlist(event,1,'Buddy','Dog','Jack Russell',2,'Male','/images/puppy1.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/puppy1.jpg"
+                    alt="Buddy">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Buddy
+                        </h3>
+
+                        <span class="pet-type">
+                            Dog
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Jack Russell
+                    </span>
+
+                    <span>
+                        🎂 2 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    Friendly and playful dog.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(1,'Buddy')">
+
+                    Meet Buddy
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- CHARLIE -->
+
+        <article class="pet-card dog-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="2"
+                    onclick="togglePetWishlist(event,2,'Charlie','Dog','Labrador',3,'Male','/images/puppy2.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/puppy2.jpg"
+                    alt="Charlie">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Charlie
+                        </h3>
+
+                        <span class="pet-type">
+                            Dog
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Labrador
+                    </span>
+
+                    <span>
+                        🎂 3 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    Loyal and friendly Labrador.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(2,'Charlie')">
+
+                    Meet Charlie
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- LUNA -->
+
+        <article class="pet-card dog-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="3"
+                    onclick="togglePetWishlist(event,3,'Luna','Dog','Beagle',2,'Female','/images/puppy3.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/puppy3.jpg"
+                    alt="Luna">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Luna
+                        </h3>
+
+                        <span class="pet-type">
+                            Dog
+                        </span>
+
+                    </div>
+
+                    <span class="gender female">
+                        ♀
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Beagle
+                    </span>
+
+                    <span>
+                        🎂 2 years
+                    </span>
+
+                    <span>
+                        ♀ Female
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    Cute and energetic Beagle.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(3,'Luna')">
+
+                    Meet Luna
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- BELLA -->
+
+        <article class="pet-card dog-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="4"
+                    onclick="togglePetWishlist(event,4,'Bella','Dog','Golden Retriever',4,'Female','/images/puppy4.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/puppy4.jpg"
+                    alt="Bella">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Bella
+                        </h3>
+
+                        <span class="pet-type">
+                            Dog
+                        </span>
+
+                    </div>
+
+                    <span class="gender female">
+                        ♀
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Golden Retriever
+                    </span>
+
+                    <span>
+                        🎂 4 years
+                    </span>
+
+                    <span>
+                        ♀ Female
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    Gentle and loving dog.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(4,'Bella')">
+
+                    Meet Bella
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- SNOW -->
+
+        <article class="pet-card dog-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="5"
+                    onclick="togglePetWishlist(event,5,'Snow','Dog','Husky',3,'Male','/images/puppy5.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/puppy5.jpg"
+                    alt="Snow">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Snow
+                        </h3>
+
+                        <span class="pet-type">
+                            Dog
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Husky
+                    </span>
+
+                    <span>
+                        🎂 3 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    Active and playful Husky.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(5,'Snow')">
+
+                    Meet Snow
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- RIO -->
+
+        <article class="pet-card dog-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="6"
+                    onclick="togglePetWishlist(event,6,'Rio','Dog','German Shepherd',2,'Male','/images/puppy6.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/puppy6.jpg"
+                    alt="Rio">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Rio
+                        </h3>
+
+                        <span class="pet-type">
+                            Dog
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 German Shepherd
+                    </span>
+
+                    <span>
+                        🎂 2 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    Smart and protective dog.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(6,'Rio')">
+
+                    Meet Rio
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- MILO -->
+
+        <article class="pet-card cat-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="7"
+                    onclick="togglePetWishlist(event,7,'Milo','Cat','Persian',2,'Male','/images/cat1.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/cat1.jpg"
+                    alt="Milo">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Milo
+                        </h3>
+
+                        <span class="pet-type">
+                            Cat
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Persian
+                    </span>
+
+                    <span>
+                        🎂 2 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    A loving pet waiting for a forever home.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(7,'Milo')">
+
+                    Meet Milo
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- LILY -->
+
+        <article class="pet-card cat-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="8"
+                    onclick="togglePetWishlist(event,8,'Lily','Cat','British Shorthair',2,'Female','/images/cat2.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/cat2.jpg"
+                    alt="Lily">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Lily
+                        </h3>
+
+                        <span class="pet-type">
+                            Cat
+                        </span>
+
+                    </div>
+
+                    <span class="gender female">
+                        ♀
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 British Shorthair
+                    </span>
+
+                    <span>
+                        🎂 2 years
+                    </span>
+
+                    <span>
+                        ♀ Female
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    A loving pet waiting for a forever home.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(8,'Lily')">
+
+                    Meet Lily
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- SIMBA -->
+
+        <article class="pet-card cat-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="9"
+                    onclick="togglePetWishlist(event,9,'Simba','Cat','Bengal',3,'Male','/images/cat3.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/cat3.jpg"
+                    alt="Simba">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Simba
+                        </h3>
+
+                        <span class="pet-type">
+                            Cat
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Bengal
+                    </span>
+
+                    <span>
+                        🎂 3 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    A loving pet waiting for a forever home.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(9,'Simba')">
+
+                    Meet Simba
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- COCO -->
+
+        <article class="pet-card cat-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="10"
+                    onclick="togglePetWishlist(event,10,'Coco','Cat','Ragdoll',2,'Female','/images/cat4.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/cat4.jpg"
+                    alt="Coco">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Coco
+                        </h3>
+
+                        <span class="pet-type">
+                            Cat
+                        </span>
+
+                    </div>
+
+                    <span class="gender female">
+                        ♀
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Ragdoll
+                    </span>
+
+                    <span>
+                        🎂 2 years
+                    </span>
+
+                    <span>
+                        ♀ Female
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    A loving pet waiting for a forever home.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(10,'Coco')">
+
+                    Meet Coco
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- NALA -->
+
+        <article class="pet-card cat-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="11"
+                    onclick="togglePetWishlist(event,11,'Nala','Cat','Siamese',3,'Female','/images/cat5.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/cat5.jpg"
+                    alt="Nala">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Nala
+                        </h3>
+
+                        <span class="pet-type">
+                            Cat
+                        </span>
+
+                    </div>
+
+                    <span class="gender female">
+                        ♀
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Siamese
+                    </span>
+
+                    <span>
+                        🎂 3 years
+                    </span>
+
+                    <span>
+                        ♀ Female
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    A loving pet waiting for a forever home.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(11,'Nala')">
+
+                    Meet Nala
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- LEO -->
+
+        <article class="pet-card cat-card">
+
+            <div class="pet-image">
+
+                <span class="available-badge">
+                    Available
+                </span>
+
+                <button
+                    class="pet-wishlist-btn"
+                    data-pet-id="12"
+                    onclick="togglePetWishlist(event,12,'Leo','Cat','Maine Coon',3,'Male','/images/cat6.jpg')">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="images/cat6.jpg"
+                    alt="Leo">
+
+            </div>
+
+
+            <div class="pet-content">
+
+                <div class="pet-title-row">
+
+                    <div>
+
+                        <h3>
+                            Leo
+                        </h3>
+
+                        <span class="pet-type">
+                            Cat
+                        </span>
+
+                    </div>
+
+                    <span class="gender">
+                        ♂
+                    </span>
+
+                </div>
+
+
+                <div class="pet-info">
+
+                    <span>
+                        🐾 Maine Coon
+                    </span>
+
+                    <span>
+                        🎂 3 years
+                    </span>
+
+                    <span>
+                        ♂ Male
+                    </span>
+
+                </div>
+
+
+                <p class="pet-description">
+                    A loving pet waiting for a forever home.
+                </p>
+
+
+                <button
+                    class="meet-btn"
+                    onclick="meetPet(12,'Leo')">
+
+                    Meet Leo
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     WISHLIST POPUP
+===================================================== -->
+
+<div id="wishlistOverlay"
+     class="wishlist-overlay">
+
+    <div class="wishlist-box">
+
+
+        <div class="popup-header">
+
+            <div>
+
+                <h3>
+                    ❤️ Wishlist
+                </h3>
+
+                <p>
+                    Your saved pets and products
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeWishlist()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- TABS -->
+
+        <div class="wishlist-tabs">
+
+            <button
+                class="wishlist-tab active"
+                onclick="showWishlistTab('pets',this)">
+
+                🐾 Pets
+
+            </button>
+
+
+            <button
+                class="wishlist-tab"
+                onclick="showWishlistTab('products',this)">
+
+                🛍️ Products
+
+            </button>
+
+        </div>
+
+
+        <!-- PET WISHLIST -->
+
+        <div
+            id="wishlistPets"
+            class="wishlist-content">
+
+        </div>
+
+
+        <!-- PRODUCT WISHLIST -->
+
+        <div
+            id="wishlistProducts"
+            class="wishlist-content"
+            style="display:none;">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     CART POPUP
+===================================================== -->
+
+<div id="cartOverlay"
+     class="cart-overlay">
+
+    <div class="cart-box">
+
+
+        <div class="popup-header">
+
+            <div>
+
+                <h3>
+                    🛒 Your Cart
+                </h3>
+
+                <p>
+                    Items you've selected
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeCart()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="cartItems"
+            class="cart-items">
+
+        </div>
+
+
+        <div
+            id="cartFooter"
+            class="cart-footer">
+
+            <div class="cart-total-row">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="cartTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <button
+                class="checkout-btn"
+                onclick="checkoutCart()">
+
+                Proceed to Checkout
+
+            </button>
+
+
+            <button
+                class="shop-btn"
+                onclick="goMarketplace()">
+
+                Go to Marketplace
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+function toggleMenu() {
+
+    document
+        .getElementById("menuOverlay")
+        .classList.toggle("show");
+
+}
+
+
+function closeMenu(event) {
+
+    if (
+        event.target ===
+        document.getElementById("menuOverlay")
+    ) {
+
+        document
+            .getElementById("menuOverlay")
+            .classList.remove("show");
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MEET PET
+===================================================== */
+
+async function meetPet(petId, petName) {
+
+
+    const loggedInUser =
+        JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+
+    if (!loggedInUser) {
+
+        alert(
+            "Please login first."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Do you want to send a meet request for " +
+            petName +
+            "?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                "/api/adoptions",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        petId: petId,
+
+                        petName: petName,
+
+                        userId: loggedInUser.id
+
+                    })
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Backend request failed"
+            );
+
+        }
+
+
+        alert(
+            "🐾 Meet request sent for " +
+            petName +
+            "!"
+        );
+
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to backend. Please try again."
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function filterPets(type, button) {
+
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(function(btn) {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+
+    const cards =
+        document.querySelectorAll(
+            ".pet-card"
+        );
+
+
+    cards.forEach(function(card) {
+
+
+        if (type === "all") {
+
+            card.style.display =
+                "";
+
+        }
+
+
+        else if (type === "Dog") {
+
+            card.style.display =
+                card.classList.contains("dog-card")
+                    ? ""
+                    : "none";
+
+        }
+
+
+        else if (type === "Cat") {
+
+            card.style.display =
+                card.classList.contains("cat-card")
+                    ? ""
+                    : "none";
+
+        }
+
+    });
+
+}
+
+
+
+/* =====================================================
+   PET WISHLIST
+===================================================== */
+
+function getPetWishlist() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "pawhubPetWishlist"
+        ) || "[]"
+    );
+
+}
+
+
+function getProductWishlist() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "pawhubProductWishlist"
+        ) || "[]"
+    );
+
+}
+
+
+
+function togglePetWishlist(
+    event,
+    id,
+    name,
+    type,
+    breed,
+    age,
+    gender,
+    image
+) {
+
+
+    event.stopPropagation();
+
+
+    let wishlist =
+        getPetWishlist();
+
+
+    const existing =
+        wishlist.find(
+            item => item.id === id
+        );
+
+
+    if (existing) {
+
+        wishlist =
+            wishlist.filter(
+                item => item.id !== id
+            );
+
+    }
+
+    else {
+
+        wishlist.push({
+
+            id: id,
+
+            name: name,
+
+            type: type,
+
+            breed: breed,
+
+            age: age,
+
+            gender: gender,
+
+            image: image
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "pawhubPetWishlist",
+        JSON.stringify(wishlist)
+    );
+
+
+    updatePetHeartButtons();
+
+    renderPetWishlist();
+
+}
+
+
+
+function updatePetHeartButtons() {
+
+
+    const wishlist =
+        getPetWishlist();
+
+
+    document
+        .querySelectorAll(
+            ".pet-wishlist-btn"
+        )
+        .forEach(function(button) {
+
+
+            const id =
+                Number(
+                    button.dataset.petId
+                );
+
+
+            const saved =
+                wishlist.some(
+                    item =>
+                        Number(item.id) === id
+                );
+
+
+            button.textContent =
+                saved ? "♥" : "♡";
+
+
+            button.classList.toggle(
+                "saved",
+                saved
+            );
+
+        });
+
+}
+
+
+
+/* =====================================================
+   OPEN WISHLIST
+===================================================== */
+
+function openWishlist() {
+
+
+    renderPetWishlist();
+
+    renderProductWishlist();
+
+
+    document
+        .getElementById(
+            "wishlistOverlay"
+        )
+        .classList.add("show");
+
+}
+
+
+
+function closeWishlist() {
+
+    document
+        .getElementById(
+            "wishlistOverlay"
+        )
+        .classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   WISHLIST TABS
+===================================================== */
+
+function showWishlistTab(
+    tab,
+    button
+) {
+
+
+    document
+        .querySelectorAll(
+            ".wishlist-tab"
+        )
+        .forEach(function(btn) {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    document
+        .getElementById(
+            "wishlistPets"
+        )
+        .style.display =
+            tab === "pets"
+                ? "block"
+                : "none";
+
+
+    document
+        .getElementById(
+            "wishlistProducts"
+        )
+        .style.display =
+            tab === "products"
+                ? "block"
+                : "none";
+
+}
+
+
+
+/* =====================================================
+   RENDER PET WISHLIST
+===================================================== */
+
+function renderPetWishlist() {
+
+
+    const container =
+        document.getElementById(
+            "wishlistPets"
+        );
+
+
+    const wishlist =
+        getPetWishlist();
+
+
+    if (wishlist.length === 0) {
+
+
+        container.innerHTML = `
+
+            <div class="empty-wishlist">
+
+                <div class="empty-icon">
+                    🐾
+                </div>
+
+                <h4>
+                    Your pet wishlist is empty
+                </h4>
+
+                <p>
+                    Tap the heart on a pet to save them here.
+                </p>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+    container.innerHTML =
+        wishlist.map(function(pet) {
+
+
+            return `
+
+                <div class="wishlist-item">
+
+                    <div class="wishlist-item-image">
+
+                        <img
+                            src="${pet.image}"
+                            alt="${pet.name}">
+
+                    </div>
+
+
+                    <div class="wishlist-item-info">
+
+                        <h4>
+                            ${pet.name}
+                        </h4>
+
+                        <p>
+                            ${pet.breed}
+                            •
+                            ${pet.age} years
+                            •
+                            ${pet.gender}
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="wishlist-remove"
+                        onclick="removePetWishlist(${pet.id})">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+
+/* =====================================================
+   REMOVE PET WISHLIST
+===================================================== */
+
+function removePetWishlist(id) {
+
+
+    let wishlist =
+        getPetWishlist();
+
+
+    wishlist =
+        wishlist.filter(
+            item =>
+                Number(item.id) !==
+                Number(id)
+        );
+
+
+    localStorage.setItem(
+        "pawhubPetWishlist",
+        JSON.stringify(wishlist)
+    );
+
+
+    renderPetWishlist();
+
+    updatePetHeartButtons();
+
+}
+
+
+
+/* =====================================================
+   PRODUCT WISHLIST
+===================================================== */
+
+function renderProductWishlist() {
+
+
+    const container =
+        document.getElementById(
+            "wishlistProducts"
+        );
+
+
+    const wishlist =
+        getProductWishlist();
+
+
+    if (wishlist.length === 0) {
+
+
+        container.innerHTML = `
+
+            <div class="empty-wishlist">
+
+                <div class="empty-icon">
+                    🛍️
+                </div>
+
+                <h4>
+                    Your product wishlist is empty
+                </h4>
+
+                <p>
+                    Save your favourite products from Marketplace.
+                </p>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+    container.innerHTML =
+        wishlist.map(function(product) {
+
+
+            return `
+
+                <div class="wishlist-item">
+
+                    <div class="wishlist-item-image">
+
+                        ${
+                            product.image
+                            ?
+                            `<img
+                                src="${product.image}"
+                                alt="${product.name || "Product"}">`
+                            :
+                            "🛍️"
+                        }
+
+                    </div>
+
+
+                    <div class="wishlist-item-info">
+
+                        <h4>
+                            ${product.name || "Product"}
+                        </h4>
+
+                        <p>
+                            ₹${product.price || 0}
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="wishlist-remove"
+                        onclick="removeProductWishlist('${product.id}')">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+
+function removeProductWishlist(id) {
+
+
+    let wishlist =
+        getProductWishlist();
+
+
+    wishlist =
+        wishlist.filter(
+            item =>
+                String(item.id) !==
+                String(id)
+        );
+
+
+    localStorage.setItem(
+        "pawhubProductWishlist",
+        JSON.stringify(wishlist)
+    );
+
+
+    renderProductWishlist();
+
+}
+
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function getCart() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "pawhubCart"
+        ) || "[]"
+    );
+
+}
+
+
+
+function updateCartCount() {
+
+
+    const cart =
+        getCart();
+
+
+    const count =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    (Number(item.quantity) || 1);
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent = count;
+
+}
+
+
+
+function openCart() {
+
+
+    renderCart();
+
+
+    document
+        .getElementById(
+            "cartOverlay"
+        )
+        .classList.add("show");
+
+}
+
+
+
+function closeCart() {
+
+    document
+        .getElementById(
+            "cartOverlay"
+        )
+        .classList.remove("show");
+
+}
+
+
+
+function renderCart() {
+
+
+    const cart =
+        getCart();
+
+
+    const container =
+        document.getElementById(
+            "cartItems"
+        );
+
+
+    const footer =
+        document.getElementById(
+            "cartFooter"
+        );
+
+
+    if (cart.length === 0) {
+
+
+        container.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                <h4>
+                    Your cart is empty
+                </h4>
+
+                <p>
+                    Add products from Marketplace.
+                </p>
+
+                <button
+                    class="shop-btn"
+                    onclick="goMarketplace()">
+
+                    Browse Marketplace
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        footer.style.display =
+            "none";
+
+
+        return;
+
+    }
+
+
+    footer.style.display =
+        "block";
+
+
+    let total = 0;
+
+
+    container.innerHTML =
+        cart.map(
+            function(item, index) {
+
+
+                const price =
+                    Number(item.price) || 0;
+
+
+                const quantity =
+                    Number(item.quantity) || 1;
+
+
+                total +=
+                    price * quantity;
+
+
+                return `
+
+                    <div class="cart-item">
+
+                        <div class="cart-item-image">
+
+                            ${
+                                item.image
+                                ?
+                                `<img
+                                    src="${item.image}"
+                                    alt="${item.name || "Product"}">`
+                                :
+                                "🛍️"
+                            }
+
+                        </div>
+
+
+                        <div class="cart-item-info">
+
+                            <h4>
+                                ${item.name || "Product"}
+                            </h4>
+
+                            <p>
+                                ₹${price} × ${quantity}
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="remove-cart"
+                            onclick="removeCartItem(${index})">
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+
+    document.getElementById(
+        "cartTotal"
+    ).textContent =
+        "₹" +
+        total.toLocaleString(
+            "en-IN"
+        );
+
+}
+
+
+
+function removeCartItem(index) {
+
+
+    const cart =
+        getCart();
+
+
+    cart.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "pawhubCart",
+        JSON.stringify(cart)
+    );
+
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+
+function goMarketplace() {
+
+    window.location.href =
+        "marketplace.html";
+
+}
+
+
+
+function checkoutCart() {
+
+
+    const cart =
+        getCart();
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "🛒 Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "Checkout system is ready for the next step. 🐾"
+    );
+
+}
+
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        updateCartCount();
+
+        updatePetHeartButtons();
+
+        renderPetWishlist();
+
+        renderProductWishlist();
+
+    }
+);
+
+
+
+/* =====================================================
+   CLOSE POPUPS
+===================================================== */
+
+document
+    .getElementById(
+        "cartOverlay"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeCart();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "wishlistOverlay"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeWishlist();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+<link rel="stylesheet" href="style/pawbot.css">
+<div id="pawbot-root">
+  <button class="pawbot-launcher" type="button" onclick="pawBotToggle()">&#128062;</button>
+  <div class="pawbot-window" id="pawbot-window">
+    <div class="pawbot-head">
+      <span>PawBot</span>
+      <button class="pawbot-close" type="button" onclick="pawBotToggle()">&times;</button>
+    </div>
+    <div class="pawbot-messages" id="pawbot-messages">
+      <div class="pawbot-msg pawbot-bot">Hi! I am PawBot. How can I help?</div>
+    </div>
+    <div class="pawbot-quick">
+      <button type="button" onclick="pawBotGo('adoption.html')">Adopt</button>
+      <button type="button" onclick="pawBotGo('vets.html')">Vet</button>
+      <button type="button" onclick="pawBotGo('vaccination.html')">Vaccination</button>
+      <button type="button" onclick="pawBotGo('lost-found.html')">Lost &amp; Found</button>
+    </div>
+    <div class="pawbot-input">
+      <input id="pawbot-input" type="text" placeholder="Ask PawBot..." onkeydown="if(event.key==='Enter') pawBotSend()">
+      <button type="button" onclick="pawBotSend()">Send</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  function addBot(text){
+    var box=document.getElementById('pawbot-messages');
+    if(!box)return;
+    var d=document.createElement('div');
+    d.className='pawbot-msg pawbot-bot';
+    d.textContent=text;
+    box.appendChild(d);
+    box.scrollTop=box.scrollHeight;
+  }
+  window.pawBotToggle=function(){
+    var w=document.getElementById('pawbot-window');
+    if(w) w.classList.toggle('open');
+  };
+  window.pawBotGo=function(url){ window.location.href=url; };
+  window.pawBotSend=function(){
+    var input=document.getElementById('pawbot-input');
+    if(!input)return;
+    var q=input.value.trim();
+    if(!q)return;
+    var box=document.getElementById('pawbot-messages');
+    var u=document.createElement('div');
+    u.className='pawbot-msg pawbot-user';
+    u.textContent=q;
+    box.appendChild(u);
+    input.value='';
+    var s=q.toLowerCase();
+    var answer='I can help with adoption, vets, vaccination, lost and found, marketplace, and community.';
+    if(s.indexOf('adopt')>=0) answer='Open Adoption to see pets and submit an adoption request.';
+    else if(s.indexOf('vet')>=0) answer='Open Vets to find veterinary services.';
+    else if(s.indexOf('vacc')>=0) answer='Open Vaccination to manage vaccination reminders.';
+    else if(s.indexOf('lost')>=0 || s.indexOf('found')>=0) answer='Open Lost & Found to report or search for pets.';
+    else if(s.indexOf('market')>=0) answer='Open Marketplace to browse pet products.';
+    else if(s.indexOf('community')>=0) answer='Open Community to connect with other pet lovers.';
+    setTimeout(function(){addBot(answer)},250);
+  };
+})();
+</script>
+    <script src="style/pawhub-global.js"></script>
+</body>
+
+</html>

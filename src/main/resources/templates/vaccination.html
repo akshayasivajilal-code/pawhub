@@ -1,0 +1,2038 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PAWHUB | Vaccination Reminder</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="style/vaccination.css">
+
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link active">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     MENU OVERLAY
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     QUICK PANEL OVERLAY
+===================================================== -->
+
+<div
+    id="quickPanelOverlay"
+    class="quick-panel-overlay"
+    onclick="closeQuickPanel()">
+
+</div>
+
+
+
+<!-- =====================================================
+     WISHLIST PANEL
+===================================================== -->
+
+<aside
+    id="wishlistPanel"
+    class="quick-panel wishlist-panel">
+
+    <div class="quick-panel-header">
+
+        <div>
+
+            <span class="panel-label">
+                PAWHUB
+            </span>
+
+            <h2>
+                Wishlist ❤️
+            </h2>
+
+        </div>
+
+        <button
+            class="panel-close"
+            type="button"
+            onclick="closeQuickPanel()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+    <div class="wishlist-tabs">
+
+        <button
+            class="wishlist-tab active"
+            type="button"
+            onclick="showWishlistTab('pets', this)">
+
+            🐾 Pets
+
+        </button>
+
+
+        <button
+            class="wishlist-tab"
+            type="button"
+            onclick="showWishlistTab('products', this)">
+
+            🛍️ Products
+
+        </button>
+
+    </div>
+
+
+    <!-- PET WISHLIST -->
+
+    <div
+        id="wishlistPets"
+        class="wishlist-content active">
+
+        <div
+            id="wishlistPetList"
+            class="wishlist-list">
+
+        </div>
+
+    </div>
+
+
+    <!-- PRODUCT WISHLIST -->
+
+    <div
+        id="wishlistProducts"
+        class="wishlist-content">
+
+        <div
+            id="wishlistProductList"
+            class="wishlist-list">
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     CART PANEL
+===================================================== -->
+
+<aside
+    id="cartPanel"
+    class="quick-panel cart-panel">
+
+    <div class="quick-panel-header">
+
+        <div>
+
+            <span class="panel-label">
+                PAWHUB
+            </span>
+
+            <h2>
+                Shopping Cart 🛒
+            </h2>
+
+        </div>
+
+        <button
+            class="panel-close"
+            type="button"
+            onclick="closeQuickPanel()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="quickCartContent"
+        class="cart-list">
+
+    </div>
+
+
+    <div class="cart-footer">
+
+        <div class="cart-total-row">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="cartTotal">
+                ₹0
+            </strong>
+
+        </div>
+
+
+        <button
+            class="checkout-btn"
+            type="button"
+            onclick="goToCheckout()">
+
+            Proceed to Checkout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero-section">
+
+    <div class="hero-content">
+
+
+        <div class="hero-text">
+
+            <div class="hero-label">
+
+                💉 PAWHUB PET WELLNESS
+
+            </div>
+
+
+            <h1>
+
+                Vaccination
+
+                <span>
+                    Reminder
+                </span>
+
+                💉
+
+            </h1>
+
+
+            <p>
+
+                Keep your pets healthy by tracking
+                vaccination schedules and never miss
+                an important dose.
+
+            </p>
+
+
+            <button
+                type="button"
+                class="primary-btn"
+                onclick="scrollToRegister()">
+
+                + Register Your Pet
+
+            </button>
+
+        </div>
+
+
+        <div class="hero-image">
+
+            <img
+                src="images/vaccination1.jpg"
+                alt="Pet Vaccination"
+                onerror="this.src='/images/vaccination.jpg';">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     REGISTER PET
+===================================================== -->
+
+<section
+    class="pet-form"
+    id="registerSection">
+
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            🐾 PET PROFILE
+        </div>
+
+        <h2>
+            Register Your Pet
+        </h2>
+
+        <p>
+            Add your pet details to keep vaccination
+            information organized.
+        </p>
+
+    </div>
+
+
+    <form
+        id="petRegistrationForm">
+
+
+        <div class="form-group">
+
+            <label for="petName">
+                Pet Name
+            </label>
+
+            <input
+                type="text"
+                id="petName"
+                placeholder="Enter pet name"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="petType">
+                Pet Type
+            </label>
+
+            <select
+                id="petType"
+                required>
+
+                <option value="">
+                    Select Pet Type
+                </option>
+
+                <option value="Dog">
+                    Dog
+                </option>
+
+                <option value="Cat">
+                    Cat
+                </option>
+
+                <option value="Rabbit">
+                    Rabbit
+                </option>
+
+                <option value="Bird">
+                    Bird
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="petDate">
+                Vaccination Date
+            </label>
+
+            <input
+                type="date"
+                id="petDate"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="ownerName">
+                Owner Name
+            </label>
+
+            <input
+                type="text"
+                id="ownerName"
+                placeholder="Enter owner name"
+                required>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="save-btn">
+
+            Save Details 🐾
+
+        </button>
+
+    </form>
+
+</section>
+
+
+
+<!-- =====================================================
+     UPCOMING VACCINATIONS
+===================================================== -->
+
+<section class="schedule">
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            💉 VACCINATION TRACKER
+        </div>
+
+        <h2>
+            Upcoming Vaccinations
+        </h2>
+
+        <p>
+            Stay updated with your pet's important
+            vaccination dates.
+        </p>
+
+    </div>
+
+
+    <div class="schedule-grid">
+
+
+        <!-- BUDDY -->
+
+        <article class="schedule-card">
+
+            <div class="schedule-image">
+
+                <img
+                    src="images/puppy6.jpg"
+                    alt="Buddy"
+                    onerror="this.src='/images/puppy1.jpg';">
+
+            </div>
+
+
+            <h3>
+                Buddy
+            </h3>
+
+            <p>
+                🐶 Golden Retriever
+            </p>
+
+            <p>
+                💉 Rabies Vaccine
+            </p>
+
+            <p>
+                📅 12 Aug 2026
+            </p>
+
+
+            <button
+                type="button"
+                onclick="markCompleted(this)">
+
+                Mark Completed
+
+            </button>
+
+        </article>
+
+
+
+        <!-- LUNA -->
+
+        <article class="schedule-card">
+
+            <div class="schedule-image">
+
+                <img
+                    src="images/puppy7.jpg"
+                    alt="Luna"
+                    onerror="this.src='/images/puppy2.jpg';">
+
+            </div>
+
+
+            <h3>
+                Luna
+            </h3>
+
+            <p>
+                🐶 German Shepherd
+            </p>
+
+            <p>
+                💉 FVRCP Vaccine
+            </p>
+
+            <p>
+                📅 21 Aug 2026
+            </p>
+
+
+            <button
+                type="button"
+                onclick="markCompleted(this)">
+
+                Mark Completed
+
+            </button>
+
+        </article>
+
+
+
+        <!-- SNOW -->
+
+        <article class="schedule-card">
+
+            <div class="schedule-image">
+
+                <img
+                    src="images/puppy8.jpg"
+                    alt="Snow"
+                    onerror="this.src='/images/puppy3.jpg';">
+
+            </div>
+
+
+            <h3>
+                Snow
+            </h3>
+
+            <p>
+                🐶 Beagle
+            </p>
+
+            <p>
+                💉 Booster Dose
+            </p>
+
+            <p>
+                📅 02 Sep 2026
+            </p>
+
+
+            <button
+                type="button"
+                onclick="markCompleted(this)">
+
+                Mark Completed
+
+            </button>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HEALTH TIPS
+===================================================== -->
+
+<section class="tips">
+
+    <div class="section-heading">
+
+        <div class="section-label">
+            PET WELLNESS
+        </div>
+
+        <h2>
+            Pet Health
+            <span>
+                Tips
+            </span>
+
+            ❤️
+
+        </h2>
+
+        <p>
+            Small daily habits can make a big difference
+            to your pet's health.
+        </p>
+
+    </div>
+
+
+    <div
+        id="healthTipsContainer"
+        class="tips-grid">
+
+        <div class="tips-loading">
+
+            Loading health tips... 🐾
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     HEALTH TIP MODAL
+     IMPORTANT:
+     This modal is completely hidden initially.
+===================================================== -->
+
+<div
+    id="healthTipModal"
+    style="
+        display:none;
+        position:fixed;
+        inset:0;
+        width:100vw;
+        height:100vh;
+        background:rgba(15,23,42,0.60);
+        z-index:999999;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+    ">
+
+
+    <div
+        id="healthTipModalBox"
+        style="
+            position:relative;
+            width:100%;
+            max-width:540px;
+            max-height:85vh;
+            overflow-y:auto;
+            background:#ffffff;
+            border-radius:24px;
+            padding:34px;
+            box-shadow:0 30px 80px rgba(15,23,42,0.30);
+            font-family:'Outfit',sans-serif;
+        ">
+
+
+        <!-- CLOSE -->
+
+        <button
+            type="button"
+            onclick="closeHealthTip()"
+            style="
+                position:absolute;
+                top:16px;
+                right:16px;
+                width:38px;
+                height:38px;
+                border:1px solid #e2e8f0;
+                border-radius:11px;
+                background:#ffffff;
+                color:#64748b;
+                font-size:18px;
+                cursor:pointer;
+            ">
+
+            ✕
+
+        </button>
+
+
+        <!-- ICON -->
+
+        <div
+            id="healthTipModalIcon"
+            style="
+                width:68px;
+                height:68px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#eef4ff;
+                border-radius:18px;
+                font-size:32px;
+                margin-bottom:20px;
+            ">
+
+            🐾
+
+        </div>
+
+
+        <!-- LABEL -->
+
+        <div
+            style="
+                color:#2563eb;
+                font-size:10px;
+                font-weight:800;
+                letter-spacing:1.3px;
+                margin-bottom:8px;
+            ">
+
+            PAWHUB PET WELLNESS
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h2
+            id="healthTipModalTitle"
+            style="
+                margin:0 0 15px 0;
+                color:#172554;
+                font-family:'Sora',sans-serif;
+                font-size:27px;
+                line-height:1.25;
+            ">
+
+            Health Tip
+
+        </h2>
+
+
+        <!-- DESCRIPTION -->
+
+        <div
+            id="healthTipModalDescription"
+            style="
+                color:#64748b;
+                font-size:15px;
+                line-height:1.8;
+                min-height:70px;
+            ">
+
+            Loading...
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:15px;
+                margin-top:25px;
+                padding-top:18px;
+                border-top:1px solid #e8eef8;
+                color:#2563eb;
+                font-size:11px;
+                font-weight:600;
+            ">
+
+            <span>
+                🐾 PAWHUB
+            </span>
+
+            <span style="color:#94a3b8;">
+                Keep your pet healthy &amp; happy
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+function toggleMenu() {
+
+    const panel =
+        document.getElementById("menuPanel");
+
+    const overlay =
+        document.getElementById("menuOverlay");
+
+    panel.classList.add("open");
+
+    overlay.classList.add("show");
+
+}
+
+
+function closeMenu() {
+
+    const panel =
+        document.getElementById("menuPanel");
+
+    const overlay =
+        document.getElementById("menuOverlay");
+
+    panel.classList.remove("open");
+
+    overlay.classList.remove("show");
+
+}
+
+
+function logoutFromMenu() {
+
+    localStorage.removeItem("loggedInUser");
+
+    window.location.href = "home.html";
+
+}
+
+
+
+/* =====================================================
+   QUICK PANELS
+===================================================== */
+
+function openWishlist() {
+
+    closeMenu();
+
+    const overlay =
+        document.getElementById(
+            "quickPanelOverlay"
+        );
+
+    const wishlist =
+        document.getElementById(
+            "wishlistPanel"
+        );
+
+    const cart =
+        document.getElementById(
+            "cartPanel"
+        );
+
+    cart.classList.remove("open");
+
+    wishlist.classList.add("open");
+
+    overlay.classList.add("show");
+
+    renderWishlist();
+
+}
+
+
+function openCart() {
+
+    closeMenu();
+
+    const overlay =
+        document.getElementById(
+            "quickPanelOverlay"
+        );
+
+    const wishlist =
+        document.getElementById(
+            "wishlistPanel"
+        );
+
+    const cart =
+        document.getElementById(
+            "cartPanel"
+        );
+
+    wishlist.classList.remove("open");
+
+    cart.classList.add("open");
+
+    overlay.classList.add("show");
+
+    renderCart();
+
+}
+
+
+function closeQuickPanel() {
+
+    const overlay =
+        document.getElementById(
+            "quickPanelOverlay"
+        );
+
+    const wishlist =
+        document.getElementById(
+            "wishlistPanel"
+        );
+
+    const cart =
+        document.getElementById(
+            "cartPanel"
+        );
+
+    overlay.classList.remove("show");
+
+    wishlist.classList.remove("open");
+
+    cart.classList.remove("open");
+
+}
+
+
+
+/* =====================================================
+   WISHLIST
+===================================================== */
+
+function getPetWishlist() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "pawhubPetWishlist"
+        )
+    ) || [];
+
+}
+
+
+function getProductWishlist() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "pawhubProductWishlist"
+        )
+    ) || [];
+
+}
+
+
+function showWishlistTab(
+    type,
+    button
+) {
+
+    document
+        .querySelectorAll(
+            ".wishlist-tab"
+        )
+        .forEach(function(tab) {
+
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(
+            ".wishlist-content"
+        )
+        .forEach(function(content) {
+
+            content.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    button.classList.add("active");
+
+
+    if (type === "pets") {
+
+        document
+            .getElementById(
+                "wishlistPets"
+            )
+            .classList.add("active");
+
+    }
+    else {
+
+        document
+            .getElementById(
+                "wishlistProducts"
+            )
+            .classList.add("active");
+
+    }
+
+}
+
+
+function renderWishlist() {
+
+    const pets =
+        getPetWishlist();
+
+    const products =
+        getProductWishlist();
+
+
+    const petList =
+        document.getElementById(
+            "wishlistPetList"
+        );
+
+    const productList =
+        document.getElementById(
+            "wishlistProductList"
+        );
+
+
+    if (!pets.length) {
+
+        petList.innerHTML = `
+            <div class="wishlist-empty">
+                <div style="font-size:38px;">
+                    🐾
+                </div>
+                <h4>
+                    No saved pets
+                </h4>
+                <p>
+                    Your favourite pets will appear here.
+                </p>
+            </div>
+        `;
+
+    }
+    else {
+
+        petList.innerHTML =
+            pets.map(function(pet) {
+
+                return `
+                    <div class="wishlist-item">
+
+                        <div>
+                            <strong>
+                                ${escapeHTML(
+                                    pet.name || "Pet"
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    pet.breed || pet.type || ""
+                                )}
+                            </span>
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    }
+
+
+    if (!products.length) {
+
+        productList.innerHTML = `
+            <div class="wishlist-empty">
+                <div style="font-size:38px;">
+                    🛍️
+                </div>
+                <h4>
+                    No saved products
+                </h4>
+                <p>
+                    Your favourite products will appear here.
+                </p>
+            </div>
+        `;
+
+    }
+    else {
+
+        productList.innerHTML =
+            products.map(function(product) {
+
+                return `
+                    <div class="wishlist-item">
+
+                        <div>
+                            <strong>
+                                ${escapeHTML(
+                                    product.name || "Product"
+                                )}
+                            </strong>
+
+                            <span>
+                                ₹${Number(
+                                    product.price || 0
+                                )}
+                            </span>
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function getCart() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "pawhubCart"
+        )
+    ) || [];
+
+}
+
+
+function updateCartCount() {
+
+    const cart =
+        getCart();
+
+    const count =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(
+                        item.quantity || 1
+                    );
+
+            },
+            0
+        );
+
+
+    const element =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    if (element) {
+
+        element.textContent =
+            count;
+
+    }
+
+}
+
+
+function renderCart() {
+
+    const cart =
+        getCart();
+
+    const container =
+        document.getElementById(
+            "quickCartContent"
+        );
+
+    const totalElement =
+        document.getElementById(
+            "cartTotal"
+        );
+
+
+    if (!cart.length) {
+
+        container.innerHTML = `
+            <div class="empty-cart">
+
+                <div class="empty-cart-icon">
+                    🛒
+                </div>
+
+                <h4>
+                    Your cart is empty
+                </h4>
+
+                <p>
+                    Add products from the marketplace.
+                </p>
+
+                <button
+                    type="button"
+                    class="shop-btn"
+                    onclick="window.location.href='marketplace.html'">
+
+                    Go to Marketplace
+
+                </button>
+
+            </div>
+        `;
+
+        totalElement.textContent =
+            "₹0";
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    container.innerHTML =
+        cart.map(function(item, index) {
+
+            const price =
+                Number(
+                    item.price || 0
+                );
+
+            const quantity =
+                Number(
+                    item.quantity || 1
+                );
+
+            total +=
+                price * quantity;
+
+
+            return `
+                <div class="cart-item">
+
+                    <div class="cart-item-info">
+
+                        <strong>
+                            ${escapeHTML(
+                                item.name || "Product"
+                            )}
+                        </strong>
+
+                        <span>
+                            ₹${price} × ${quantity}
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        onclick="removeCartItem(${index})">
+
+                        ✕
+
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    totalElement.textContent =
+        "₹" + total;
+
+}
+
+
+function removeCartItem(index) {
+
+    const cart =
+        getCart();
+
+    cart.splice(index, 1);
+
+    localStorage.setItem(
+        "pawhubCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+function goToCheckout() {
+
+    const cart =
+        getCart();
+
+    if (!cart.length) {
+
+        return;
+
+    }
+
+    window.location.href =
+        "checkout.html";
+
+}
+
+
+
+/* =====================================================
+   REGISTER PET
+===================================================== */
+
+function scrollToRegister() {
+
+    const section =
+        document.getElementById(
+            "registerSection"
+        );
+
+    section.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+document
+    .getElementById(
+        "petRegistrationForm"
+    )
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const petName =
+                document.getElementById(
+                    "petName"
+                ).value.trim();
+
+
+            const petType =
+                document.getElementById(
+                    "petType"
+                ).value;
+
+
+            const date =
+                document.getElementById(
+                    "petDate"
+                ).value;
+
+
+            const ownerName =
+                document.getElementById(
+                    "ownerName"
+                ).value.trim();
+
+
+            const vaccinationData = {
+
+                petName: petName,
+
+                petType: petType,
+
+                vaccinationDate: date,
+
+                ownerName: ownerName,
+
+                savedAt:
+                    new Date().toISOString()
+
+            };
+
+
+            localStorage.setItem(
+                "pawhubVaccinationPet",
+                JSON.stringify(
+                    vaccinationData
+                )
+            );
+
+
+            alert(
+                "Pet vaccination details saved successfully! 🐾"
+            );
+
+
+            this.reset();
+
+        }
+    );
+
+
+
+/* =====================================================
+   MARK VACCINATION COMPLETED
+===================================================== */
+
+function markCompleted(button) {
+
+    button.textContent =
+        "✓ Completed";
+
+    button.classList.add(
+        "completed"
+    );
+
+    button.disabled = true;
+
+}
+
+
+
+/* =====================================================
+   HEALTH TIPS
+===================================================== */
+
+async function loadHealthTips() {
+
+    const container =
+        document.getElementById(
+            "healthTipsContainer"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/health-tips"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load health tips"
+            );
+
+        }
+
+
+        const tips =
+            await response.json();
+
+
+        if (
+            !tips ||
+            tips.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="tips-loading">
+
+                    No health tips available 🐾
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            tips.map(function(tip) {
+
+                return `
+                    <article
+                        class="tip-card"
+                        onclick="openHealthTip(${tip.id})">
+
+                        <div class="tip-icon">
+
+                            ${escapeHTML(
+                                tip.icon || "🐾"
+                            )}
+
+                        </div>
+
+                        <h3>
+
+                            ${escapeHTML(
+                                tip.title ||
+                                "Health Tip"
+                            )}
+
+                        </h3>
+
+                        <p>
+
+                            ${escapeHTML(
+                                tip.description ||
+                                ""
+                            )}
+
+                        </p>
+
+                        <div class="tip-read-more">
+
+                            View Details →
+
+                        </div>
+
+                    </article>
+                `;
+
+            }).join("");
+
+
+    }
+    catch(error) {
+
+        console.error(
+            "Health tips error:",
+            error
+        );
+
+
+        container.innerHTML = `
+            <div class="tips-loading">
+
+                Unable to load health tips 😢
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   OPEN HEALTH TIP
+===================================================== */
+
+async function openHealthTip(id) {
+
+    const modal =
+        document.getElementById(
+            "healthTipModal"
+        );
+
+    const icon =
+        document.getElementById(
+            "healthTipModalIcon"
+        );
+
+    const title =
+        document.getElementById(
+            "healthTipModalTitle"
+        );
+
+    const description =
+        document.getElementById(
+            "healthTipModalDescription"
+        );
+
+
+    /*
+       DIRECT INLINE STYLE
+       This avoids the CSS problem that was
+       causing the modal to appear at the
+       bottom of the page.
+    */
+
+    modal.style.display =
+        "flex";
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    icon.textContent =
+        "🐾";
+
+    title.textContent =
+        "Loading...";
+
+    description.textContent =
+        "Loading health information...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/health-tips/" + id
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load health tip"
+            );
+
+        }
+
+
+        const tip =
+            await response.json();
+
+
+        icon.textContent =
+            tip.icon || "🐾";
+
+
+        title.textContent =
+            tip.title || "Health Tip";
+
+
+        description.textContent =
+            tip.description ||
+            "No additional information available.";
+
+    }
+    catch(error) {
+
+        console.error(
+            "Health tip details error:",
+            error
+        );
+
+
+        title.textContent =
+            "Unable to load information";
+
+
+        description.textContent =
+            "Please try again later.";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CLOSE HEALTH TIP
+===================================================== */
+
+function closeHealthTip() {
+
+    const modal =
+        document.getElementById(
+            "healthTipModal"
+        );
+
+
+    modal.style.display =
+        "none";
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+
+/* =====================================================
+   MODAL BACKDROP CLICK
+===================================================== */
+
+document
+    .getElementById(
+        "healthTipModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeHealthTip();
+
+            }
+
+        }
+    );
+
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeHealthTip();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        updateCartCount();
+
+        loadHealthTips();
+
+    }
+);
+
+</script>
+
+
+    <script src="style/pawhub-global.js"></script>
+</body>
+
+</html>

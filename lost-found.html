@@ -1,0 +1,1581 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PAWHUB | Lost & Found</title>
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap">
+
+    <link rel="stylesheet" href="style/lost-found.css">
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link active">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+<!-- ================= NAVBAR ================= -->
+
+
+
+
+<!-- ================= SIDE MENU ================= -->
+
+<div class="menu-overlay"
+     id="menuOverlay"
+     onclick="closeMenu()">
+</div>
+
+
+<aside class="menu-panel" id="menuPanel">
+
+    <div class="menu-header">
+
+        <div>
+            <span>PAWHUB</span>
+            <h3>Pet Care Menu</h3>
+        </div>
+
+        <button class="menu-close"
+                onclick="closeMenu()">
+            ✕
+        </button>
+
+    </div>
+
+
+    <div class="menu-links">
+
+        <a href="home.html">🏠 Home</a>
+
+        <a href="dashboard.html">📊 Dashboard</a>
+
+        <a href="adoption.html">🐾 Adoption</a>
+
+        <a href="marketplace.html">🛒 Marketplace</a>
+
+        <a href="lost-found.html" class="active">
+            🔍 Lost &amp; Found
+        </a>
+
+        <a href="pet-services.html">🩺 Pet Services</a>
+
+        <a href="vaccination.html">💉 Vaccination</a>
+
+        <a href="community.html">👥 Community</a>
+
+        <a href="my-pets.html">❤️ My Pets</a>
+
+        <a href="my-bookings.html">📅 My Bookings</a>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= QUICK PANEL OVERLAY ================= -->
+
+<div class="quick-panel-overlay"
+     id="quickPanelOverlay"
+     onclick="closeQuickPanel()">
+</div>
+
+
+<!-- ================= WISHLIST ================= -->
+
+<aside class="quick-panel"
+       id="wishlistPanel">
+
+    <button class="quick-close"
+            onclick="closeQuickPanel()">
+        ✕
+    </button>
+
+    <h3>❤️ Wishlist</h3>
+
+    <p>
+        Your saved pets and products will appear here.
+    </p>
+
+    <button class="quick-action"
+            onclick="window.location.href='marketplace.html'">
+        Go to Marketplace
+    </button>
+
+</aside>
+
+
+<!-- ================= CART ================= -->
+
+<aside class="quick-panel"
+       id="cartPanel">
+
+    <button class="quick-close"
+            onclick="closeQuickPanel()">
+        ✕
+    </button>
+
+    <h3>🛒 Cart</h3>
+
+    <div id="quickCartContent"></div>
+
+    <button class="quick-action"
+            onclick="window.location.href='checkout.html'">
+        Go to Checkout
+    </button>
+
+</aside>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-decoration paw-one">🐾</div>
+    <div class="hero-decoration paw-two">🐾</div>
+
+    <div class="hero-content">
+
+        <div class="hero-text">
+
+            <span class="hero-label">
+                🐾 PAWHUB COMMUNITY
+            </span>
+
+            <h1>
+                Lost &amp; Found
+                <span>Pets</span>
+                <b>🐾</b>
+            </h1>
+
+            <p>
+                Help reunite lost pets with their loving
+                families. Every report and every share
+                can make a difference.
+            </p>
+
+            <div class="hero-actions">
+
+                <button class="primary-btn"
+                        onclick="reportLostPet()">
+                    🐾 Report a Pet
+                </button>
+
+                <button class="secondary-btn"
+                        onclick="scrollToReports()">
+                    View Reports ↓
+                </button>
+
+            </div>
+
+
+            <div class="hero-mini-stats">
+
+                <div>
+                    <strong>🐕</strong>
+                    <span>Lost Pets</span>
+                </div>
+
+                <div>
+                    <strong>🤝</strong>
+                    <span>Community Help</span>
+                </div>
+
+                <div>
+                    <strong>🏠</strong>
+                    <span>Safe Reunions</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-image-wrapper">
+
+            <div class="hero-circle">
+
+                <span class="floating-paw paw-a">🐾</span>
+                <span class="floating-paw paw-b">🐾</span>
+
+                <img src="images/lost found1.jpg"
+                     alt="Lost and Found Pets"
+                     onerror="this.src='/images/home1.png'">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REPORT FORM ================= -->
+
+<section class="report-section"
+         id="reportForm">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            🐾 HELP A PET
+        </span>
+
+        <h2>
+            Report a Lost / Found Pet
+            <span>❤️</span>
+        </h2>
+
+        <p>
+            Share the details below so our community
+            can help.
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <div class="form-card-top">
+
+            <div class="form-icon">
+                📝
+            </div>
+
+            <div>
+                <h3>Pet Report</h3>
+
+                <p>
+                    Tell us about the pet and where it was
+                    lost or found.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="lostFoundForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="petName">
+                        Pet Name <span>*</span>
+                    </label>
+
+                    <input type="text"
+                           id="petName"
+                           placeholder="Enter pet name"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="petType">
+                        Pet Type <span>*</span>
+                    </label>
+
+                    <select id="petType" required>
+
+                        <option value="">
+                            Select pet type
+                        </option>
+
+                        <option value="Dog">🐶 Dog</option>
+                        <option value="Cat">🐱 Cat</option>
+                        <option value="Rabbit">🐰 Rabbit</option>
+                        <option value="Bird">🐦 Bird</option>
+                        <option value="Other">🐾 Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="breed">
+                        Breed <span>*</span>
+                    </label>
+
+                    <input type="text"
+                           id="breed"
+                           placeholder="Example: Labrador"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="location">
+                        Location <span>*</span>
+                    </label>
+
+                    <input type="text"
+                           id="location"
+                           placeholder="Where was the pet lost/found?"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Report Status <span>*</span>
+                    </label>
+
+                    <select id="status" required>
+
+                        <option value="">
+                            Select status
+                        </option>
+
+                        <option value="Missing">
+                            🔴 Missing
+                        </option>
+
+                        <option value="Found">
+                            🟢 Found
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="image">
+                        Pet Image
+                    </label>
+
+                    <input type="text"
+                           id="image"
+                           placeholder="Example: dog1.jpg">
+
+                </div>
+
+
+                <div class="form-group full-width">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea id="description"
+                              rows="5"
+                              placeholder="Describe the pet, identifying marks, collar details, where you saw the pet, etc."></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-note">
+
+                <span>💡</span>
+
+                <p>
+                    A clear photo and accurate location can
+                    greatly improve the chances of finding the pet.
+                </p>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button type="button"
+                        class="cancel-btn"
+                        onclick="closeReportForm()">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="submit-btn">
+                    Submit Report 🐾
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REPORTS ================= -->
+
+<section class="reports-section"
+         id="reports">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            🐾 COMMUNITY REPORTS
+        </span>
+
+        <h2>
+            Recently Reported Pets ❤️
+        </h2>
+
+        <p>
+            Help these pets find their way home.
+        </p>
+
+    </div>
+
+
+    <div class="report-grid"
+         id="reportGrid">
+
+        <div class="loading-card">
+
+            <div class="loading-paw">
+                🐾
+            </div>
+
+            <p>
+                Loading reports...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW TO HELP ================= -->
+
+<section class="help-section">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            🐾 TOGETHER WE CAN HELP
+        </span>
+
+        <h2>
+            How You Can Help ❤️
+        </h2>
+
+        <p>
+            Small actions can make a big difference
+            for a lost pet and its family.
+        </p>
+
+    </div>
+
+
+    <div class="help-grid">
+
+        <div class="help-card">
+
+            <div class="help-icon blue">
+                📝
+            </div>
+
+            <div>
+                <h3>Report</h3>
+                <p>
+                    Submit details of a lost or found pet.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="help-card">
+
+            <div class="help-icon yellow">
+                📷
+            </div>
+
+            <div>
+                <h3>Share a Photo</h3>
+                <p>
+                    Add a clear image to make identification easier.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="help-card">
+
+            <div class="help-icon pink">
+                📢
+            </div>
+
+            <div>
+                <h3>Spread the Word</h3>
+                <p>
+                    Share reports with friends and your community.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="help-card">
+
+            <div class="help-icon green">
+                🏠
+            </div>
+
+            <div>
+                <h3>Reunite</h3>
+                <p>
+                    Help pets safely return to their families.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ================= DETAILS MODAL ================= -->
+
+<div class="details-modal"
+     id="detailsModal">
+
+    <div class="modal-card">
+
+        <button class="modal-close"
+                onclick="closeDetails()">
+            ×
+        </button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/* ================= MENU ================= */
+
+function toggleMenu() {
+
+    document
+        .getElementById("menuPanel")
+        .classList.add("open");
+
+    document
+        .getElementById("menuOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeMenu() {
+
+    document
+        .getElementById("menuPanel")
+        .classList.remove("open");
+
+    document
+        .getElementById("menuOverlay")
+        .classList.remove("show");
+
+}
+
+
+/* ================= WISHLIST ================= */
+
+function openWishlist() {
+
+    closeMenu();
+
+    document
+        .getElementById("wishlistPanel")
+        .classList.add("open");
+
+    document
+        .getElementById("quickPanelOverlay")
+        .classList.add("show");
+
+}
+
+
+/* ================= CART ================= */
+
+function openCart() {
+
+    closeMenu();
+
+    renderQuickCart();
+
+    document
+        .getElementById("cartPanel")
+        .classList.add("open");
+
+    document
+        .getElementById("quickPanelOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeQuickPanel() {
+
+    document
+        .getElementById("wishlistPanel")
+        .classList.remove("open");
+
+    document
+        .getElementById("cartPanel")
+        .classList.remove("open");
+
+    document
+        .getElementById("quickPanelOverlay")
+        .classList.remove("show");
+
+}
+
+
+/* ================= CART CONTENT ================= */
+
+function renderQuickCart() {
+
+    const box =
+        document.getElementById("quickCartContent");
+
+    let cart = [];
+
+    try {
+
+        cart = JSON.parse(
+            localStorage.getItem("pawhubCart") || "[]"
+        );
+
+    } catch (error) {
+
+        cart = [];
+
+    }
+
+
+    if (!cart.length) {
+
+        box.innerHTML = `
+            <div class="quick-empty">
+
+                <div>🛒</div>
+
+                <p>
+                    Your cart is empty.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    box.innerHTML = cart.map(item => {
+
+        const quantity =
+            Number(item.quantity || 1);
+
+        const price =
+            Number(item.price || 0);
+
+        total += price * quantity;
+
+
+        return `
+
+            <div class="quick-cart-item">
+
+                <div>
+
+                    <strong>
+                        ${escapeHTML(
+                            item.name || "Product"
+                        )}
+                    </strong>
+
+                    <small>
+                        ₹${price} × ${quantity}
+                    </small>
+
+                </div>
+
+                <b>
+                    ₹${price * quantity}
+                </b>
+
+            </div>
+
+        `;
+
+    }).join("");
+
+
+    box.innerHTML += `
+
+        <div class="quick-cart-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong>
+                ₹${total}
+            </strong>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ================= REPORT FORM ================= */
+
+function reportLostPet() {
+
+    const section =
+        document.getElementById("reportForm");
+
+    section.classList.add("show");
+
+
+    setTimeout(() => {
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 100);
+
+}
+
+
+function closeReportForm() {
+
+    document
+        .getElementById("reportForm")
+        .classList.remove("show");
+
+}
+
+
+function scrollToReports() {
+
+    document
+        .getElementById("reports")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* ================= IMAGE ================= */
+
+function getImagePath(image) {
+
+    if (!image || image.trim() === "") {
+        return "/images/puppy1.jpg";
+    }
+
+    image = image.trim();
+
+    if (
+        image.startsWith("http://") ||
+        image.startsWith("https://") ||
+        image.startsWith("/")
+    ) {
+        return image;
+    }
+
+    return "/images/" + image;
+}
+/* ================= SUBMIT REPORT ================= */
+
+document
+    .getElementById("lostFoundForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        const report = {
+
+            petName:
+                document
+                    .getElementById("petName")
+                    .value
+                    .trim(),
+
+            petType:
+                document
+                    .getElementById("petType")
+                    .value,
+
+            breed:
+                document
+                    .getElementById("breed")
+                    .value
+                    .trim(),
+
+            location:
+                document
+                    .getElementById("location")
+                    .value
+                    .trim(),
+
+            status:
+                document
+                    .getElementById("status")
+                    .value,
+
+            description:
+                document
+                    .getElementById("description")
+                    .value
+                    .trim(),
+
+            image:
+                document
+                    .getElementById("image")
+                    .value
+                    .trim()
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/lost-found",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(report)
+
+                    }
+                );
+
+
+            if (response.ok) {
+
+                alert(
+                    "Report submitted successfully! 🐾"
+                );
+
+
+                document
+                    .getElementById("lostFoundForm")
+                    .reset();
+
+
+                closeReportForm();
+
+                loadReports();
+
+            } else {
+
+                alert(
+                    "Failed to submit report. Please try again."
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Cannot connect to Spring Boot server."
+            );
+
+        }
+
+    });
+
+
+/* ================= LOAD REPORTS ================= */
+
+async function loadReports() {
+
+    const grid =
+        document.getElementById("reportGrid");
+
+
+    try {
+
+        const response =
+            await fetch("/api/lost-found");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load reports"
+            );
+
+        }
+
+
+        const reports =
+            await response.json();
+
+
+        grid.innerHTML = "";
+
+
+        if (!reports || reports.length === 0) {
+
+            grid.innerHTML = `
+
+                <div class="empty-reports">
+
+                    <div class="empty-icon">
+                        🐾
+                    </div>
+
+                    <h3>
+                        No reports yet
+                    </h3>
+
+                    <p>
+                        Be the first person to report
+                        a lost or found pet.
+                    </p>
+
+                    <button
+                        onclick="reportLostPet()">
+
+                        Report a Pet
+
+                    </button>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        reports.forEach(report => {
+
+            const card =
+                document.createElement("article");
+
+
+            card.className =
+                "report-card";
+
+
+            const image =
+                getImagePath(report.image);
+
+
+            const statusClass =
+                report.status === "Found"
+                    ? "found"
+                    : "missing";
+
+
+            const statusText =
+                report.status === "Found"
+                    ? "🟢 Found"
+                    : "🔴 Missing";
+
+
+            card.innerHTML = `
+
+                <div class="report-image">
+
+                    <img
+                        src="${image}"
+                        alt="${escapeHTML(
+                            report.petName || "Pet"
+                        )}"
+                        onerror="this.src='/images/logo.png'">
+
+                    <span class="status-badge ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                </div>
+
+
+                <div class="report-content">
+
+                    <h3>
+                        ${escapeHTML(
+                            report.petName ||
+                            "Unnamed Pet"
+                        )}
+                    </h3>
+
+
+                    <div class="report-detail">
+
+                        <span>🐾</span>
+
+                        <p>
+
+                            <strong>Type</strong>
+
+                            ${escapeHTML(
+                                report.petType ||
+                                "Not specified"
+                            )}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="report-detail">
+
+                        <span>🧬</span>
+
+                        <p>
+
+                            <strong>Breed</strong>
+
+                            ${escapeHTML(
+                                report.breed ||
+                                "Not specified"
+                            )}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="report-detail">
+
+                        <span>📍</span>
+
+                        <p>
+
+                            <strong>Location</strong>
+
+                            ${escapeHTML(
+                                report.location ||
+                                "Not specified"
+                            )}
+
+                        </p>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        ${escapeHTML(
+                            report.description ||
+                            "No description available."
+                        )}
+
+                    </p>
+
+
+                    <button
+                        class="details-btn"
+                        onclick='viewDetails(${JSON.stringify(report)})'>
+
+                        View Details
+
+                        <span>→</span>
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        grid.innerHTML = `
+
+            <div class="empty-reports error">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Unable to load reports
+                </h3>
+
+                <p>
+                    Please make sure the Spring Boot
+                    server is running.
+                </p>
+
+                <button onclick="loadReports()">
+                    Try Again
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ================= DETAILS ================= */
+
+function viewDetails(report) {
+
+    const modal =
+        document.getElementById("detailsModal");
+
+    const content =
+        document.getElementById("modalContent");
+
+
+    const image =
+        getImagePath(report.image);
+
+
+    const statusClass =
+        report.status === "Found"
+            ? "found"
+            : "missing";
+
+
+    content.innerHTML = `
+
+        <div class="modal-image">
+
+            <img
+                src="${image}"
+                alt="${escapeHTML(
+                    report.petName || "Pet"
+                )}"
+                onerror="this.src='/images/logo.png'">
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <span class="status-badge ${statusClass}">
+
+                ${
+                    report.status === "Found"
+                        ? "🟢 Found"
+                        : "🔴 Missing"
+                }
+
+            </span>
+
+
+            <h2>
+                ${escapeHTML(
+                    report.petName ||
+                    "Unnamed Pet"
+                )}
+            </h2>
+
+
+            <div class="modal-info">
+
+                <p>
+
+                    <strong>
+                        🐾 Pet Type
+                    </strong>
+
+                    ${escapeHTML(
+                        report.petType ||
+                        "Not specified"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        🧬 Breed
+                    </strong>
+
+                    ${escapeHTML(
+                        report.breed ||
+                        "Not specified"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        📍 Location
+                    </strong>
+
+                    ${escapeHTML(
+                        report.location ||
+                        "Not specified"
+                    )}
+
+                </p>
+
+            </div>
+
+
+            <div class="modal-description">
+
+                <strong>
+                    About this report
+                </strong>
+
+                <p>
+
+                    ${escapeHTML(
+                        report.description ||
+                        "No additional description available."
+                    )}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    modal.classList.add("show");
+
+}
+
+
+function closeDetails() {
+
+    document
+        .getElementById("detailsModal")
+        .classList.remove("show");
+
+}
+
+
+document
+    .getElementById("detailsModal")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+
+            closeDetails();
+
+        }
+
+    });
+
+
+/* ================= ESCAPE HTML ================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ================= INITIAL LOAD ================= */
+
+loadReports();
+
+</script>
+
+    <script src="style/pawhub-global.js"></script>
+</body>
+
+</html>

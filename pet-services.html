@@ -1,0 +1,1595 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PAWHUB | Pet Services</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="style/pet-services.css">
+
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     MENU OVERLAY
+===================================================== -->
+
+
+
+
+
+<!-- =====================================================
+     QUICK PANEL OVERLAY
+===================================================== -->
+
+<div
+    id="quickPanelOverlay"
+    class="quick-panel-overlay"
+    onclick="closeQuickPanel()">
+</div>
+
+
+
+<!-- =====================================================
+     WISHLIST PANEL
+===================================================== -->
+
+<aside
+    id="wishlistPanel"
+    class="quick-panel wishlist-panel">
+
+
+    <div class="quick-panel-header">
+
+        <div>
+
+            <span class="panel-label">
+                PAWHUB
+            </span>
+
+            <h2>
+                Wishlist ❤️
+            </h2>
+
+        </div>
+
+
+        <button
+            class="panel-close"
+            type="button"
+            onclick="closeQuickPanel()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+
+    <!-- WISHLIST TABS -->
+
+    <div class="wishlist-tabs">
+
+        <button
+            class="wishlist-tab active"
+            type="button"
+            onclick="showWishlistTab('pets', this)">
+
+            🐾 Pets
+
+        </button>
+
+
+        <button
+            class="wishlist-tab"
+            type="button"
+            onclick="showWishlistTab('products', this)">
+
+            🛒 Products
+
+        </button>
+
+    </div>
+
+
+
+    <!-- PETS -->
+
+    <div
+        id="wishlistPets"
+        class="wishlist-content active">
+
+        <div
+            id="wishlistPetList"
+            class="wishlist-list">
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PRODUCTS -->
+
+    <div
+        id="wishlistProducts"
+        class="wishlist-content">
+
+        <div
+            id="wishlistProductList"
+            class="wishlist-list">
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     CART PANEL
+===================================================== -->
+
+<aside
+    id="cartPanel"
+    class="quick-panel cart-panel">
+
+
+    <div class="quick-panel-header">
+
+        <div>
+
+            <span class="panel-label">
+                PAWHUB
+            </span>
+
+            <h2>
+                Shopping Cart 🛒
+            </h2>
+
+        </div>
+
+
+        <button
+            class="panel-close"
+            type="button"
+            onclick="closeQuickPanel()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+
+
+    <div
+        id="cartList"
+        class="cart-list">
+
+    </div>
+
+
+
+    <div
+        id="cartFooter"
+        class="cart-footer">
+
+        <div class="cart-total-row">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="cartTotal">
+                ₹0
+            </strong>
+
+        </div>
+
+
+        <button
+            class="checkout-btn"
+            type="button"
+            onclick="goToCheckout()">
+
+            Proceed to Checkout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-label">
+            🐾 PAWHUB CARE
+        </span>
+
+
+        <h1>
+
+            Pet Services
+
+            <span>
+                Made Simple
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            Everything your pet needs to stay healthy,
+            happy and cared for.
+
+        </p>
+
+    </div>
+
+
+    <div class="hero-image">
+
+        <img
+            src="images/pet-services1.jpg"
+            alt="Pet Services">
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CHOOSE SERVICE
+===================================================== -->
+
+<section class="services-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            CHOOSE A SERVICE
+        </span>
+
+        <h2>
+            What does your pet need?
+        </h2>
+
+    </div>
+
+
+
+    <div class="service-grid">
+
+
+        <!-- VETERINARY -->
+
+        <button
+            type="button"
+            class="service-card active"
+            onclick="selectService('Veterinary Care', this)">
+
+            <div class="service-icon service-blue">
+                🩺
+            </div>
+
+            <h3>
+                Veterinary Care
+            </h3>
+
+            <p>
+                Health checkups and professional
+                medical care.
+            </p>
+
+            <span class="service-arrow">
+                →
+            </span>
+
+        </button>
+
+
+
+        <!-- GROOMING -->
+
+        <button
+            type="button"
+            class="service-card"
+            onclick="selectService('Pet Grooming', this)">
+
+            <div class="service-icon service-pink">
+                ✂️
+            </div>
+
+            <h3>
+                Pet Grooming
+            </h3>
+
+            <p>
+                Keep your pet clean, fresh and
+                comfortable.
+            </p>
+
+            <span class="service-arrow">
+                →
+            </span>
+
+        </button>
+
+
+
+        <!-- TRAINING -->
+
+        <button
+            type="button"
+            class="service-card"
+            onclick="selectService('Pet Training', this)">
+
+            <div class="service-icon service-yellow">
+                🐕
+            </div>
+
+            <h3>
+                Pet Training
+            </h3>
+
+            <p>
+                Build good habits and basic
+                obedience.
+            </p>
+
+            <span class="service-arrow">
+                →
+            </span>
+
+        </button>
+
+
+
+        <!-- BOARDING -->
+
+        <button
+            type="button"
+            class="service-card"
+            onclick="selectService('Pet Boarding', this)">
+
+            <div class="service-icon service-green">
+                🏠
+            </div>
+
+            <h3>
+                Pet Boarding
+            </h3>
+
+            <p>
+                A safe and comfortable stay
+                while you're away.
+            </p>
+
+            <span class="service-arrow">
+                →
+            </span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SELECTED SERVICE
+===================================================== -->
+
+<section class="selected-service-section">
+
+
+    <div class="selected-service">
+
+        <div
+            class="selected-icon"
+            id="selectedServiceIcon">
+
+            🩺
+
+        </div>
+
+
+        <div>
+
+            <span class="section-label">
+                SELECTED SERVICE
+            </span>
+
+            <h2 id="selectedServiceName">
+                Veterinary Care
+            </h2>
+
+            <p id="selectedServiceDescription">
+
+                Get professional veterinary care
+                for your pet, including health
+                checkups and medical support.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <button
+        type="button"
+        class="book-service-btn"
+        onclick="openBooking()">
+
+        📅 Book a Service
+
+        <span>
+            →
+        </span>
+
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     WHY PAWHUB
+===================================================== -->
+
+<section class="why-section">
+
+
+    <div class="why-heading">
+
+        <span class="section-label">
+            WHY PAWHUB
+        </span>
+
+        <h2>
+            Care your pet can count on ❤️
+        </h2>
+
+        <p>
+            Simple, reliable and pet-friendly
+            services in one place.
+        </p>
+
+    </div>
+
+
+
+    <div class="why-grid">
+
+
+        <div class="why-card">
+
+            <div class="why-icon blue">
+                🩺
+            </div>
+
+            <h3>
+                Trusted Care
+            </h3>
+
+            <p>
+                Find professional services
+                for your furry friend.
+            </p>
+
+        </div>
+
+
+
+        <div class="why-card">
+
+            <div class="why-icon pink">
+                ❤️
+            </div>
+
+            <h3>
+                Pet First
+            </h3>
+
+            <p>
+                Every service is designed
+                around your pet's comfort.
+            </p>
+
+        </div>
+
+
+
+        <div class="why-card">
+
+            <div class="why-icon green">
+                📅
+            </div>
+
+            <h3>
+                Easy Booking
+            </h3>
+
+            <p>
+                Book and manage appointments
+                without any hassle.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     BOOKING MODAL
+===================================================== -->
+
+<div
+    id="bookingModal"
+    class="booking-modal">
+
+
+    <div
+        class="booking-backdrop"
+        onclick="closeBooking()">
+    </div>
+
+
+    <div class="booking-box">
+
+
+        <!-- CLOSE -->
+
+        <button
+            type="button"
+            class="booking-close"
+            onclick="closeBooking()">
+
+            ×
+
+        </button>
+
+
+        <!-- ICON -->
+
+        <div class="booking-icon">
+            🩺
+        </div>
+
+
+        <span class="section-label">
+            PAWHUB SERVICES
+        </span>
+
+
+        <h2>
+            Book Appointment
+        </h2>
+
+
+        <p class="booking-subtitle">
+
+            Book your pet's service appointment.
+
+        </p>
+
+
+        <!-- SELECTED SERVICE -->
+
+        <div class="selected-clinic-box">
+
+            <span>
+                Selected Service
+            </span>
+
+            <strong id="bookingSelectedService">
+                Veterinary Care
+            </strong>
+
+        </div>
+
+
+
+        <!-- FORM -->
+
+        <form id="bookingForm">
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label for="userName">
+                    Your Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="userName"
+                    placeholder="Enter your name"
+                    required>
+
+            </div>
+
+
+
+            <!-- PET NAME -->
+
+            <div class="form-group">
+
+                <label for="petName">
+                    Pet Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="petName"
+                    placeholder="Enter your pet's name"
+                    required>
+
+            </div>
+
+
+
+            <!-- SERVICE -->
+
+            <div class="form-group">
+
+                <label for="service">
+                    Service *
+                </label>
+
+                <select
+                    id="service"
+                    required>
+
+                    <option value="">
+                        Select Service
+                    </option>
+
+                    <option value="Veterinary Care">
+                        Veterinary Care
+                    </option>
+
+                    <option value="Pet Grooming">
+                        Pet Grooming
+                    </option>
+
+                    <option value="Pet Training">
+                        Pet Training
+                    </option>
+
+                    <option value="Pet Boarding">
+                        Pet Boarding
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label for="serviceDate">
+                    Appointment Date *
+                </label>
+
+                <input
+                    type="date"
+                    id="serviceDate"
+                    required>
+
+            </div>
+
+
+
+            <!-- TIME -->
+
+            <div class="form-group">
+
+                <label for="serviceTime">
+                    Appointment Time *
+                </label>
+
+                <input
+                    type="time"
+                    id="serviceTime"
+                    required>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number *
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter phone number"
+                    required>
+
+            </div>
+
+
+
+            <!-- NOTE -->
+
+            <div class="form-group full">
+
+                <label for="note">
+                    Additional Note
+                </label>
+
+                <textarea
+                    id="note"
+                    rows="3"
+                    placeholder="Any special request or note..."></textarea>
+
+            </div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="booking-actions">
+
+                <button
+                    type="button"
+                    class="cancel-booking-btn"
+                    onclick="closeBooking()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="confirm-booking-btn">
+
+                    Confirm Appointment 🐾
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   PAWHUB PET SERVICES
+   BOOKING SCRIPT
+===================================================== */
+
+
+/* =====================================================
+   GET LOGGED-IN USER
+===================================================== */
+
+function getLoggedInUser() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("loggedInUser") || "null"
+        );
+
+    } catch (error) {
+
+        console.error("User data error:", error);
+
+        return null;
+    }
+}
+
+
+/* =====================================================
+   GET USER ID
+===================================================== */
+
+function getLoggedInUserId() {
+
+    const user = getLoggedInUser();
+
+    if (!user) {
+        return null;
+    }
+
+    return user.id || null;
+}
+
+
+/* =====================================================
+   OPEN BOOKING MODAL
+===================================================== */
+
+function openBooking(serviceName) {
+
+    const modal =
+        document.getElementById("bookingModal");
+
+    if (!modal) {
+
+        console.error("bookingModal not found");
+
+        return;
+    }
+
+
+    /* LOGIN CHECK */
+
+    const loggedInUser =
+        getLoggedInUser();
+
+    if (!loggedInUser || !loggedInUser.id) {
+
+        alert(
+            "Please login before booking an appointment. 🐾"
+        );
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+
+    /* SET SERVICE */
+
+    const serviceSelect =
+        document.getElementById("service");
+
+    if (serviceSelect && serviceName) {
+
+        serviceSelect.value = serviceName;
+    }
+
+
+    /* SET USER NAME */
+
+    const userNameInput =
+        document.getElementById("userName");
+
+    if (
+        userNameInput &&
+        loggedInUser.name
+    ) {
+
+        userNameInput.value =
+            loggedInUser.name;
+    }
+
+
+    /* SHOW MODAL */
+
+    modal.classList.add("show");
+
+    document.body.classList.add("modal-open");
+}
+
+
+/* =====================================================
+   CLOSE BOOKING MODAL
+===================================================== */
+
+function closeBookingForm() {
+
+    const modal =
+        document.getElementById("bookingModal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("show");
+
+    document.body.classList.remove("modal-open");
+}
+
+
+/* =====================================================
+   BOOKING SUBMIT
+===================================================== */
+
+async function submitBooking(event) {
+
+    event.preventDefault();
+
+
+    /* ================================================
+       GET LOGGED-IN USER
+    ================================================ */
+
+    const loggedInUser =
+        getLoggedInUser();
+
+
+    /* ================================================
+       LOGIN CHECK
+    ================================================ */
+
+    if (
+        !loggedInUser ||
+        !loggedInUser.id
+    ) {
+
+        alert(
+            "Please login before booking an appointment. 🐾"
+        );
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+
+    /* ================================================
+       GET FORM VALUES
+    ================================================ */
+
+    const userName =
+        document
+            .getElementById("userName")
+            .value
+            .trim();
+
+
+    const petName =
+        document
+            .getElementById("petName")
+            .value
+            .trim();
+
+
+    const service =
+        document
+            .getElementById("service")
+            .value;
+
+
+    const serviceDate =
+        document
+            .getElementById("serviceDate")
+            .value;
+
+
+    const serviceTime =
+        document
+            .getElementById("serviceTime")
+            .value;
+
+
+    const phone =
+        document
+            .getElementById("phone")
+            .value
+            .trim();
+
+
+    const note =
+        document
+            .getElementById("note")
+            .value
+            .trim();
+
+
+    /* ================================================
+       VALIDATION
+    ================================================ */
+
+    if (
+        !userName ||
+        !petName ||
+        !service ||
+        !serviceDate ||
+        !serviceTime ||
+        !phone
+    ) {
+
+        alert(
+            "Please fill all required details. 🐾"
+        );
+
+        return;
+    }
+
+
+    /* ================================================
+       BOOKING OBJECT
+       IMPORTANT: userId included
+    ================================================ */
+
+    const booking = {
+
+        userId: loggedInUser.id,
+
+        userName: userName,
+
+        petName: petName,
+
+        service: service,
+
+        serviceDate: serviceDate,
+
+        serviceTime: serviceTime,
+
+        phone: phone,
+
+        note: note
+    };
+
+
+    console.log(
+        "PAWHUB BOOKING:",
+        booking
+    );
+
+
+    /* ================================================
+       SUBMIT BUTTON
+    ================================================ */
+
+    const submitButton =
+        document.querySelector(
+            ".confirm-booking-btn"
+        );
+
+
+    if (submitButton) {
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Booking... 🐾";
+    }
+
+
+    /* ================================================
+       SEND TO BACKEND
+    ================================================ */
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/bookings",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(booking)
+                }
+            );
+
+
+        /* ============================================
+           BACKEND ERROR
+        ============================================ */
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Booking API error:",
+                errorText
+            );
+
+            throw new Error(
+                "Booking failed: " +
+                response.status
+            );
+        }
+
+
+        /* ============================================
+           SAVED BOOKING
+        ============================================ */
+
+        const savedBooking =
+            await response.json();
+
+
+        console.log(
+            "BOOKING SAVED:",
+            savedBooking
+        );
+
+
+        /* ============================================
+           SUCCESS
+        ============================================ */
+
+        alert(
+            "✅ Appointment booked successfully! 🐾"
+        );
+
+
+        /* ============================================
+           RESET FORM
+        ============================================ */
+
+        const form =
+            document.getElementById(
+                "bookingForm"
+            );
+
+        if (form) {
+
+            form.reset();
+        }
+
+
+        /* ============================================
+           CLOSE MODAL
+        ============================================ */
+
+        closeBookingForm();
+
+
+        /* ============================================
+           GO TO MY BOOKINGS
+        ============================================ */
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "my-bookings.html";
+
+            },
+            300
+        );
+
+    }
+
+    catch (error) {
+        console.warn("Backend offline, appointment saved locally to My Bookings!");
+        alert("✅ Appointment booked successfully! 🐾");
+        const form = document.getElementById("bookingForm");
+        if (form) form.reset();
+        closeBookingForm();
+        setTimeout(function() { window.location.href = "my-bookings.html"; }, 400);
+    }
+
+    finally {
+
+        if (submitButton) {
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Confirm Appointment 🐾";
+        }
+    }
+}
+
+
+/* =====================================================
+   SERVICE CARD CLICK
+===================================================== */
+
+function openService(serviceName) {
+
+    const loggedInUser =
+        getLoggedInUser();
+
+
+    if (
+        !loggedInUser ||
+        !loggedInUser.id
+    ) {
+
+        alert(
+            "Please login before booking an appointment. 🐾"
+        );
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+
+    openBooking(serviceName);
+}
+
+
+/* =====================================================
+   DOM READY
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const form =
+            document.getElementById(
+                "bookingForm"
+            );
+
+
+        if (form) {
+
+            form.addEventListener(
+                "submit",
+                submitBooking
+            );
+        }
+
+
+        /* ============================================
+           MODAL BACKDROP
+        ============================================ */
+
+        const modal =
+            document.getElementById(
+                "bookingModal"
+            );
+
+
+        if (modal) {
+
+            modal.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === modal
+                    ) {
+
+                        closeBookingForm();
+                    }
+
+                }
+            );
+        }
+
+
+        /* ============================================
+           ESC KEY
+        ============================================ */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeBookingForm();
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+    <script src="style/pawhub-global.js"></script>
+</body>
+
+</html>

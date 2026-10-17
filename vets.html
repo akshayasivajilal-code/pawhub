@@ -1,0 +1,2464 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PAWHUB | Vet Finder</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="style/vets.css">
+    <link rel="stylesheet" href="style/pawhub-global.css">
+</head>
+
+<body>
+
+<!-- ================= PAWHUB CLASSIC FULL-WIDTH NAVBAR ================= -->
+<header class="pawhub-header">
+    <div class="pawhub-header-inner">
+
+        <!-- Logo -->
+        <a href="home.html" class="pawhub-logo">
+            <div class="pawhub-logo-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="18.5" cy="8" r="2.5" fill="white"/>
+                    <circle cx="9.5" cy="5" r="2" fill="white"/>
+                    <circle cx="14.5" cy="5" r="2" fill="white"/>
+                    <path d="M12 10c-4 0-7 2.5-7 5.5 0 3.5 3.5 5.5 7 5.5s7-2 7-5.5c0-3-3-5.5-7-5.5z" fill="white"/>
+                </svg>
+            </div>
+            <div class="pawhub-logo-text">
+                <h2>PAWHUB</h2>
+                <span>Pet Care Community</span>
+            </div>
+        </a>
+
+        <!-- Nav Links (center) -->
+        <nav class="pawhub-nav-links">
+            <a href="home.html" class="pawhub-link">Home</a>
+            <a href="adoption.html" class="pawhub-link">Adoption</a>
+            <a href="marketplace.html" class="pawhub-link">Marketplace</a>
+            <a href="lost-found.html" class="pawhub-link">Lost &amp; Found</a>
+            <a href="vets.html" class="pawhub-link active">Vet Finder</a>
+            <a href="vaccination.html" class="pawhub-link">Vaccination</a>
+            <a href="community.html" class="pawhub-link">Community</a>
+            <a href="dashboard.html" class="pawhub-link">Dashboard</a>
+        </nav>
+
+        <!-- Right: PawMatch + Icons + User Logout -->
+        <div class="pawhub-actions">
+            <button type="button" class="pawhub-pawmatch-btn" onclick="openPawMatchQuiz()">
+                &#10024; PawMatch
+            </button>
+            <button type="button" class="pawhub-icon-btn" onclick="openWishlist()" title="Saved Pets">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <span class="paw-fav-count pawhub-badge" style="display:none;">0</span>
+            </button>
+            <button type="button" class="pawhub-icon-btn paw-theme-btn" onclick="togglePawTheme()" title="Toggle Theme">
+                <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+
+            <!-- User Logout Button -->
+            <button type="button" class="pawhub-user-pill" onclick="logoutPawHub()" title="Sign Out">
+                <span class="user-avatar">&#128100;</span>
+                <span id="navUserName">Logout</span>
+            </button>
+
+            <button type="button" class="pawhub-icon-btn pawhub-mobile-toggle" onclick="togglePawMobile()" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div class="pawhub-mobile-dropdown" id="pawMobileMenu" style="display:none;">
+        <a href="home.html">Home</a>
+        <a href="adoption.html">Adoption</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="lost-found.html">Lost &amp; Found</a>
+        <a href="vets.html">Vet Finder</a>
+        <a href="vaccination.html">Vaccination</a>
+        <a href="community.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="javascript:void(0)" onclick="logoutPawHub()" style="color:#ef4444; font-weight:700;">🚪 Log Out</a>
+    </div>
+</header>
+
+
+
+<!-- Wishlist Side Drawer -->
+<div id="paw-wishlist-overlay" class="paw-wishlist-overlay" onclick="closeWishlist()"></div>
+<div id="paw-wishlist-drawer" class="paw-wishlist-drawer">
+    <div class="paw-drawer-header">
+        <h3>❤️ Saved Pets</h3>
+        <button class="paw-drawer-close" onclick="closeWishlist()">&times;</button>
+    </div>
+    <div id="paw-wishlist-items" class="paw-wishlist-items"></div>
+    <div style="padding-top: 14px; border-top: 1px solid var(--paw-border, #e2e8f0);">
+        <a href="adoption.html" style="display: block; text-align: center; padding: 12px; background: #2563eb; color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Browse All Pets →</a>
+    </div>
+</div>
+
+
+
+
+
+<!-- PawMatch Quiz Modal -->
+<div id="paw-quiz-modal" class="paw-quiz-modal">
+    <div class="paw-quiz-box">
+        <button class="paw-quiz-close" onclick="closePawMatchQuiz()">&times;</button>
+        
+        <div id="paw-quiz-step-1" class="paw-quiz-step active">
+            <div style="font-size: 40px; margin-bottom: 8px;">🏡</div>
+            <h3>Where do you live?</h3>
+            <p>Help us find a pet that thrives in your living space.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'apartment')">
+                    🏢 Cozy Apartment or Studio
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'house')">
+                    🏡 House with a Fenced Yard
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(1, 'farm')">
+                    🌳 Countryside or Farm with Acreage
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-2" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">⚡</div>
+            <h3>What's your typical weekend vibe?</h3>
+            <p>Every pet has a unique energy level!</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'couch')">
+                    🛋️ Relaxing indoors, reading &amp; movie nights
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'walker')">
+                    🚶 Nice casual strolls in local parks
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(2, 'runner')">
+                    🏃 Hiking trails, jogging &amp; active outdoor play
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-3" class="paw-quiz-step">
+            <div style="font-size: 40px; margin-bottom: 8px;">💖</div>
+            <h3>What pet companion are you dreaming of?</h3>
+            <p>Tell us your heart's preference.</p>
+            <div class="paw-quiz-options">
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'dog')">
+                    🐶 An affectionate, loyal dog
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'cat')">
+                    🐱 A calm, purring, independent cat
+                </button>
+                <button type="button" class="paw-quiz-btn" onclick="recordQuizAnswer(3, 'any')">
+                    ✨ Surprise me! Any loving companion
+                </button>
+            </div>
+        </div>
+
+        <div id="paw-quiz-step-result" class="paw-quiz-step"></div>
+    </div>
+</div>
+
+
+
+<!-- ================= HEADER ================= -->
+
+
+
+
+<!-- ================= MENU OVERLAY ================= -->
+
+<div class="menu-overlay"
+     id="menuOverlay"
+     onclick="closeMenu()">
+</div>
+
+<aside class="menu-panel"
+       id="menuPanel">
+
+    <div class="menu-header">
+
+        <div>
+            <span>PAWHUB</span>
+            <h3>Pet Care Menu</h3>
+        </div>
+
+        <button class="menu-close"
+                onclick="closeMenu()">
+            ✕
+        </button>
+
+    </div>
+
+    <div class="menu-links">
+
+        <a href="home.html">🏠 Home</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="adoption.html">🐾 Adoption</a>
+        <a href="marketplace.html">🛒 Marketplace</a>
+        <a href="lost-found.html">🔍 Lost &amp; Found</a>
+        <a href="pet-services.html">🩺 Pet Services</a>
+        <a href="vaccination.html">💉 Vaccination</a>
+        <a href="community.html">👥 Community</a>
+        <a href="vets.html" class="active">🧑‍⚕️ Vet Finder</a>
+        <a href="my-pets.html">❤️ My Pets</a>
+        <a href="my-bookings.html">📅 My Bookings</a>
+
+    </div>
+
+    <button class="menu-logout"
+            onclick="logoutFromMenu()">
+        ↪ Logout
+    </button>
+
+</aside>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="vet-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            🩺 Trusted Veterinary Care
+        </div>
+
+        <h1>
+            Find the Right Vet<br>
+            <span>for Your Best Friend</span>
+        </h1>
+
+        <p>
+            Discover trusted veterinary clinics, explore nearby
+            pet care services and book appointments easily.
+        </p>
+
+        <div class="hero-actions">
+
+            <button class="primary-btn"
+                    onclick="scrollToClinics()">
+                Find a Vet
+            </button>
+
+            <button class="secondary-btn"
+                    onclick="scrollToMap()">
+                📍 Explore Nearby
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+        <div class="hero-circle"></div>
+
+        <div class="hero-pet-card">
+            <img src="images/vet1.jpg"
+                 alt="Veterinary care"
+                 onerror="this.style.display='none'">
+
+            <div class="hero-pet-info">
+                <strong>Expert Pet Care</strong>
+                <span>Available near you</span>
+            </div>
+        </div>
+
+        <div class="floating-card floating-card-one">
+            <span>⭐</span>
+            <div>
+                <strong>4.9/5</strong>
+                <small>Top Rated</small>
+            </div>
+        </div>
+
+        <div class="floating-card floating-card-two">
+            <span>🩺</span>
+            <div>
+                <strong>24/7</strong>
+                <small>Emergency Care</small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= QUICK STATS ================= -->
+
+<section class="vet-stats">
+
+    <div class="stat-card">
+        <div class="stat-icon">🏥</div>
+        <div>
+            <strong>50+</strong>
+            <span>Verified Clinics</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">👨‍⚕️</div>
+        <div>
+            <strong>100+</strong>
+            <span>Veterinarians</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📍</div>
+        <div>
+            <strong>10+</strong>
+            <span>Cities Covered</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">❤️</div>
+        <div>
+            <strong>5K+</strong>
+            <span>Happy Pets</span>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ================= MAP SECTION ================= -->
+
+<section class="map-section"
+         id="mapSection">
+
+    <div class="section-heading">
+
+        <div>
+            <span class="section-label">LOCATION</span>
+
+            <h2>
+                Find Vets Near You
+            </h2>
+
+            <p>
+                Search for veterinary clinics around your location.
+            </p>
+        </div>
+
+        <button class="location-btn"
+                onclick="findNearbyVets()">
+            📍 Use My Location
+        </button>
+
+    </div>
+
+
+    <div class="map-search-row">
+
+        <div class="city-search">
+
+            <span>🔎</span>
+
+            <input type="text"
+                   id="citySearch"
+                   placeholder="Search city or location..."
+                   onkeydown="if(event.key === 'Enter') searchCity()">
+
+            <button onclick="searchCity()">
+                Search
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="map-container">
+
+        <div id="vetMap"></div>
+
+        <div class="map-info-card">
+
+            <div class="map-info-icon">
+                📍
+            </div>
+
+            <div>
+                <strong>Nearby Veterinary Clinics</strong>
+                <span id="mapStatus">
+                    Explore clinics around you
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CLINICS ================= -->
+
+<section class="clinics-section"
+         id="clinicsSection">
+
+    <div class="section-heading">
+
+        <div>
+            <span class="section-label">VERIFIED CLINICS</span>
+
+            <h2>
+                Popular Veterinary Clinics
+            </h2>
+
+            <p>
+                Trusted clinics selected for quality pet care.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="clinic-grid">
+
+
+        <!-- CLINIC 1 -->
+
+        <article class="clinic-card"
+                 data-vet-id="happy-paws">
+
+            <div class="clinic-image">
+
+                <img src="images/vet2.jpg"
+                     alt="Happy Paws Clinic"
+                     onerror="this.src='/images/vet1.jpg'">
+
+                <span class="verified-badge">
+                    ✓ Verified
+                </span>
+
+                <button class="favorite-btn"
+                        data-vet-id="happy-paws"
+                        onclick="toggleFavorite(this)"
+                        title="Save clinic">
+                    ♡
+                </button>
+
+            </div>
+
+            <div class="clinic-content">
+
+                <div class="clinic-top">
+
+                    <div>
+                        <h3>Happy Paws Clinic</h3>
+                        <span>Coimbatore</span>
+                    </div>
+
+                    <div class="rating">
+                        ⭐ 4.9
+                    </div>
+
+                </div>
+
+                <p class="clinic-description">
+                    Complete veterinary care with experienced
+                    doctors and modern facilities.
+                </p>
+
+                <div class="clinic-meta">
+
+                    <span>🕐 9 AM - 9 PM</span>
+                    <span>📍 2.4 km</span>
+
+                </div>
+
+                <div class="clinic-actions">
+
+                    <button class="outline-btn"
+                            onclick="focusSavedVet('happy-paws')">
+                        View Location
+                    </button>
+
+                    <button class="book-btn"
+                            onclick="openBookingForm(
+                                'Happy Paws Clinic',
+                                'Coimbatore'
+                            )">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLINIC 2 -->
+
+        <article class="clinic-card"
+                 data-vet-id="pet-care-hospital">
+
+            <div class="clinic-image">
+
+                <img src="images/vet3.jpg"
+                     alt="Pet Care Hospital"
+                     onerror="this.src='/images/vet1.jpg'">
+
+                <span class="verified-badge">
+                    ✓ Verified
+                </span>
+
+                <button class="favorite-btn"
+                        data-vet-id="pet-care-hospital"
+                        onclick="toggleFavorite(this)"
+                        title="Save clinic">
+                    ♡
+                </button>
+
+            </div>
+
+            <div class="clinic-content">
+
+                <div class="clinic-top">
+
+                    <div>
+                        <h3>Pet Care Hospital</h3>
+                        <span>Chennai</span>
+                    </div>
+
+                    <div class="rating">
+                        ⭐ 4.8
+                    </div>
+
+                </div>
+
+                <p class="clinic-description">
+                    Friendly veterinary specialists offering
+                    diagnostics, surgery and preventive care.
+                </p>
+
+                <div class="clinic-meta">
+
+                    <span>🕐 24 Hours</span>
+                    <span>📍 4.1 km</span>
+
+                </div>
+
+                <div class="clinic-actions">
+
+                    <button class="outline-btn"
+                            onclick="focusSavedVet('pet-care-hospital')">
+                        View Location
+                    </button>
+
+                    <button class="book-btn"
+                            onclick="openBookingForm(
+                                'Pet Care Hospital',
+                                'Chennai'
+                            )">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLINIC 3 -->
+
+        <article class="clinic-card"
+                 data-vet-id="animal-wellness">
+
+            <div class="clinic-image">
+
+                <img src="images/vet4.jpg"
+                     alt="Animal Wellness Center"
+                     onerror="this.src='/images/vet1.jpg'">
+
+                <span class="verified-badge">
+                    ✓ Verified
+                </span>
+
+                <button class="favorite-btn"
+                        data-vet-id="animal-wellness"
+                        onclick="toggleFavorite(this)"
+                        title="Save clinic">
+                    ♡
+                </button>
+
+            </div>
+
+            <div class="clinic-content">
+
+                <div class="clinic-top">
+
+                    <div>
+                        <h3>Animal Wellness Center</h3>
+                        <span>Bangalore</span>
+                    </div>
+
+                    <div class="rating">
+                        ⭐ 4.7
+                    </div>
+
+                </div>
+
+                <p class="clinic-description">
+                    Holistic pet wellness, vaccination,
+                    grooming and preventive veterinary services.
+                </p>
+
+                <div class="clinic-meta">
+
+                    <span>🕐 8 AM - 8 PM</span>
+                    <span>📍 5.2 km</span>
+
+                </div>
+
+                <div class="clinic-actions">
+
+                    <button class="outline-btn"
+                            onclick="focusSavedVet('animal-wellness')">
+                        View Location
+                    </button>
+
+                    <button class="book-btn"
+                            onclick="openBookingForm(
+                                'Animal Wellness Center',
+                                'Bangalore'
+                            )">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLINIC 4 -->
+
+        <article class="clinic-card"
+                 data-vet-id="paws-care">
+
+            <div class="clinic-image">
+
+                <img src="images/vet5.jpg"
+                     alt="Paws & Care"
+                     onerror="this.src='/images/vet1.jpg'">
+
+                <span class="verified-badge">
+                    ✓ Verified
+                </span>
+
+                <button class="favorite-btn"
+                        data-vet-id="paws-care"
+                        onclick="toggleFavorite(this)"
+                        title="Save clinic">
+                    ♡
+                </button>
+
+            </div>
+
+            <div class="clinic-content">
+
+                <div class="clinic-top">
+
+                    <div>
+                        <h3>Paws &amp; Care</h3>
+                        <span>Hosur</span>
+                    </div>
+
+                    <div class="rating">
+                        ⭐ 4.9
+                    </div>
+
+                </div>
+
+                <p class="clinic-description">
+                    Compassionate veterinary care for dogs,
+                    cats and other companion animals.
+                </p>
+
+                <div class="clinic-meta">
+
+                    <span>🕐 9 AM - 8 PM</span>
+                    <span>📍 3.6 km</span>
+
+                </div>
+
+                <div class="clinic-actions">
+
+                    <button class="outline-btn"
+                            onclick="focusSavedVet('paws-care')">
+                        View Location
+                    </button>
+
+                    <button class="book-btn"
+                            onclick="openBookingForm(
+                                'Paws & Care',
+                                'Hosur'
+                            )">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="services-section">
+
+    <div class="section-heading centered">
+
+        <span class="section-label">
+            PET HEALTH SERVICES
+        </span>
+
+        <h2>
+            Everything Your Pet Needs
+        </h2>
+
+        <p>
+            From routine checkups to emergency care,
+            find the right service for your pet.
+        </p>
+
+    </div>
+
+
+    <div class="service-grid">
+
+        <button class="service-card"
+                onclick="openService('General Checkup')">
+
+            <div class="service-icon">
+                🩺
+            </div>
+
+            <strong>General Checkup</strong>
+
+            <span>
+                Routine health examination
+            </span>
+
+            <b>→</b>
+
+        </button>
+
+
+        <button class="service-card"
+                onclick="openService('Vaccination')">
+
+            <div class="service-icon">
+                💉
+            </div>
+
+            <strong>Vaccination</strong>
+
+            <span>
+                Essential pet vaccinations
+            </span>
+
+            <b>→</b>
+
+        </button>
+
+
+        <button class="service-card"
+                onclick="openService('Dental Care')">
+
+            <div class="service-icon">
+                🦷
+            </div>
+
+            <strong>Dental Care</strong>
+
+            <span>
+                Complete dental treatment
+            </span>
+
+            <b>→</b>
+
+        </button>
+
+
+        <button class="service-card"
+                onclick="openService('Emergency Care')">
+
+            <div class="service-icon">
+                🚑
+            </div>
+
+            <strong>Emergency Care</strong>
+
+            <span>
+                Urgent medical assistance
+            </span>
+
+            <b>→</b>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WISHLIST PANEL ================= -->
+
+<div class="quick-overlay"
+     id="wishlistOverlay"
+     onclick="closeWishlist()">
+</div>
+
+<aside class="quick-panel wishlist-panel"
+       id="wishlistPanel">
+
+    <div class="quick-header">
+
+        <div>
+            <span>YOUR SAVED ITEMS</span>
+            <h3>Wishlist</h3>
+        </div>
+
+        <button onclick="closeWishlist()">
+            ✕
+        </button>
+
+    </div>
+
+
+    <div class="wishlist-tabs">
+
+        <button class="wishlist-tab active"
+                onclick="switchWishlistTab('vets', this)">
+            🩺 Vets
+        </button>
+
+        <button class="wishlist-tab"
+                onclick="switchWishlistTab('pets', this)">
+            🐾 Pets
+        </button>
+
+        <button class="wishlist-tab"
+                onclick="switchWishlistTab('products', this)">
+            🛒 Products
+        </button>
+
+    </div>
+
+
+    <div class="wishlist-content"
+         id="wishlistVetList">
+    </div>
+
+    <div class="wishlist-content hidden"
+         id="wishlistPetList">
+    </div>
+
+    <div class="wishlist-content hidden"
+         id="wishlistProductList">
+    </div>
+
+</aside>
+
+
+<!-- ================= CART PANEL ================= -->
+
+<div class="quick-overlay"
+     id="cartOverlay"
+     onclick="closeCart()">
+</div>
+
+<aside class="quick-panel cart-panel"
+       id="cartPanel">
+
+    <div class="quick-header">
+
+        <div>
+            <span>PAWHUB SHOP</span>
+            <h3>Your Cart</h3>
+        </div>
+
+        <button onclick="closeCart()">
+            ✕
+        </button>
+
+    </div>
+
+
+    <div class="cart-list"
+         id="cartList">
+    </div>
+
+
+    <div class="cart-footer">
+
+        <div class="cart-total-row">
+            <span>Total</span>
+            <strong id="cartTotal">₹0</strong>
+        </div>
+
+        <button class="checkout-btn"
+                onclick="goToCheckout()">
+            Proceed to Checkout
+        </button>
+
+        <button class="continue-shopping"
+                onclick="window.location.href='marketplace.html'">
+            Continue Shopping
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= BOOKING MODAL ================= -->
+
+<div class="booking-modal"
+     id="bookingModal">
+
+    <div class="booking-box">
+
+        <button class="modal-close"
+                onclick="closeBookingForm()">
+            ✕
+        </button>
+
+        <div class="booking-heading">
+
+            <div class="booking-icon">
+                🩺
+            </div>
+
+            <div>
+                <span>APPOINTMENT</span>
+                <h3>Book a Vet Visit</h3>
+            </div>
+
+        </div>
+
+
+        <div class="selected-clinic">
+
+            <span>Selected Clinic</span>
+
+            <strong id="selectedClinic">
+                -
+            </strong>
+
+        </div>
+
+
+        <form id="bookingForm">
+
+            <input type="hidden"
+                   id="bookingClinic"
+                   name="clinic">
+
+            <input type="hidden"
+                   id="bookingLocation"
+                   name="location">
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="customerName">
+                        Your Name
+                    </label>
+
+                    <input type="text"
+                           id="customerName"
+                           name="customerName"
+                           placeholder="Enter your name"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="customerPhone">
+                        Phone Number
+                    </label>
+
+                    <input type="tel"
+                           id="customerPhone"
+                           name="phone"
+                           placeholder="Enter phone number"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="petName">
+                        Pet Name
+                    </label>
+
+                    <input type="text"
+                           id="petName"
+                           name="petName"
+                           placeholder="Enter pet name"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="service">
+                        Service
+                    </label>
+
+                    <select id="service"
+                            name="service"
+                            required>
+
+                        <option value="">
+                            Select service
+                        </option>
+
+                        <option value="General Checkup">
+                            General Checkup
+                        </option>
+
+                        <option value="Vaccination">
+                            Vaccination
+                        </option>
+
+                        <option value="Dental Care">
+                            Dental Care
+                        </option>
+
+                        <option value="Emergency Care">
+                            Emergency Care
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="bookingDate">
+                        Date
+                    </label>
+
+                    <input type="date"
+                           id="bookingDate"
+                           name="date"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="bookingTime">
+                        Time
+                    </label>
+
+                    <input type="time"
+                           id="bookingTime"
+                           name="time"
+                           required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="bookingNote">
+                    Additional Note
+                </label>
+
+                <textarea id="bookingNote"
+                          name="note"
+                          rows="3"
+                          placeholder="Tell us anything important about your pet..."></textarea>
+
+            </div>
+
+
+            <button type="submit"
+                    class="confirm-booking-btn">
+                Confirm Appointment
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="pawhub-unified-footer">
+    <div class="pawhub-footer-container">
+        <!-- Brand section -->
+        <div class="pawhub-footer-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo-badge">🐾</div>
+                <div>
+                    <h3>PAWHUB</h3>
+                    <span>Pet Care Community</span>
+                </div>
+            </div>
+            <p class="footer-tagline">
+                Connecting pets with loving families. Providing healthcare, nutrition, and compassionate care for every paw.
+            </p>
+            <div class="footer-status-pill">
+                <span class="status-dot"></span> 1,200+ Happy Pets Adopted
+            </div>
+        </div>
+
+        <!-- Links Columns -->
+        <div class="pawhub-footer-links">
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="home.html">Home</a>
+                <a href="adoption.html">Adoption Center</a>
+                <a href="marketplace.html">Pet Marketplace</a>
+                <a href="lost-found.html">Lost &amp; Found</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Pet Health</h4>
+                <a href="vets.html">Find Veterinary Clinic</a>
+                <a href="vaccination.html">Vaccination Tracker</a>
+                <a href="pet-services.html">Pet Services</a>
+                <a href="my-bookings.html">My Appointments</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Community &amp; You</h4>
+                <a href="community.html">Pet Community</a>
+                <a href="dashboard.html">User Dashboard</a>
+                <a href="my-pets.html">My Saved Pets</a>
+                <a href="login.html">Account Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="pawhub-footer-bottom">
+        <p>&copy; 2026 PAWHUB. Made with 💙 for pets everywhere.</p>
+        <div class="footer-meta-links">
+            <a href="community.html">Community Guidelines</a>
+            <a href="vets.html">Emergency Care</a>
+            <a href="home.html">Back to Top &uarr;</a>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ================= LEAFLET ================= -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<script>
+
+/* =====================================================
+   MENU
+===================================================== */
+
+function toggleMenu() {
+
+    const panel = document.getElementById("menuPanel");
+    const overlay = document.getElementById("menuOverlay");
+
+    panel.classList.add("open");
+    overlay.classList.add("show");
+
+}
+
+
+function closeMenu() {
+
+    const panel = document.getElementById("menuPanel");
+    const overlay = document.getElementById("menuOverlay");
+
+    panel.classList.remove("open");
+    overlay.classList.remove("show");
+
+}
+
+
+function logoutFromMenu() {
+
+    localStorage.removeItem("loggedInUser");
+
+    window.location.href = "home.html";
+
+}
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function getCart() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("pawhubCart") || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function saveCart(cart) {
+
+    localStorage.setItem(
+        "pawhubCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+function updateCartCount() {
+
+    const cart = getCart();
+
+    const count = cart.reduce(
+        (total, item) =>
+            total + Number(item.quantity || 1),
+        0
+    );
+
+    const badge = document.getElementById("cartCount");
+
+    if (badge) {
+
+        badge.textContent = count;
+
+        badge.style.display =
+            count > 0 ? "flex" : "none";
+
+    }
+
+}
+
+
+function openCart() {
+
+    renderCart();
+
+    document
+        .getElementById("cartPanel")
+        .classList.add("open");
+
+    document
+        .getElementById("cartOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeCart() {
+
+    document
+        .getElementById("cartPanel")
+        .classList.remove("open");
+
+    document
+        .getElementById("cartOverlay")
+        .classList.remove("show");
+
+}
+
+
+function renderCart() {
+
+    const list =
+        document.getElementById("cartList");
+
+    const totalElement =
+        document.getElementById("cartTotal");
+
+    const cart = getCart();
+
+    if (!cart.length) {
+
+        list.innerHTML = `
+            <div class="cart-empty">
+                <div>🛒</div>
+                <h4>Your cart is empty</h4>
+                <p>Add products from the marketplace.</p>
+            </div>
+        `;
+
+        totalElement.textContent = "₹0";
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+    list.innerHTML = cart.map(
+        (item, index) => {
+
+            const quantity =
+                Number(item.quantity || 1);
+
+            const price =
+                Number(item.price || 0);
+
+            const itemTotal =
+                price * quantity;
+
+            total += itemTotal;
+
+            return `
+                <div class="cart-item">
+
+                    <div class="cart-item-image">
+                        <img src="${escapeHTML(
+                            item.image || "/images/marketplace1.jpg"
+                        )}"
+                        alt="${escapeHTML(item.name || "Product")}">
+                    </div>
+
+                    <div class="cart-item-info">
+
+                        <strong>
+                            ${escapeHTML(item.name || "Product")}
+                        </strong>
+
+                        <span>
+                            ₹${price.toLocaleString("en-IN")}
+                            × ${quantity}
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="cart-remove"
+                        onclick="removeCartItem(${index})">
+                        ✕
+                    </button>
+
+                </div>
+            `;
+
+        }
+    ).join("");
+
+
+    totalElement.textContent =
+        "₹" + total.toLocaleString("en-IN");
+
+}
+
+
+function removeCartItem(index) {
+
+    const cart = getCart();
+
+    cart.splice(index, 1);
+
+    saveCart(cart);
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+function goToCheckout() {
+
+    const cart = getCart();
+
+    if (!cart.length) {
+
+        alert("Your cart is empty.");
+
+        return;
+
+    }
+
+    window.location.href = "checkout.html";
+
+}
+
+
+/* =====================================================
+   VET WISHLIST
+===================================================== */
+
+function getVetWishlist() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("pawhubVetWishlist") || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function saveVetWishlist(list) {
+
+    localStorage.setItem(
+        "pawhubVetWishlist",
+        JSON.stringify(list)
+    );
+
+}
+
+
+const vetData = {
+
+    "happy-paws": {
+        id: "happy-paws",
+        name: "Happy Paws Clinic",
+        location: "Coimbatore",
+        image: "/images/vet2.jpg"
+    },
+
+    "pet-care-hospital": {
+        id: "pet-care-hospital",
+        name: "Pet Care Hospital",
+        location: "Chennai",
+        image: "/images/vet3.jpg"
+    },
+
+    "animal-wellness": {
+        id: "animal-wellness",
+        name: "Animal Wellness Center",
+        location: "Bangalore",
+        image: "/images/vet4.jpg"
+    },
+
+    "paws-care": {
+        id: "paws-care",
+        name: "Paws & Care",
+        location: "Hosur",
+        image: "/images/vet5.jpg"
+    }
+
+};
+
+
+function toggleFavorite(button) {
+
+    const id =
+        button.dataset.vetId;
+
+    const wishlist =
+        getVetWishlist();
+
+    const index =
+        wishlist.findIndex(
+            item => item.id === id
+        );
+
+
+    if (index >= 0) {
+
+        wishlist.splice(index, 1);
+
+        button.classList.remove("active");
+
+        button.textContent = "♡";
+
+    } else {
+
+        if (vetData[id]) {
+
+            wishlist.push(
+                vetData[id]
+            );
+
+        }
+
+        button.classList.add("active");
+
+        button.textContent = "♥";
+
+    }
+
+
+    saveVetWishlist(wishlist);
+
+    renderVetWishlist();
+
+}
+
+
+function restoreVetWishlistButtons() {
+
+    const wishlist =
+        getVetWishlist();
+
+    document
+        .querySelectorAll(".favorite-btn")
+        .forEach(button => {
+
+            const id =
+                button.dataset.vetId;
+
+            const saved =
+                wishlist.some(
+                    item => item.id === id
+                );
+
+            if (saved) {
+
+                button.classList.add("active");
+
+                button.textContent = "♥";
+
+            } else {
+
+                button.classList.remove("active");
+
+                button.textContent = "♡";
+
+            }
+
+        });
+
+}
+
+
+function openWishlist() {
+
+    renderVetWishlist();
+
+    renderPetWishlist();
+
+    renderProductWishlist();
+
+    document
+        .getElementById("wishlistPanel")
+        .classList.add("open");
+
+    document
+        .getElementById("wishlistOverlay")
+        .classList.add("show");
+
+}
+
+
+function closeWishlist() {
+
+    document
+        .getElementById("wishlistPanel")
+        .classList.remove("open");
+
+    document
+        .getElementById("wishlistOverlay")
+        .classList.remove("show");
+
+}
+
+
+function switchWishlistTab(
+    tab,
+    button
+) {
+
+    document
+        .querySelectorAll(".wishlist-tab")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+
+    document
+        .getElementById("wishlistVetList")
+        .classList.add("hidden");
+
+    document
+        .getElementById("wishlistPetList")
+        .classList.add("hidden");
+
+    document
+        .getElementById("wishlistProductList")
+        .classList.add("hidden");
+
+
+    if (tab === "vets") {
+
+        document
+            .getElementById("wishlistVetList")
+            .classList.remove("hidden");
+
+    }
+
+    if (tab === "pets") {
+
+        document
+            .getElementById("wishlistPetList")
+            .classList.remove("hidden");
+
+    }
+
+    if (tab === "products") {
+
+        document
+            .getElementById("wishlistProductList")
+            .classList.remove("hidden");
+
+    }
+
+}
+
+
+function renderVetWishlist() {
+
+    const container =
+        document.getElementById(
+            "wishlistVetList"
+        );
+
+    const wishlist =
+        getVetWishlist();
+
+
+    if (!wishlist.length) {
+
+        container.innerHTML = `
+            <div class="wishlist-empty">
+                <div>🩺</div>
+                <h4>No saved vets</h4>
+                <p>Tap the heart on a clinic to save it.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        wishlist.map(vet => `
+
+            <div class="wishlist-card">
+
+                <img
+                    src="${escapeHTML(vet.image)}"
+                    alt="${escapeHTML(vet.name)}"
+                    onerror="this.src='/images/vet1.jpg'"
+                >
+
+                <div class="wishlist-card-info">
+
+                    <strong>
+                        ${escapeHTML(vet.name)}
+                    </strong>
+
+                    <span>
+                        📍 ${escapeHTML(vet.location)}
+                    </span>
+
+                    <div class="wishlist-card-actions">
+
+                        <button
+                            onclick="focusSavedVet('${escapeForJS(vet.id)}')">
+                            View
+                        </button>
+
+                        <button
+                            onclick="removeVetFromWishlist('${escapeForJS(vet.id)}')">
+                            Remove
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function removeVetFromWishlist(id) {
+
+    const wishlist =
+        getVetWishlist()
+            .filter(item => item.id !== id);
+
+    saveVetWishlist(wishlist);
+
+    restoreVetWishlistButtons();
+
+    renderVetWishlist();
+
+}
+
+
+function focusSavedVet(id) {
+
+    closeWishlist();
+
+    const card =
+        document.querySelector(
+            `.clinic-card[data-vet-id="${id}"]`
+        );
+
+    if (card) {
+
+        card.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        card.classList.add("highlight-card");
+
+        setTimeout(
+            () => card.classList.remove("highlight-card"),
+            1800
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   PET WISHLIST
+===================================================== */
+
+function getPetWishlist() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("pawhubPetWishlist") || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function renderPetWishlist() {
+
+    const container =
+        document.getElementById(
+            "wishlistPetList"
+        );
+
+    const pets =
+        getPetWishlist();
+
+
+    if (!pets.length) {
+
+        container.innerHTML = `
+            <div class="wishlist-empty">
+                <div>🐾</div>
+                <h4>No saved pets</h4>
+                <p>Save pets from the Adoption page.</p>
+
+                <button
+                    onclick="window.location.href='adoption.html'">
+                    Browse Adoption
+                </button>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        pets.map(
+            pet => `
+
+                <div class="wishlist-card">
+
+                    <img
+                        src="${escapeHTML(
+                            pet.image || "/images/puppy1.jpg"
+                        )}"
+                        alt="${escapeHTML(
+                            pet.name || "Pet"
+                        )}"
+                        onerror="this.src='/images/puppy1.jpg'"
+                    >
+
+                    <div class="wishlist-card-info">
+
+                        <strong>
+                            ${escapeHTML(
+                                pet.name || "Pet"
+                            )}
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                pet.breed || pet.type || "Pet"
+                            )}
+                        </span>
+
+                        <div class="wishlist-card-actions">
+
+                            <button
+                                onclick="window.location.href='adoption.html'">
+                                View Pet
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   PRODUCT WISHLIST
+===================================================== */
+
+function getProductWishlist() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("pawhubProductWishlist") || "[]"
+        );
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function renderProductWishlist() {
+
+    const container =
+        document.getElementById(
+            "wishlistProductList"
+        );
+
+    const products =
+        getProductWishlist();
+
+
+    if (!products.length) {
+
+        container.innerHTML = `
+            <div class="wishlist-empty">
+                <div>🛒</div>
+                <h4>No saved products</h4>
+                <p>Save products from the marketplace.</p>
+
+                <button
+                    onclick="window.location.href='marketplace.html'">
+                    Browse Marketplace
+                </button>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        products.map(
+            product => `
+
+                <div class="wishlist-card">
+
+                    <img
+                        src="${escapeHTML(
+                            product.image || "/images/marketplace1.jpg"
+                        )}"
+                        alt="${escapeHTML(
+                            product.name || "Product"
+                        )}"
+                    >
+
+                    <div class="wishlist-card-info">
+
+                        <strong>
+                            ${escapeHTML(
+                                product.name || "Product"
+                            )}
+                        </strong>
+
+                        <span>
+                            ₹${Number(
+                                product.price || 0
+                            ).toLocaleString("en-IN")}
+                        </span>
+
+                        <div class="wishlist-card-actions">
+
+                            <button
+                                onclick="window.location.href='marketplace.html'">
+                                View Product
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   MAP & ACCURATE CLINIC LOCATIONS (OpenStreetMap - Free & No API Key Required)
+===================================================== */
+
+let vetMap = null;
+let userMarker = null;
+let clinicMarkers = [];
+
+const clinicLocations = {
+    "happy-paws": {
+        lat: 11.0168,
+        lng: 76.9558,
+        name: "Happy Paws Clinic",
+        city: "Coimbatore",
+        address: "Avinashi Road, Peelamedu, Coimbatore",
+        phone: "+91 98765 43210"
+    },
+    "pet-care-hospital": {
+        lat: 13.0827,
+        lng: 80.2707,
+        name: "Pet Care Hospital",
+        city: "Chennai",
+        address: "Anna Nagar West, Chennai",
+        phone: "+91 98410 12345"
+    },
+    "animal-wellness": {
+        lat: 12.9716,
+        lng: 77.5946,
+        name: "Animal Wellness Center",
+        city: "Bangalore",
+        address: "Indiranagar 100ft Road, Bangalore",
+        phone: "+91 80252 67890"
+    },
+    "paws-care": {
+        lat: 12.7409,
+        lng: 77.8253,
+        name: "Paws & Care",
+        city: "Hosur",
+        address: "Bagalur Road, Near City Center, Hosur",
+        phone: "+91 94432 56789"
+    }
+};
+
+function initMap() {
+    if (vetMap) return;
+
+    vetMap = L.map("vetMap").setView([12.5, 78.5], 7);
+
+    // OpenStreetMap Standard - 100% Free, Reliable, No API Key, No Watermark
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(vetMap);
+
+    clinicMarkers = [];
+
+    Object.entries(clinicLocations).forEach(([id, clinic]) => {
+        const marker = L.marker([clinic.lat, clinic.lng]).addTo(vetMap);
+        marker.bindPopup(`
+            <div style="font-family:'Outfit',sans-serif; padding:6px; min-width:180px;">
+                <h4 style="margin:0 0 4px; color:#2563eb; font-size:15px; font-weight:800;">${clinic.name}</h4>
+                <div style="font-size:12px; color:#64748b; margin-bottom:5px;">📍 ${clinic.address}</div>
+                <div style="font-size:12px; font-weight:600; color:#10b981; margin-bottom:8px;">📞 ${clinic.phone}</div>
+                <button onclick="openBookingForm('${clinic.name}', '${clinic.city}')" style="background:#2563eb; color:white; border:none; padding:6px 14px; border-radius:12px; font-size:12px; font-weight:700; cursor:pointer; width:100%;">Book Appointment</button>
+            </div>
+        `);
+        marker.vetId = id;
+        clinicMarkers.push(marker);
+    });
+}
+
+function focusSavedVet(id) {
+    const clinic = clinicLocations[id];
+    if (!clinic) return;
+
+    const mapSection = document.getElementById("mapSection") || document.getElementById("vetMap");
+    if (mapSection) {
+        mapSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    if (!vetMap) initMap();
+
+    setTimeout(() => {
+        vetMap.flyTo([clinic.lat, clinic.lng], 14, { duration: 1.2 });
+        const marker = clinicMarkers.find(m => m.vetId === id);
+        if (marker) marker.openPopup();
+        const statusEl = document.getElementById("mapStatus");
+        if (statusEl) statusEl.textContent = `📍 Showing location for ${clinic.name} in ${clinic.city}`;
+    }, 450);
+}
+
+function searchCity() {
+    const input = document.getElementById("citySearch");
+    if (!input) return;
+    const city = input.value.trim().toLowerCase();
+    if (!city) return;
+
+    const cityCoords = {
+        coimbatore: [11.0168, 76.9558],
+        chennai: [13.0827, 80.2707],
+        bangalore: [12.9716, 77.5946],
+        bengaluru: [12.9716, 77.5946],
+        hosur: [12.7409, 77.8253]
+    };
+
+    const coords = cityCoords[city];
+    if (coords) {
+        if (!vetMap) initMap();
+        vetMap.flyTo(coords, 12, { duration: 1.0 });
+        const statusEl = document.getElementById("mapStatus");
+        if (statusEl) statusEl.textContent = `Showing verified clinics in ${city.charAt(0).toUpperCase() + city.slice(1)}`;
+        
+        document.querySelectorAll('.clinic-card').forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(city) ? 'block' : 'none';
+        });
+    } else {
+        alert("City not available in demo map. Try Coimbatore, Chennai, Bangalore, or Hosur.");
+    }
+}
+
+function findNearbyVets() {
+    if (!navigator.geolocation) {
+        alert("Location services are not supported by your browser.");
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            if (!vetMap) initMap();
+            vetMap.flyTo([lat, lng], 13);
+            if (userMarker) vetMap.removeLayer(userMarker);
+            userMarker = L.marker([lat, lng]).addTo(vetMap).bindPopup("📍 You are here").openPopup();
+            document.getElementById("mapStatus").textContent = "Showing clinics near your location";
+        },
+        () => {
+            alert("Unable to access your location. Please search your city (e.g. Coimbatore, Chennai).");
+        }
+    );
+}
+
+/* =====================================================
+   SCROLL
+===================================================== */
+
+function scrollToMap() {
+
+    document
+        .getElementById("mapSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+function scrollToClinics() {
+
+    document
+        .getElementById("clinicsSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
+   BOOKING
+===================================================== */
+
+function openBookingForm(
+    clinicName,
+    location
+) {
+
+    document.getElementById(
+        "selectedClinic"
+    ).textContent =
+        clinicName +
+        (location ? " • " + location : "");
+
+
+    document.getElementById(
+        "bookingClinic"
+    ).value =
+        clinicName;
+
+
+    document.getElementById(
+        "bookingLocation"
+    ).value =
+        location || "";
+
+
+    document.getElementById(
+        "bookingModal"
+    ).classList.add("open");
+
+
+    const dateInput =
+        document.getElementById(
+            "bookingDate"
+        );
+
+
+    if (dateInput) {
+
+        const today =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+        dateInput.min = today;
+
+    }
+
+}
+
+
+function closeBookingForm() {
+
+    document
+        .getElementById("bookingModal")
+        .classList.remove("open");
+
+}
+
+
+document
+    .getElementById("bookingForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const loggedInUser =
+                JSON.parse(
+                    localStorage.getItem(
+                        "loggedInUser"
+                    ) || "null"
+                );
+
+
+            if (!loggedInUser) {
+
+                alert(
+                    "Please login before booking an appointment."
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            const booking = {
+
+                userId:
+                    loggedInUser.id,
+
+                customerName:
+                    document.getElementById(
+                        "customerName"
+                    ).value.trim(),
+
+                phone:
+                    document.getElementById(
+                        "customerPhone"
+                    ).value.trim(),
+
+                petName:
+                    document.getElementById(
+                        "petName"
+                    ).value.trim(),
+
+                service:
+                    document.getElementById(
+                        "service"
+                    ).value,
+
+                date:
+                    document.getElementById(
+                        "bookingDate"
+                    ).value,
+
+                time:
+                    document.getElementById(
+                        "bookingTime"
+                    ).value,
+
+                note:
+                    document.getElementById(
+                        "bookingNote"
+                    ).value.trim(),
+
+                clinic:
+                    document.getElementById(
+                        "bookingClinic"
+                    ).value,
+
+                location:
+                    document.getElementById(
+                        "bookingLocation"
+                    ).value
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/bookings",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    booking
+                                )
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Booking failed"
+                    );
+
+                }
+
+
+                const savedBooking =
+                    await response.json();
+
+
+                console.log(
+                    "Saved booking:",
+                    savedBooking
+                );
+
+
+                alert(
+                    "Appointment booked successfully! 🩺"
+                );
+
+
+                document
+                    .getElementById(
+                        "bookingForm"
+                    )
+                    .reset();
+
+
+                closeBookingForm();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+                alert(
+                    "Unable to book appointment. Please try again."
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   SERVICES
+===================================================== */
+
+function openService(
+    serviceName
+) {
+
+    openBookingForm(
+        "Select a clinic",
+        ""
+    );
+
+
+    document.getElementById(
+        "service"
+    ).value =
+        serviceName;
+
+}
+
+
+/* =====================================================
+   ESCAPE HELPERS
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeForJS(value) {
+
+    return String(value ?? "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"');
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        updateCartCount();
+
+        restoreVetWishlistButtons();
+
+        renderVetWishlist();
+
+        renderPetWishlist();
+
+        renderProductWishlist();
+
+        initMap();
+
+    }
+);
+
+</script>
+
+    <script src="style/pawhub-global.js"></script>
+</body>
+</html>

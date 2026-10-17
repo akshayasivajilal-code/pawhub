@@ -1,0 +1,140 @@
+/* ===========================
+   PAWHUB Splash Screen
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Sora',sans-serif;
+    background:linear-gradient(135deg,#f8fbff,#dbeeff);
+    overflow:hidden;
+}
+
+/* Splash Screen */
+
+.splash-screen{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Logo Box */
+
+.logo-box{
+    text-align:center;
+    animation:fadeIn 1.2s ease;
+}
+
+/* Paw Logo */
+
+.paw-logo{
+    width: 260px;
+    margin-bottom:20px;
+    animation:float 3s ease-in-out infinite;
+}
+
+/* Heading */
+
+.logo-box h1{
+    font-size:60px;
+    font-weight:800;
+    color:#0f4fa8;
+    letter-spacing:3px;
+}
+
+/* Tagline */
+
+.logo-box p{
+    margin-top:10px;
+    color:#555;
+    font-size:18px;
+    font-weight:500;
+}
+
+/* Puppy */
+
+.puppy{
+    width:240px;
+    margin-top:35px;
+    animation:breathe 2.5s ease-in-out infinite;
+}
+
+/* Floating Logo */
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* Puppy Breathing */
+
+@keyframes breathe{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+/* Fade */
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.logo-box h1{
+    font-size:42px;
+}
+
+.logo-box p{
+    font-size:15px;
+}
+
+.paw-logo{
+    width:90px;
+}
+
+.puppy{
+    width:180px;
+}
+
+}

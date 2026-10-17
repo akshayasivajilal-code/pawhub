@@ -1,0 +1,588 @@
+/* ==========================================================================
+   PAWHUB GLOBAL DESIGN SYSTEM
+   Full-width sticky header · Emerald & Royal Blue · Zero Orange
+   ========================================================================== */
+
+:root {
+  --paw-primary: #2563eb;
+  --paw-primary-dark: #1d4ed8;
+  --paw-accent: #10b981;
+  --paw-cyan: #06b6d4;
+  --paw-indigo: #4f46e5;
+  --paw-coral: #f43f5e;
+  --paw-bg: #f8fafc;
+  --paw-card-bg: #ffffff;
+  --paw-text: #0f172a;
+  --paw-text-muted: #64748b;
+  --paw-nav-bg: rgba(255, 255, 255, 0.96);
+  --paw-border: rgba(226, 232, 240, 0.9);
+  --paw-shadow: 0 12px 35px -5px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="dark"] {
+  --paw-bg: #0b1120;
+  --paw-card-bg: #1e293b;
+  --paw-text: #f8fafc;
+  --paw-text-muted: #94a3b8;
+  --paw-nav-bg: rgba(15, 23, 42, 0.97);
+  --paw-border: rgba(51, 65, 85, 0.85);
+  --paw-shadow: 0 14px 40px -5px rgba(0, 0, 0, 0.55);
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode body/text/sections */
+[data-theme="dark"] body { background: #0b1120 !important; color: #f8fafc !important; }
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
+[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6 { color: #f8fafc !important; }
+[data-theme="dark"] .hero, [data-theme="dark"] section,
+[data-theme="dark"] .services, [data-theme="dark"] .featured-pets-section {
+  background: #0b1120 !important;
+}
+[data-theme="dark"] .card, [data-theme="dark"] .pet-card,
+[data-theme="dark"] .service-card, [data-theme="dark"] .clinic-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .blended-image {
+  background: radial-gradient(circle at 50% 40%, #1e293b 0%, #0f172a 100%) !important;
+}
+[data-theme="dark"] footer { background: #050811 !important; }
+
+/* =========================================================
+   NAVBAR — Full-Width Sticky (exactly like old screenshot)
+   ========================================================= */
+.pawhub-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  background: var(--paw-nav-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--paw-border);
+  box-shadow: 0 2px 20px rgba(15, 23, 42, 0.06);
+  font-family: 'Outfit', sans-serif;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+[data-theme="dark"] .pawhub-header {
+  background: rgba(15, 23, 42, 0.97) !important;
+  border-bottom-color: #334155 !important;
+  box-shadow: 0 2px 28px rgba(0,0,0,0.45) !important;
+}
+
+/* Colorful top accent line */
+.pawhub-header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb 0%, #10b981 40%, #4f46e5 80%, #06b6d4 100%);
+  z-index: 1;
+}
+
+.pawhub-header-inner {
+  max-width: 1400px;
+  width: 100%;
+  height: 76px;
+  margin: 0 auto;
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+/* ── Logo ──────────────────────────────────────────────── */
+.pawhub-logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.pawhub-logo-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(37,99,235,0.3);
+  transition: transform 0.25s ease;
+}
+
+.pawhub-logo:hover .pawhub-logo-box {
+  transform: rotate(-6deg) scale(1.08);
+}
+
+.pawhub-logo-text h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  color: #2563eb;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+[data-theme="dark"] .pawhub-logo-text h2 { color: #60a5fa !important; }
+
+.pawhub-logo-text span {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--paw-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: block;
+}
+
+/* ── Nav Links (center) ────────────────────────────────── */
+.pawhub-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.pawhub-link {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  padding: 7px 13px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .pawhub-link { color: #94a3b8; }
+
+.pawhub-link:hover {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.08);
+}
+
+[data-theme="dark"] .pawhub-link:hover {
+  color: #60a5fa;
+  background: rgba(96, 165, 250, 0.1);
+}
+
+/* Active link highlight */
+.pawhub-link.active {
+  color: #ffffff !important;
+  background: #2563eb !important;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+}
+
+/* ── Right Action Area ─────────────────────────────────── */
+.pawhub-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pawhub-pawmatch-btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pawhub-pawmatch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(16,185,129,0.45);
+}
+
+.pawhub-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--paw-border);
+  background: var(--paw-card-bg);
+  color: var(--paw-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.pawhub-icon-btn:hover {
+  border-color: #2563eb;
+  background: rgba(37, 99, 235, 0.07);
+  color: #2563eb;
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .pawhub-icon-btn {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .pawhub-icon-btn:hover {
+  color: #60a5fa !important;
+  border-color: #60a5fa !important;
+}
+
+.pawhub-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  background: #f43f5e;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+}
+
+/* Mobile hamburger — hidden on desktop */
+.pawhub-mobile-toggle {
+  display: none;
+}
+
+/* Mobile dropdown */
+.pawhub-mobile-dropdown {
+  background: var(--paw-card-bg);
+  border-top: 1px solid var(--paw-border);
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pawhub-mobile-dropdown a {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--paw-text);
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.pawhub-mobile-dropdown a:hover {
+  background: rgba(37,99,235,0.08);
+  color: #2563eb;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .pawhub-nav-links { gap: 2px; }
+  .pawhub-link { font-size: 13px; padding: 6px 10px; }
+}
+
+@media (max-width: 900px) {
+  .pawhub-nav-links { display: none; }
+  .pawhub-mobile-toggle { display: flex; }
+  .pawhub-pawmatch-btn { display: none; }
+}
+
+/* HIDE the old leftover drawer strip */
+.paw-mobile-drawer, .paw-nav-wrapper, .paw-universal-nav { display: none !important; }
+
+/* =========================================================
+   WISHLIST DRAWER
+   ========================================================= */
+.paw-wishlist-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10005;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.paw-wishlist-overlay.open { opacity: 1; pointer-events: auto; }
+
+.paw-wishlist-drawer {
+  position: fixed; top: 0; right: -420px;
+  width: min(400px, 92vw); height: 100%;
+  background: var(--paw-card-bg);
+  box-shadow: -10px 0 35px rgba(0,0,0,0.2);
+  z-index: 10010; padding: 24px;
+  display: flex; flex-direction: column;
+  transition: right 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  border-left: 1px solid var(--paw-border);
+}
+.paw-wishlist-drawer.open { right: 0; }
+.paw-drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 16px; border-bottom: 1px solid var(--paw-border);
+}
+.paw-drawer-header h3 { font-family: 'Sora',sans-serif; font-size: 20px; margin: 0; color: var(--paw-text); }
+.paw-drawer-close { background: transparent; border: 0; font-size: 26px; color: var(--paw-text-muted); cursor: pointer; }
+.paw-wishlist-items { flex: 1; overflow-y: auto; margin: 16px 0; }
+.paw-fav-card {
+  display: flex; align-items: center; gap: 12px; padding: 10px;
+  border-radius: 14px; border: 1px solid var(--paw-border); margin-bottom: 10px; background: var(--paw-bg);
+}
+.paw-fav-card img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; }
+.paw-fav-info { flex: 1; }
+.paw-fav-info h4 { margin: 0; font-size: 15px; color: var(--paw-text); }
+.paw-fav-info p { margin: 2px 0 0; font-size: 12px; color: var(--paw-text-muted); }
+.paw-fav-remove { background: transparent; border: 0; font-size: 20px; color: #f43f5e; cursor: pointer; }
+
+/* =========================================================
+   PAWMATCH QUIZ MODAL
+   ========================================================= */
+.paw-quiz-modal {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.7);
+  backdrop-filter: blur(8px);
+  z-index: 10020; display: none;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.paw-quiz-modal.open { display: flex; }
+.paw-quiz-box {
+  background: var(--paw-card-bg); border: 1px solid var(--paw-border);
+  border-radius: 28px; padding: 36px; max-width: 520px; width: 100%;
+  position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.35); text-align: center;
+}
+.paw-quiz-close { position: absolute; top: 18px; right: 18px; background: transparent; border: 0; font-size: 26px; color: var(--paw-text-muted); cursor: pointer; }
+.paw-quiz-step { display: none; }
+.paw-quiz-step.active { display: block; }
+.paw-quiz-box h3 { font-family:'Sora',sans-serif; font-size: 24px; color: var(--paw-text); margin-bottom: 8px; }
+.paw-quiz-box p { color: var(--paw-text-muted); font-size: 14px; margin-bottom: 24px; }
+.paw-quiz-options { display: flex; flex-direction: column; gap: 12px; }
+.paw-quiz-btn { padding: 14px 20px; border-radius: 16px; border: 2px solid var(--paw-border); background: var(--paw-bg); color: var(--paw-text); font-size: 15px; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.2s; }
+.paw-quiz-btn:hover { border-color: #2563eb; background: rgba(37,99,235,0.08); transform: translateX(4px); }
+
+/* Confetti */
+.paw-confetti { position: fixed; width: 10px; height: 10px; z-index: 10010; pointer-events: none; animation: confettiFall 2.5s linear forwards; }
+@keyframes confettiFall { 0% { top: -10px; transform: rotate(0deg); opacity: 1; } 100% { top: 110vh; transform: rotate(720deg); opacity: 0; } }
+
+
+/* =========================================================
+   PAWHUB UNIFIED PREMIUM FOOTER (Zero Orange)
+   ========================================================= */
+.pawhub-unified-footer {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 65px 6% 30px;
+  font-family: 'Outfit', -apple-system, sans-serif;
+  margin-top: 80px;
+  border-top: 1px solid rgba(51, 65, 85, 0.7);
+}
+
+[data-theme="dark"] .pawhub-unified-footer {
+  background: #060913;
+  border-top-color: #1e293b;
+}
+
+.pawhub-footer-container {
+  max-width: 1350px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 2fr;
+  gap: 50px;
+  margin-bottom: 45px;
+}
+
+.pawhub-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+}
+
+.footer-brand-header h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.footer-brand-header span {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: block;
+}
+
+.footer-tagline {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 0;
+}
+
+.footer-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #10b981;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.pawhub-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.footer-col h4 {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 16px 0;
+}
+
+.footer-col a {
+  display: block;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: #60a5fa;
+  transform: translateX(3px);
+}
+
+.pawhub-footer-bottom {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding-top: 25px;
+  border-top: 1px solid rgba(51, 65, 85, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.pawhub-footer-bottom p {
+  margin: 0;
+}
+
+.footer-meta-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-meta-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-meta-links a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 850px) {
+  .pawhub-footer-container {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .pawhub-footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .pawhub-footer-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* User Pill / Logout Button in Nav */
+.pawhub-user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: #2563eb;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.pawhub-user-pill:hover {
+  background: #f43f5e;
+  border-color: #f43f5e;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+}
+[data-theme="dark"] .pawhub-user-pill {
+  background: rgba(96, 165, 250, 0.15);
+  border-color: rgba(96, 165, 250, 0.3);
+  color: #60a5fa;
+}
+[data-theme="dark"] .pawhub-user-pill:hover {
+  background: #f43f5e;
+  border-color: #f43f5e;
+  color: #ffffff;
+}

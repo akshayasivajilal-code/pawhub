@@ -1,0 +1,1189 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: #f4f8ff;
+    color: #172554;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    height: 76px;
+    width: 100%;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e8eef8;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    padding: 0 6%;
+
+    box-shadow:
+        0 4px 18px rgba(37, 88, 249, 0.06);
+
+    position: relative;
+    z-index: 1000;
+}
+
+
+/* Logo */
+
+.logo-area {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    gap: 11px;
+}
+
+.logo-paws {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #5b82ff
+        );
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.20);
+}
+
+.brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+
+    justify-content: center;
+
+    line-height: 1;
+}
+
+.brand-text strong {
+    font-family: 'Sora', sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #172554;
+}
+
+.brand-text small {
+    color: #8a98ad;
+
+    font-size: 8px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   NAV ICONS
+========================================================= */
+
+.nav-icons {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    gap: 9px;
+
+    margin-left: auto;
+}
+
+.icon-btn {
+    width: 39px !important;
+    height: 39px !important;
+
+    border: 1px solid #e3eaf5;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: 0.25s ease;
+}
+
+.icon-btn:hover {
+    background: #f1f6ff;
+
+    border-color: #c9d8ff;
+
+    transform: translateY(-2px);
+}
+
+.wishlist-nav-btn {
+    color: #ef4444 !important;
+
+    font-size: 18px !important;
+}
+
+.wishlist-nav-btn:hover {
+    background: #fff1f2;
+
+    border-color: #fecdd3;
+}
+
+
+/* =========================================================
+   MAIN CHECKOUT
+========================================================= */
+
+.checkout-page {
+    width: 100%;
+
+    min-height: calc(100vh - 76px);
+
+    padding: 42px 5% 70px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.checkout-header {
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+.checkout-header h1 {
+    font-family: 'Sora', sans-serif;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    color: #172554;
+
+    margin-bottom: 7px;
+}
+
+.checkout-header p {
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   MAIN TWO COLUMN LAYOUT
+========================================================= */
+
+.checkout-layout {
+    width: 100%;
+
+    max-width: 1080px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        410px
+        minmax(0, 1fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.checkout-card {
+    background: #ffffff;
+
+    border: 1px solid #e5ebf5;
+
+    border-radius: 20px;
+
+    padding: 23px;
+
+    box-shadow:
+        0 12px 35px rgba(37, 88, 249, 0.07);
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.checkout-card h2 {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-family: 'Sora', sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: #172554;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   ORDER ITEMS
+========================================================= */
+
+#checkoutItems {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.checkout-item {
+    min-height: 74px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px;
+
+    background: #f8faff;
+
+    border: 1px solid #e9eef7;
+
+    border-radius: 14px;
+
+    transition: 0.2s ease;
+}
+
+.checkout-item:hover {
+    border-color: #d5e1ff;
+
+    transform: translateY(-1px);
+}
+
+.checkout-item img {
+    width: 62px;
+    height: 62px;
+
+    object-fit: cover;
+
+    border-radius: 11px;
+
+    border: 1px solid #e1e8f3;
+
+    flex-shrink: 0;
+}
+
+.item-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.item-info h3 {
+    color: #172554;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.item-info p {
+    color: #64748b;
+
+    font-size: 11px;
+}
+
+.checkout-item > strong {
+    color: #2563eb;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.total-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 17px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #e8eef7;
+}
+
+.total-row span {
+    color: #64748b;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+.total-row strong {
+    color: #2563eb;
+
+    font-family: 'Sora', sans-serif;
+
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+#checkoutForm {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+
+    color: #334155;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+
+    border: 1px solid #dfe7f2;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #172554;
+
+    font-size: 12px;
+
+    padding: 11px 12px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.form-group input {
+    height: 42px;
+}
+
+.form-group textarea {
+    min-height: 82px;
+
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #7da2ff;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.07);
+}
+
+
+/* =========================================================
+   PAYMENT SELECT
+========================================================= */
+
+.form-group select {
+    height: 42px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   UPI SECTION
+========================================================= */
+
+.upi-section {
+    margin-top: 13px;
+
+    padding: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f6f9ff,
+            #f1f6ff
+        );
+
+    border: 1px solid #dce7fb;
+
+    border-radius: 16px;
+
+    position: relative;
+
+    z-index: 10;
+}
+
+
+/* UPI title */
+
+.upi-title {
+    margin-bottom: 14px;
+}
+
+.upi-title strong {
+    display: block;
+
+    color: #172554;
+
+    font-family: 'Sora', sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.upi-title span {
+    display: block;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   UPI APPS
+========================================================= */
+
+.upi-label {
+    display: block;
+
+    color: #334155;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    margin-bottom: 7px;
+}
+
+.upi-apps {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 7px;
+}
+
+.upi-app {
+    min-height: 42px;
+
+    border: 1px solid #dfe7f2;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    position: relative;
+
+    z-index: 20;
+}
+
+.upi-app:hover {
+    border-color: #9db8ff;
+
+    background: #f8faff;
+}
+
+.upi-app input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.upi-app input:checked + span {
+    color: #2563eb;
+}
+
+.upi-app:has(input:checked) {
+    border-color: #6f96ff;
+
+    background: #eef4ff;
+
+    box-shadow:
+        0 0 0 1px #6f96ff;
+}
+
+.upi-app span {
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: #334155;
+}
+
+
+/* =========================================================
+   UPI DIVIDER
+========================================================= */
+
+.upi-divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 13px 0;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.upi-divider::before,
+.upi-divider::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: #dce4f0;
+}
+
+
+/* =========================================================
+   UPI INPUT
+========================================================= */
+
+.upi-input {
+    width: 100%;
+
+    height: 42px;
+
+    border: 1px solid #dfe7f2;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    padding: 0 12px;
+
+    color: #172554;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.upi-input:focus {
+    border-color: #7da2ff;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.07);
+}
+
+
+/* =========================================================
+   CONTINUE TO PAY
+========================================================= */
+
+.pay-now-btn {
+    width: 100% !important;
+
+    min-height: 42px !important;
+
+    margin-top: 11px;
+
+    padding: 11px 15px !important;
+
+    border: none !important;
+
+    border-radius: 11px !important;
+
+    background: #2563eb !important;
+
+    color: #ffffff !important;
+
+    font-size: 12px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+
+    position: relative !important;
+
+    z-index: 99999 !important;
+
+    pointer-events: auto !important;
+
+    box-shadow:
+        0 7px 17px rgba(37, 99, 235, 0.20);
+
+    transition: 0.2s ease;
+}
+
+.pay-now-btn:hover {
+    background: #1d4ed8 !important;
+
+    transform: translateY(-1px);
+}
+
+.pay-now-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   UPI NOTE
+========================================================= */
+
+.upi-note {
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   COD BUTTON
+========================================================= */
+
+.place-order-btn {
+    width: 100%;
+
+    min-height: 44px;
+
+    margin-top: 15px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 17px rgba(37, 99, 235, 0.18);
+
+    transition: 0.2s ease;
+}
+
+.place-order-btn:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PAYMENT MODAL
+========================================================= */
+
+#paymentModal {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    width: 100vw !important;
+
+    height: 100vh !important;
+
+    z-index: 999999 !important;
+
+    pointer-events: auto !important;
+}
+
+.payment-modal-overlay {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    width: 100vw !important;
+
+    height: 100vh !important;
+
+    background:
+        rgba(15, 23, 42, 0.58) !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    padding: 20px !important;
+
+    z-index: 999999 !important;
+}
+
+.payment-modal-box {
+    width: min(410px, 92vw) !important;
+
+    background: #ffffff !important;
+
+    border-radius: 23px !important;
+
+    padding: 28px !important;
+
+    position: relative !important;
+
+    z-index: 1000000 !important;
+
+    text-align: center !important;
+
+    box-shadow:
+        0 30px 80px
+        rgba(15, 23, 42, 0.28) !important;
+
+    animation:
+        paymentPopup
+        0.25s ease-out !important;
+}
+
+@keyframes paymentPopup {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(18px)
+            scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* Modal close */
+
+.payment-close {
+    position: absolute !important;
+
+    top: 13px !important;
+
+    right: 15px !important;
+
+    width: 33px !important;
+
+    height: 33px !important;
+
+    border: none !important;
+
+    border-radius: 50% !important;
+
+    background: #f1f5f9 !important;
+
+    color: #64748b !important;
+
+    font-size: 22px !important;
+
+    cursor: pointer !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+}
+
+
+/* Modal icon */
+
+.payment-icon {
+    width: 60px !important;
+
+    height: 60px !important;
+
+    margin: 0 auto 14px !important;
+
+    border-radius: 17px !important;
+
+    background: #eef4ff !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    font-size: 28px !important;
+}
+
+.payment-modal-box h2 {
+    font-family: 'Sora', sans-serif !important;
+
+    color: #172554 !important;
+
+    font-size: 23px !important;
+
+    margin-bottom: 6px !important;
+}
+
+.payment-subtitle {
+    color: #64748b !important;
+
+    font-size: 13px !important;
+
+    margin-bottom: 18px !important;
+}
+
+
+/* Modal amount */
+
+.payment-amount {
+    background: #f5f8ff !important;
+
+    border: 1px solid #dbe6ff !important;
+
+    border-radius: 15px !important;
+
+    padding: 14px !important;
+
+    margin-bottom: 13px !important;
+}
+
+.payment-amount span {
+    display: block !important;
+
+    color: #64748b !important;
+
+    font-size: 11px !important;
+
+    margin-bottom: 4px !important;
+}
+
+.payment-amount strong {
+    display: block !important;
+
+    color: #2563eb !important;
+
+    font-family: 'Sora', sans-serif !important;
+
+    font-size: 26px !important;
+}
+
+
+/* Modal details */
+
+.payment-details {
+    text-align: left !important;
+
+    border: 1px solid #e5eaf2 !important;
+
+    border-radius: 13px !important;
+
+    padding: 11px 14px !important;
+
+    margin-bottom: 13px !important;
+}
+
+.payment-details > div {
+    display: flex !important;
+
+    justify-content: space-between !important;
+
+    gap: 15px !important;
+
+    padding: 5px 0 !important;
+}
+
+.payment-details span {
+    color: #64748b !important;
+
+    font-size: 12px !important;
+}
+
+.payment-details strong {
+    color: #172554 !important;
+
+    font-size: 12px !important;
+}
+
+
+/* Warning */
+
+.payment-warning {
+    background: #fff8e8 !important;
+
+    color: #8a6200 !important;
+
+    border-radius: 11px !important;
+
+    padding: 10px !important;
+
+    margin-bottom: 15px !important;
+
+    font-size: 10px !important;
+
+    line-height: 1.5 !important;
+}
+
+
+/* Confirm */
+
+.confirm-payment-btn {
+    width: 100% !important;
+
+    min-height: 43px !important;
+
+    border: none !important;
+
+    border-radius: 11px !important;
+
+    background: #2563eb !important;
+
+    color: #ffffff !important;
+
+    font-size: 13px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer !important;
+
+    margin-bottom: 9px !important;
+
+    transition: 0.2s ease;
+}
+
+.confirm-payment-btn:hover {
+    background: #1d4ed8 !important;
+
+    transform: translateY(-1px);
+}
+
+.confirm-payment-btn:disabled {
+    opacity: 0.65 !important;
+
+    cursor: not-allowed !important;
+}
+
+
+/* Cancel */
+
+.cancel-payment-btn {
+    width: 100% !important;
+
+    min-height: 41px !important;
+
+    border: 1px solid #dbe2ec !important;
+
+    border-radius: 11px !important;
+
+    background: #ffffff !important;
+
+    color: #64748b !important;
+
+    font-size: 12px !important;
+
+    font-weight: 600 !important;
+
+    cursor: pointer !important;
+}
+
+.cancel-payment-btn:hover {
+    background: #f8fafc !important;
+}
+
+
+/* =========================================================
+   EMPTY CART
+========================================================= */
+
+.empty {
+    text-align: center;
+
+    padding: 30px 10px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+
+        max-width: 620px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .navbar {
+        height: 70px;
+
+        padding: 0 4%;
+    }
+
+    .logo-paws {
+        width: 40px;
+        height: 40px;
+
+        font-size: 20px;
+    }
+
+    .brand-text strong {
+        font-size: 14px;
+    }
+
+    .brand-text small {
+        font-size: 7px;
+    }
+
+    .nav-icons {
+        gap: 6px;
+    }
+
+    .icon-btn {
+        width: 35px !important;
+        height: 35px !important;
+
+        font-size: 15px;
+    }
+
+    .checkout-page {
+        padding:
+            30px 4% 50px;
+    }
+
+    .checkout-header h1 {
+        font-size: 27px;
+    }
+
+    .checkout-card {
+        padding: 18px;
+
+        border-radius: 17px;
+    }
+
+    .upi-apps {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-modal-box {
+        width: 94vw !important;
+
+        padding: 23px !important;
+    }
+}

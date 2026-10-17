@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAWHUB | Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .splash-screen {
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .enter-hint {
+            margin-top: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2563eb;
+            background: rgba(37, 99, 235, 0.08);
+            display: inline-block;
+            padding: 8px 22px;
+            border-radius: 20px;
+            animation: pulse 2s infinite ease-in-out;
+            letter-spacing: 0.5px;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="splash-screen" onclick="goToNext()">
+        <div class="logo-box">
+            <img src="images/logo1.png" class="paw-logo" alt="PAWHUB Logo" onerror="this.src='logo1.png'">
+            <h1>PAWHUB</h1>
+            <p>Every Paw Deserves a Loving Home</p>
+            <div class="enter-hint">Click anywhere or press Enter to begin 🐾</div>
+        </div>
+    </section>
+
+    <script>
+        function checkLoggedIn() {
+            var isAuth = localStorage.getItem('pawhub_logged_in') === 'true';
+            var rawUser = localStorage.getItem('loggedInUser');
+            var user = null;
+            try { user = rawUser ? JSON.parse(rawUser) : null; } catch(e) {}
+            return isAuth && user !== null;
+        }
+
+        window.goToNext = function () {
+            if (checkLoggedIn()) {
+                window.location.replace('home.html');
+            } else {
+                window.location.replace('login.html');
+            }
+        };
+
+        // Auto redirect after 2 seconds
+        setTimeout(function () {
+            window.goToNext();
+        }, 2200);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                window.goToNext();
+            }
+        });
+    </script>
+</body>
+</html>
