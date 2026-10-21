@@ -97,10 +97,22 @@
     }
 
     // Clean any example phone numbers from session
-    if (user && (user.phone === '+91 99999 88888' || user.phone === '+91 98765 43210')) {
+    if (user && (user.phone === '+91 99999 88888' || user.phone === '+91 98765 43210' || user.phone === '99999 88888' || user.phone === '98765 43210')) {
       user.phone = '';
       try { localStorage.setItem('loggedInUser', JSON.stringify(user)); } catch (e) {}
     }
+    // Also sanitize the demo account in the registered users list
+    try {
+      var regUsers = JSON.parse(localStorage.getItem('pawhub_registered_users') || '[]');
+      var regChanged = false;
+      regUsers.forEach(function(ru) {
+        if (ru.phone === '+91 99999 88888' || ru.phone === '+91 98765 43210') {
+          ru.phone = '';
+          regChanged = true;
+        }
+      });
+      if (regChanged) { localStorage.setItem('pawhub_registered_users', JSON.stringify(regUsers)); }
+    } catch (e) {}
 
     refreshThemeIcons(document.documentElement.getAttribute('data-theme') === 'dark');
     updateWishlistUI();
