@@ -202,7 +202,7 @@
   var quizState = { step: 1, answers: {} };
 
   window.openPawMatchQuiz = function () {
-    var modal = document.getElementById('paw-match-modal');
+    var modal = document.getElementById('paw-quiz-modal');
     if (!modal) return;
     quizState = { step: 1, answers: {} };
     showQuizStep(1);
@@ -210,7 +210,7 @@
   };
 
   window.closePawMatchQuiz = function () {
-    var modal = document.getElementById('paw-match-modal');
+    var modal = document.getElementById('paw-quiz-modal');
     if (modal) modal.style.display = 'none';
   };
 
