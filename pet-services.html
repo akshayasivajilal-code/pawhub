@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -24,30 +24,153 @@
           href="style/pet-services.css">
 
     <link rel="stylesheet" href="style/pawhub-global.css">
-    <!-- Cache-proof Modal Button Styles -->
+    <!-- Cache-proof Modal & Booking Styles -->
     <style>
+        /* ================= Booking Modal & Backdrop ================= */
+        .booking-modal {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: rgba(15, 23, 42, 0.65) !important;
+            backdrop-filter: blur(6px) !important;
+            display: none;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 16px !important;
+            z-index: 999999 !important; /* Above navbar (z-index 10000) */
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease !important;
+        }
+        .booking-modal.show {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+        .booking-backdrop {
+            position: absolute !important;
+            inset: 0 !important;
+            z-index: 1 !important;
+            background: transparent !important;
+        }
+
+        /* ================= Compact Sized Booking Box ================= */
+        .booking-box {
+            position: relative !important;
+            z-index: 10 !important;
+            width: 100% !important;
+            max-width: 500px !important;
+            max-height: 86vh !important;
+            overflow-y: auto !important;
+            padding: 22px 26px !important;
+            border-radius: 20px !important;
+            background: #ffffff !important;
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35) !important;
+            transform: translateY(14px) scale(0.98) !important;
+            transition: transform 0.25s ease !important;
+            box-sizing: border-box !important;
+        }
+        .booking-modal.show .booking-box {
+            transform: translateY(0) scale(1) !important;
+        }
+
+        /* ================= Prominent Visible Close Cross Button ================= */
+        .booking-close {
+            position: absolute !important;
+            top: 14px !important;
+            right: 14px !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            background: #f1f5f9 !important;
+            border: 1.5px solid #cbd5e1 !important;
+            color: #1e293b !important;
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            z-index: 100 !important;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1) !important;
+            transition: all 0.2s ease !important;
+        }
+        .booking-close:hover {
+            background: #fee2e2 !important;
+            color: #ef4444 !important;
+            border-color: #fca5a5 !important;
+            transform: scale(1.08) !important;
+        }
+
+        /* Compact Header Elements */
+        .booking-icon {
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 12px !important;
+            font-size: 22px !important;
+            margin-bottom: 8px !important;
+        }
+        .booking-box > h2 {
+            font-size: 22px !important;
+            margin-top: 4px !important;
+            margin-bottom: 4px !important;
+        }
+        .booking-subtitle {
+            font-size: 12.5px !important;
+            margin-top: 2px !important;
+            margin-bottom: 10px !important;
+        }
+        .selected-clinic-box {
+            margin-top: 10px !important;
+            padding: 10px 14px !important;
+            border-radius: 12px !important;
+        }
+        #bookingForm {
+            gap: 12px !important;
+            margin-top: 12px !important;
+        }
+        .form-group label {
+            font-size: 11.5px !important;
+            margin-bottom: 4px !important;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 9px 12px !important;
+            font-size: 12.5px !important;
+            border-radius: 10px !important;
+        }
+        .form-group textarea {
+            min-height: 60px !important;
+        }
         .form-group.full {
             grid-column: 1 / -1 !important;
             width: 100% !important;
         }
+
+        /* Modal Actions */
         .booking-actions {
             grid-column: 1 / -1 !important;
             width: 100% !important;
             display: flex !important;
             align-items: center !important;
-            gap: 14px !important;
-            margin-top: 18px !important;
-            padding-top: 16px !important;
+            gap: 12px !important;
+            margin-top: 12px !important;
+            padding-top: 12px !important;
             border-top: 1px solid #e2e8f0 !important;
         }
         .cancel-booking-btn {
             flex: 0 0 auto !important;
-            padding: 13px 26px !important;
-            border-radius: 14px !important;
+            padding: 11px 22px !important;
+            border-radius: 12px !important;
             border: 1.5px solid #cbd5e1 !important;
             background: #ffffff !important;
             color: #475569 !important;
-            font-size: 14.5px !important;
+            font-size: 14px !important;
             font-weight: 600 !important;
             cursor: pointer !important;
             transition: all 0.25s ease !important;
@@ -65,14 +188,14 @@
         .confirm-booking-btn {
             flex: 1 !important;
             border: none !important;
-            border-radius: 14px !important;
-            padding: 14px 28px !important;
+            border-radius: 12px !important;
+            padding: 12px 22px !important;
             background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
             color: #ffffff !important;
-            font-size: 14.5px !important;
+            font-size: 14px !important;
             font-weight: 700 !important;
             cursor: pointer !important;
-            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35) !important;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35) !important;
             transition: all 0.25s ease !important;
             display: inline-flex !important;
             align-items: center !important;
@@ -81,7 +204,44 @@
         }
         .confirm-booking-btn:hover {
             transform: translateY(-2px) !important;
-            box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45) !important;
+            box-shadow: 0 12px 26px rgba(37, 99, 235, 0.45) !important;
+        }
+
+        /* Dark Theme Support */
+        [data-theme="dark"] .booking-box {
+            background: #0f172a !important;
+            border: 1px solid #334155 !important;
+            color: #f8fafc !important;
+        }
+        [data-theme="dark"] .booking-close {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+            color: #cbd5e1 !important;
+        }
+        [data-theme="dark"] .booking-close:hover {
+            background: #7f1d1d !important;
+            color: #fca5a5 !important;
+            border-color: #ef4444 !important;
+        }
+        [data-theme="dark"] .booking-box > h2 {
+            color: #f8fafc !important;
+        }
+        [data-theme="dark"] .booking-subtitle {
+            color: #94a3b8 !important;
+        }
+        [data-theme="dark"] .selected-clinic-box {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        [data-theme="dark"] .form-group label {
+            color: #cbd5e1 !important;
+        }
+        [data-theme="dark"] .form-group input,
+        [data-theme="dark"] .form-group select,
+        [data-theme="dark"] .form-group textarea {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+            color: #f8fafc !important;
         }
         [data-theme="dark"] .booking-actions {
             border-top-color: #334155 !important;
@@ -656,9 +816,11 @@
         <button
             type="button"
             class="booking-close"
-            onclick="closeBooking()">
+            id="bookingCloseBtn"
+            onclick="closeBooking()"
+            aria-label="Close booking modal">
 
-            ×
+            ✕
 
         </button>
 
@@ -993,67 +1155,48 @@ function getLoggedInUserId() {
 ===================================================== */
 
 function openBooking(serviceName) {
-
-    const modal =
-        document.getElementById("bookingModal");
-
+    const modal = document.getElementById("bookingModal");
     if (!modal) {
-
         console.error("bookingModal not found");
-
         return;
     }
-
 
     /* LOGIN CHECK */
-
-    const loggedInUser =
-        getLoggedInUser();
-
+    const loggedInUser = getLoggedInUser();
     if (!loggedInUser || !loggedInUser.id) {
-
-        alert(
-            "Please login before booking an appointment. 🐾"
-        );
-
+        alert("Please login before booking an appointment. 🐾");
         window.location.href = "login.html";
-
         return;
     }
 
-
     /* SET SERVICE */
-
-    const serviceSelect =
-        document.getElementById("service");
-
+    const serviceSelect = document.getElementById("service");
     if (serviceSelect && serviceName) {
-
         serviceSelect.value = serviceName;
     }
-
-
-    /* SET USER NAME */
-
-    const userNameInput =
-        document.getElementById("userName");
-
-    if (
-        userNameInput &&
-        loggedInUser.name
-    ) {
-
-        userNameInput.value =
-            loggedInUser.name;
+    const serviceLabel = document.getElementById("bookingSelectedService");
+    if (serviceLabel && serviceName) {
+        serviceLabel.textContent = serviceName;
     }
 
+    /* PREFILL USER DETAILS */
+    const userNameInput = document.getElementById("userName");
+    if (userNameInput && loggedInUser.name && !userNameInput.value) {
+        userNameInput.value = loggedInUser.name;
+    }
+    const phoneInput = document.getElementById("phone");
+    if (phoneInput && loggedInUser.phone && !phoneInput.value) {
+        phoneInput.value = loggedInUser.phone;
+    }
 
     /* SHOW MODAL */
-
-    modal.classList.add("show");
-
+    modal.style.display = "flex";
+    requestAnimationFrame(function() {
+        modal.classList.add("show");
+    });
     document.body.classList.add("modal-open");
 }
+window.openBooking = openBooking;
 
 
 /* =====================================================
@@ -1061,17 +1204,18 @@ function openBooking(serviceName) {
 ===================================================== */
 
 function closeBooking() {
-    closeBookingForm();
-}
-window.closeBooking = closeBooking;
-
-function closeBookingForm() {
     const modal = document.getElementById("bookingModal");
     if (!modal) return;
     modal.classList.remove("show");
     document.body.classList.remove("modal-open");
+    setTimeout(function() {
+        if (!modal.classList.contains("show")) {
+            modal.style.display = "none";
+        }
+    }, 250);
 }
-window.closeBookingForm = closeBookingForm;
+window.closeBooking = closeBooking;
+window.closeBookingForm = closeBooking;
 
 // Also allow closing by pressing the Escape key
 document.addEventListener("keydown", function(e) {
@@ -1081,293 +1225,132 @@ document.addEventListener("keydown", function(e) {
 });
 
 
-    modal.classList.remove("show");
-
-    document.body.classList.remove("modal-open");
-}
-
-
 /* =====================================================
    BOOKING SUBMIT
 ===================================================== */
 
 async function submitBooking(event) {
-
     event.preventDefault();
-
 
     /* ================================================
        GET LOGGED-IN USER
     ================================================ */
+    const loggedInUser = getLoggedInUser();
 
-    const loggedInUser =
-        getLoggedInUser();
-
-
-    /* ================================================
-       LOGIN CHECK
-    ================================================ */
-
-    if (
-        !loggedInUser ||
-        !loggedInUser.id
-    ) {
-
-        alert(
-            "Please login before booking an appointment. 🐾"
-        );
-
+    if (!loggedInUser || !loggedInUser.id) {
+        alert("Please login before booking an appointment. 🐾");
         window.location.href = "login.html";
-
         return;
     }
-
 
     /* ================================================
        GET FORM VALUES
     ================================================ */
-
-    const userName =
-        document
-            .getElementById("userName")
-            .value
-            .trim();
-
-
-    const petName =
-        document
-            .getElementById("petName")
-            .value
-            .trim();
-
-
-    const service =
-        document
-            .getElementById("service")
-            .value;
-
-
-    const serviceDate =
-        document
-            .getElementById("serviceDate")
-            .value;
-
-
-    const serviceTime =
-        document
-            .getElementById("serviceTime")
-            .value;
-
-
-    const phone =
-        document
-            .getElementById("phone")
-            .value
-            .trim();
-
-
-    const note =
-        document
-            .getElementById("note")
-            .value
-            .trim();
-
+    const userName = document.getElementById("userName").value.trim();
+    const petName = document.getElementById("petName").value.trim();
+    const service = document.getElementById("service").value;
+    const serviceDate = document.getElementById("serviceDate").value;
+    const serviceTime = document.getElementById("serviceTime").value;
+    const phone = document.getElementById("phone").value.trim();
+    const note = document.getElementById("note").value.trim();
 
     /* ================================================
        VALIDATION
     ================================================ */
-
-    if (
-        !userName ||
-        !petName ||
-        !service ||
-        !serviceDate ||
-        !serviceTime ||
-        !phone
-    ) {
-
-        alert(
-            "Please fill all required details. 🐾"
-        );
-
+    if (!userName || !petName || !service || !serviceDate || !serviceTime || !phone) {
+        alert("Please fill all required details. 🐾");
         return;
     }
 
-
     /* ================================================
        BOOKING OBJECT
-       IMPORTANT: userId included
     ================================================ */
-
     const booking = {
-
+        id: Date.now(),
         userId: loggedInUser.id,
-
         userName: userName,
-
+        customerName: userName,
         petName: petName,
-
         service: service,
-
         serviceDate: serviceDate,
-
+        date: serviceDate,
         serviceTime: serviceTime,
-
+        time: serviceTime,
         phone: phone,
-
-        note: note
+        note: note,
+        notes: note,
+        status: "Confirmed ✓",
+        createdAt: new Date().toISOString()
     };
 
-
-    console.log(
-        "PAWHUB BOOKING:",
-        booking
-    );
-
+    console.log("PAWHUB BOOKING CREATED:", booking);
 
     /* ================================================
-       SUBMIT BUTTON
+       ALWAYS SAVE TO LOCALSTORAGE IMMEDIATELY
+       Guarantees booking appears in My Bookings on
+       GitHub Pages and offline environments!
     ================================================ */
+    try {
+        let existingBookings = [];
+        try {
+            const raw = localStorage.getItem("pawhub_bookings");
+            if (raw) existingBookings = JSON.parse(raw);
+            if (!Array.isArray(existingBookings)) existingBookings = [];
+        } catch (e) {
+            existingBookings = [];
+        }
+        // Add newest booking to front
+        existingBookings.unshift(booking);
+        localStorage.setItem("pawhub_bookings", JSON.stringify(existingBookings));
+        console.log("Booking successfully saved to localStorage!");
+    } catch (saveErr) {
+        console.error("Failed to save booking to localStorage:", saveErr);
+    }
 
-    const submitButton =
-        document.querySelector(
-            ".confirm-booking-btn"
-        );
+    /* ================================================
+       SUBMIT BUTTON STATE
+    ================================================ */
+    const submitButton = document.querySelector(".confirm-booking-btn");
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Booking... 🐾";
+    }
 
+    /* ================================================
+       BACKGROUND BACKEND SYNC (Optional, if Spring Boot active)
+    ================================================ */
+    const isStaticHost = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+    if (!isStaticHost) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            await fetch("/api/bookings", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(booking),
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+        } catch (apiError) {
+            console.log("Backend offline; appointment saved locally.");
+        }
+    }
+
+    /* ================================================
+       SUCCESS & REDIRECT
+    ================================================ */
+    alert("✅ Appointment booked successfully! 🐾");
+    const form = document.getElementById("bookingForm");
+    if (form) form.reset();
+    closeBooking();
+
+    setTimeout(function() {
+        window.location.href = "my-bookings.html";
+    }, 350);
 
     if (submitButton) {
-
-        submitButton.disabled = true;
-
-        submitButton.textContent =
-            "Booking... 🐾";
-    }
-
-
-    /* ================================================
-       SEND TO BACKEND
-    ================================================ */
-
-    try {
-
-        const response =
-            await fetch(
-                "/api/bookings",
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify(booking)
-                }
-            );
-
-
-        /* ============================================
-           BACKEND ERROR
-        ============================================ */
-
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
-
-            console.error(
-                "Booking API error:",
-                errorText
-            );
-
-            throw new Error(
-                "Booking failed: " +
-                response.status
-            );
-        }
-
-
-        /* ============================================
-           SAVED BOOKING
-        ============================================ */
-
-        const savedBooking =
-            await response.json();
-
-
-        console.log(
-            "BOOKING SAVED:",
-            savedBooking
-        );
-
-
-        /* ============================================
-           SUCCESS
-        ============================================ */
-
-        alert(
-            "✅ Appointment booked successfully! 🐾"
-        );
-
-
-        /* ============================================
-           RESET FORM
-        ============================================ */
-
-        const form =
-            document.getElementById(
-                "bookingForm"
-            );
-
-        if (form) {
-
-            form.reset();
-        }
-
-
-        /* ============================================
-           CLOSE MODAL
-        ============================================ */
-
-        closeBookingForm();
-
-
-        /* ============================================
-           GO TO MY BOOKINGS
-        ============================================ */
-
-        setTimeout(
-            function() {
-
-                window.location.href =
-                    "my-bookings.html";
-
-            },
-            300
-        );
-
-    }
-
-    catch (error) {
-        console.warn("Backend offline, appointment saved locally to My Bookings!");
-        alert("✅ Appointment booked successfully! 🐾");
-        const form = document.getElementById("bookingForm");
-        if (form) form.reset();
-        closeBookingForm();
-        setTimeout(function() { window.location.href = "my-bookings.html"; }, 400);
-    }
-
-    finally {
-
-        if (submitButton) {
-
-            submitButton.disabled = false;
-
-            submitButton.textContent =
-                "Confirm Appointment 🐾";
-        }
+        submitButton.disabled = false;
+        submitButton.textContent = "Confirm Appointment 🐾";
     }
 }
 

@@ -1275,89 +1275,105 @@ function getLoggedInUser() {
 ===================================================== */
 
 async function loadBookings() {
-    const loggedInUser = getLoggedInUser();
     const loading = document.getElementById("loadingState");
     const empty = document.getElementById("emptyState");
     const error = document.getElementById("errorState");
     const container = document.getElementById("bookingsContainer");
 
-    if (loading) loading.style.display = "block";
-    if (empty) empty.style.display = "none";
-    if (error) error.style.display = "none";
-
-    let bookings = [];
-
-    // 1. Try reading from localStorage (offline / standalone file:// mode support)
     try {
-        const stored = localStorage.getItem("pawhub_bookings");
-        if (stored) {
-            bookings = JSON.parse(stored);
-        }
-    } catch (e) {
-        bookings = [];
-    }
+        const loggedInUser = getLoggedInUser();
 
-    // 2. If no bookings stored yet, seed default sample bookings for a polished experience!
-    if (!bookings || bookings.length === 0) {
-        const uName = loggedInUser ? (loggedInUser.name || "Pet Lover") : "Pet Lover";
-        const uPhone = loggedInUser ? (loggedInUser.phone || "+91 98765 43210") : "+91 98765 43210";
-        bookings = [
-            {
-                id: 101,
-                userId: loggedInUser ? loggedInUser.id : 1,
-                userName: uName,
-                petName: "Max (Golden Retriever)",
-                service: "Full Grooming & Spa",
-                serviceDate: new Date(Date.now() + 86400000 * 2).toISOString().split("T")[0],
-                serviceTime: "10:30",
-                phone: uPhone,
-                notes: "Organic shampoo, nail trimming, and coat conditioning",
-                status: "Confirmed ✓"
-            },
-            {
-                id: 102,
-                userId: loggedInUser ? loggedInUser.id : 1,
-                userName: uName,
-                petName: "Bella (Persian Cat)",
-                service: "Veterinary Health Checkup",
-                serviceDate: new Date(Date.now() + 86400000 * 5).toISOString().split("T")[0],
-                serviceTime: "14:00",
-                phone: uPhone,
-                notes: "Annual wellness check, dental exam, and booster",
-                status: "Confirmed ✓"
-            }
-        ];
-        localStorage.setItem("pawhub_bookings", JSON.stringify(bookings));
-    }
-
-    // 3. Also try backend API in background if reachable
-    if (loggedInUser && loggedInUser.id) {
+        // 1. Try reading from localStorage immediately
+        let bookings = [];
         try {
-            const response = await fetch("/api/bookings/user/" + loggedInUser.id, {
-                method: "GET",
-                headers: { "Accept": "application/json" },
-                cache: "no-store"
-            });
-            if (response.ok) {
-                const apiBookings = await response.json();
-                if (Array.isArray(apiBookings) && apiBookings.length > 0) {
-                    bookings = apiBookings;
-                }
+            const stored = localStorage.getItem("pawhub_bookings");
+            if (stored) {
+                bookings = JSON.parse(stored);
             }
-        } catch (apiErr) {
-            // Standalone mode: using localStorage data seamlessly
-            console.log("Using local offline bookings");
+        } catch (e) {
+            bookings = [];
         }
-    }
 
-    if (loading) loading.style.display = "none";
+        if (!Array.isArray(bookings)) bookings = [];
 
-    if (!Array.isArray(bookings) || bookings.length === 0) {
-        if (empty) empty.style.display = "block";
-    } else {
-        renderBookings(bookings);
+        // 2. If no bookings stored yet, seed default sample bookings for a polished experience!
+        if (bookings.length === 0) {
+            const uName = loggedInUser ? (loggedInUser.name || "Pet Lover") : "Pet Lover";
+            const uPhone = loggedInUser ? (loggedInUser.phone || "+91 98765 43210") : "+91 98765 43210";
+            bookings = [
+                {
+                    id: 101,
+                    userId: loggedInUser ? loggedInUser.id : 1,
+                    userName: uName,
+                    petName: "Max (Golden Retriever)",
+                    service: "Full Grooming & Spa",
+                    serviceDate: new Date(Date.now() + 86400000 * 2).toISOString().split("T")[0],
+                    serviceTime: "10:30",
+                    phone: uPhone,
+                    note: "Organic shampoo, nail trimming, and coat conditioning",
+                    notes: "Organic shampoo, nail trimming, and coat conditioning",
+                    status: "Confirmed ✓"
+                },
+                {
+                    id: 102,
+                    userId: loggedInUser ? loggedInUser.id : 1,
+                    userName: uName,
+                    petName: "Bella (Persian Cat)",
+                    service: "Veterinary Health Checkup",
+                    serviceDate: new Date(Date.now() + 86400000 * 5).toISOString().split("T")[0],
+                    serviceTime: "14:00",
+                    phone: uPhone,
+                    note: "Annual wellness check, dental exam, and booster",
+                    notes: "Annual wellness check, dental exam, and booster",
+                    status: "Confirmed ✓"
+                }
+            ];
+            localStorage.setItem("pawhub_bookings", JSON.stringify(bookings));
+        }
+
+        // 3. Immediately render existing bookings & hide spinner so user NEVER waits
+        if (bookings.length > 0) {
+            renderBookings(bookings);
+            if (empty) empty.style.display = "none";
+        } else {
+            if (empty) empty.style.display = "block";
+            if (container) container.innerHTML = "";
+        }
+
+        if (loading) loading.style.display = "none";
+
+        // 4. Background check with Spring Boot backend (only if running locally, skip on static hosts)
+        const isStaticHost = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+        if (!isStaticHost && loggedInUser && loggedInUser.id) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                const response = await fetch("/api/bookings/user/" + loggedInUser.id, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" },
+                    cache: "no-store",
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                if (response.ok) {
+                    const apiBookings = await response.json();
+                    if (Array.isArray(apiBookings) && apiBookings.length > 0) {
+                        bookings = apiBookings;
+                        renderBookings(bookings);
+                    }
+                }
+            } catch (apiErr) {
+                console.log("Using local offline bookings");
+            }
+        }
+
+    } catch (err) {
+        console.error("Critical error in loadBookings:", err);
+        if (error) error.style.display = "block";
+    } finally {
+        // Redundant guarantee: loading spinner is ALWAYS hidden
+        if (loading) loading.style.display = "none";
     }
-}
 }
 
 
@@ -1366,188 +1382,92 @@ async function loadBookings() {
 ===================================================== */
 
 function renderBookings(bookings) {
-
-    const container =
-        document.getElementById(
-            "bookingsContainer"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
+    const container = document.getElementById("bookingsContainer");
+    if (!container) return;
 
     container.innerHTML = "";
 
+    bookings.forEach(function(booking) {
+        if (!booking) return;
 
-    bookings.forEach(
-        function(booking) {
+        const card = document.createElement("div");
+        card.className = "booking-card";
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+        const service = booking.service || (booking.clinic ? "Vet Visit: " + booking.clinic : "Pet Service");
+        const serviceIcon = getServiceIcon(service);
+        const customerName = booking.userName || booking.customerName || "Pet Lover";
+        const petName = booking.petName || "Pet";
+        const dateVal = booking.serviceDate || booking.date;
+        const timeVal = booking.serviceTime || booking.time;
+        const phoneVal = booking.phone || "Not provided";
+        const noteVal = booking.note || booking.notes || (booking.location ? "Location: " + booking.location : "No additional note");
+        const statusVal = booking.status || "Confirmed ✓";
 
+        card.innerHTML = `
+            <div class="booking-top">
+                <div class="service-icon">
+                    ${serviceIcon}
+                </div>
+                <div class="booking-title">
+                    <span class="booking-label">
+                        SERVICE BOOKING
+                    </span>
+                    <h3>
+                        ${escapeHTML(service)}
+                    </h3>
+                </div>
+                <div class="booking-status">
+                    ${escapeHTML(statusVal)}
+                </div>
+            </div>
 
-            card.className =
-                "booking-card";
-
-
-            const service =
-                booking.service ||
-                "Pet Service";
-
-
-            const serviceIcon =
-                getServiceIcon(
-                    service
-                );
-
-
-            card.innerHTML = `
-
-                <div class="booking-top">
-
-                    <div class="service-icon">
-
-                        ${serviceIcon}
-
-                    </div>
-
-
-                    <div class="booking-title">
-
-                        <span class="booking-label">
-
-                            SERVICE BOOKING
-
-                        </span>
-
-                        <h3>
-
-                            ${escapeHTML(service)}
-
-                        </h3>
-
-                    </div>
-
-
-                    <div class="booking-status">
-
-                        Confirmed ✓
-
-                    </div>
-
+            <div class="booking-details">
+                <div class="detail-item">
+                    <span>👤 Customer</span>
+                    <strong>
+                        ${escapeHTML(customerName)}
+                    </strong>
                 </div>
 
-
-                <div class="booking-details">
-
-                    <div class="detail-item">
-
-                        <span>👤 Customer</span>
-
-                        <strong>
-
-                            ${escapeHTML(
-                                booking.userName ||
-                                "Not provided"
-                            )}
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span>🐾 Pet</span>
-
-                        <strong>
-
-                            ${escapeHTML(
-                                booking.petName ||
-                                "Not provided"
-                            )}
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span>📅 Date</span>
-
-                        <strong>
-
-                            ${formatDate(
-                                booking.serviceDate
-                            )}
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span>⏰ Time</span>
-
-                        <strong>
-
-                            ${formatTime(
-                                booking.serviceTime
-                            )}
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span>📞 Phone</span>
-
-                        <strong>
-
-                            ${escapeHTML(
-                                booking.phone ||
-                                "Not provided"
-                            )}
-
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span>📝 Note</span>
-
-                        <strong>
-
-                            ${escapeHTML(
-                                booking.note ||
-                                "No additional note"
-                            )}
-
-                        </strong>
-
-                    </div>
-
+                <div class="detail-item">
+                    <span>🐾 Pet</span>
+                    <strong>
+                        ${escapeHTML(petName)}
+                    </strong>
                 </div>
 
-            `;
+                <div class="detail-item">
+                    <span>📅 Date</span>
+                    <strong>
+                        ${formatDate(dateVal)}
+                    </strong>
+                </div>
 
+                <div class="detail-item">
+                    <span>⏰ Time</span>
+                    <strong>
+                        ${formatTime(timeVal)}
+                    </strong>
+                </div>
 
-            container.appendChild(
-                card
-            );
+                <div class="detail-item">
+                    <span>📞 Phone</span>
+                    <strong>
+                        ${escapeHTML(phoneVal)}
+                    </strong>
+                </div>
 
-        }
-    );
+                <div class="detail-item">
+                    <span>📝 Note</span>
+                    <strong>
+                        ${escapeHTML(noteVal)}
+                    </strong>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
 }
 
 

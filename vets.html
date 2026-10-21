@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2314,73 +2314,64 @@ document
             };
 
 
+            // Always save to localStorage immediately for offline & GitHub Pages support
             try {
-
-                const response =
-                    await fetch(
-                        "/api/bookings",
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    booking
-                                )
-                        }
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Booking failed"
-                    );
-
+                let localBookings = [];
+                try {
+                    const raw = localStorage.getItem("pawhub_bookings");
+                    if (raw) localBookings = JSON.parse(raw);
+                    if (!Array.isArray(localBookings)) localBookings = [];
+                } catch (e) {
+                    localBookings = [];
                 }
-
-
-                const savedBooking =
-                    await response.json();
-
-
-                console.log(
-                    "Saved booking:",
-                    savedBooking
-                );
-
-
-                alert(
-                    "Appointment booked successfully! 🩺"
-                );
-
-
-                document
-                    .getElementById(
-                        "bookingForm"
-                    )
-                    .reset();
-
-
-                closeBookingForm();
-
+                localBookings.unshift({
+                    id: Date.now(),
+                    userId: loggedInUser.id,
+                    userName: booking.customerName,
+                    customerName: booking.customerName,
+                    phone: booking.phone,
+                    petName: booking.petName,
+                    service: "Vet Visit - " + (booking.clinic || "Clinic"),
+                    clinic: booking.clinic,
+                    serviceDate: booking.date,
+                    date: booking.date,
+                    serviceTime: booking.time,
+                    time: booking.time,
+                    note: booking.note || ("Location: " + (booking.location || "Clinic")),
+                    notes: booking.note || ("Location: " + (booking.location || "Clinic")),
+                    status: "Confirmed ✓",
+                    createdAt: new Date().toISOString()
+                });
+                localStorage.setItem("pawhub_bookings", JSON.stringify(localBookings));
+            } catch (saveErr) {
+                console.error("Local booking save failed:", saveErr);
             }
 
-            catch (error) {
-
-                console.error(
-                    error
-                );
-
-                alert(
-                    "Unable to book appointment. Please try again."
-                );
-
+            // Optional background backend sync
+            const isStaticHost = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+            if (!isStaticHost) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2000);
+                    await fetch("/api/bookings", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(booking),
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+                } catch (err) {
+                    console.log("Backend offline, appointment saved locally.");
+                }
             }
+
+            alert("Appointment booked successfully! 🩺");
+            const bForm = document.getElementById("bookingForm");
+            if (bForm) bForm.reset();
+            closeBookingForm();
+            setTimeout(function() {
+                window.location.href = "my-bookings.html";
+            }, 350);
 
         }
     );
