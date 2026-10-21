@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -811,34 +811,32 @@ async function loadMyPets() {
 
     try {
 
-        const response =
-            await fetch(
-                "/api/pets/user/" +
-                loggedInUser.id
-            );
+        /* ── READ FROM LOCALSTORAGE first (works on GitHub Pages) ── */
+        let pets = [];
+        try {
+            const stored = localStorage.getItem("pawhub_my_pets");
+            if (stored) {
+                const all = JSON.parse(stored);
+                pets = Array.isArray(all)
+                    ? all.filter(p => !p.userId || String(p.userId) === String(loggedInUser.id))
+                    : [];
+            }
+        } catch (lsErr) { pets = []; }
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load pets"
-            );
-
+        /* ── Optional Spring Boot sync (local only) ── */
+        const isStaticHost =
+            window.location.hostname.includes("github.io") ||
+            window.location.protocol === "file:";
+        if (!isStaticHost) {
+            try {
+                const r = await fetch("/api/pets/user/" + loggedInUser.id);
+                if (r.ok) { const api = await r.json(); if (Array.isArray(api) && api.length > 0) pets = api; }
+            } catch (e) { /* offline */ }
         }
 
+        countElement.textContent = pets.length;
 
-        const pets =
-            await response.json();
-
-
-        countElement.textContent =
-            pets.length;
-
-
-        if (
-            !pets ||
-            pets.length === 0
-        ) {
+        if (!pets || pets.length === 0) {
 
             container.innerHTML = `
 
@@ -975,25 +973,24 @@ async function loadRecentBookings() {
 
     try {
 
-        const response =
-            await fetch(
-                "/api/bookings/user/" +
-                loggedInUser.id
-            );
+        /* ── READ FROM LOCALSTORAGE first (works on GitHub Pages) ── */
+        let bookings = [];
+        try {
+            const stored = localStorage.getItem("pawhub_bookings");
+            if (stored) bookings = JSON.parse(stored) || [];
+            if (!Array.isArray(bookings)) bookings = [];
+        } catch (lsErr) { bookings = []; }
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load bookings"
-            );
-
+        /* ── Optional Spring Boot sync (local only) ── */
+        const isStaticHostB =
+            window.location.hostname.includes("github.io") ||
+            window.location.protocol === "file:";
+        if (!isStaticHostB) {
+            try {
+                const r = await fetch("/api/bookings/user/" + loggedInUser.id);
+                if (r.ok) { const api = await r.json(); if (Array.isArray(api) && api.length > 0) bookings = api; }
+            } catch (e) { /* offline */ }
         }
-
-
-        const bookings =
-            await response.json();
-
 
         if (
             !bookings ||

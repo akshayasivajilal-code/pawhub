@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -322,26 +322,32 @@ async function loadMyPets() {
 
     try {
 
-        /* ================= FETCH PETS ================= */
+        /* ── READ FROM LOCALSTORAGE (works on GitHub Pages) ── */
 
-        const response =
-            await fetch(
-                "/api/pets/user/" +
-                loggedInUser.id
-            );
+        let myPets = [];
+        try {
+            const stored = localStorage.getItem("pawhub_my_pets");
+            if (stored) {
+                const all = JSON.parse(stored);
+                myPets = Array.isArray(all)
+                    ? all.filter(p => !p.userId || String(p.userId) === String(loggedInUser.id))
+                    : [];
+            }
+        } catch (lsErr) { myPets = []; }
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to fetch pets"
-            );
-
+        /* ── Optional: also try Spring Boot API when running locally ── */
+        const isStaticHost =
+            window.location.hostname.includes("github.io") ||
+            window.location.protocol === "file:";
+        if (!isStaticHost) {
+            try {
+                const response = await fetch("/api/pets/user/" + loggedInUser.id);
+                if (response.ok) {
+                    const apiPets = await response.json();
+                    if (Array.isArray(apiPets) && apiPets.length > 0) myPets = apiPets;
+                }
+            } catch (e) { /* offline – use localStorage */ }
         }
-
-
-        const myPets =
-            await response.json();
 
 
         /* ================= NO PETS ================= */
@@ -575,8 +581,8 @@ async function loadMyPets() {
                 </h2>
 
                 <p>
-                    Please make sure Spring Boot
-                    is running and try again.
+                    Something went wrong loading your pets.
+                    Please try again.
                 </p>
 
                 <button
