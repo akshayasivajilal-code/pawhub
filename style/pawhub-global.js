@@ -96,6 +96,12 @@
       }
     }
 
+    // Clean any example phone numbers from session
+    if (user && (user.phone === '+91 99999 88888' || user.phone === '+91 98765 43210')) {
+      user.phone = '';
+      try { localStorage.setItem('loggedInUser', JSON.stringify(user)); } catch (e) {}
+    }
+
     refreshThemeIcons(document.documentElement.getAttribute('data-theme') === 'dark');
     updateWishlistUI();
   });

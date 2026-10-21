@@ -1,36 +1,135 @@
 /* ==========================================================================
-   PAWHUB UNIVERSAL JAVASCRIPT
-   Theme switcher, Wishlist manager, PawMatch Quiz & Navigation controller
+   PAWHUB GLOBAL JAVASCRIPT
+   Authentication Guard, Theme Toggle, Wishlist, PawMatch Quiz, Nav Active Link
    ========================================================================== */
-
 (function () {
   'use strict';
 
-  // 1. THEME MANAGER
-  const savedTheme = localStorage.getItem('pawhub_theme') || 'light';
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  // ── 0. AUTHENTICATION & ACCESS GUARD ──────────────────────────────────────
+  var publicPages = ['index.html', 'login.html', 'register.html', ''];
+  var currentFile = window.location.pathname.split('/').pop() || 'index.html';
 
-  window.togglePawTheme = function () {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('pawhub_theme', next);
-    updateThemeIcon();
+  function getCurrentUser() {
+    try {
+      var raw = localStorage.getItem('loggedInUser');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function isLoggedIn() {
+    var hasFlag = localStorage.getItem('pawhub_logged_in') === 'true';
+    var user = getCurrentUser();
+    return hasFlag && user !== null;
+  }
+
+  // Access Guard: If visiting a protected page without logging in -> redirect to login.html
+  if (!publicPages.includes(currentFile)) {
+    if (!isLoggedIn()) {
+      sessionStorage.setItem('pawhub_redirect_after_login', currentFile);
+      window.location.replace('login.html');
+      return;
+    }
+  }
+
+  window.logoutPawHub = function () {
+    if (confirm('Are you sure you want to log out of PAWHUB? 🐾')) {
+      localStorage.removeItem('loggedInUser');
+      localStorage.removeItem('pawhub_logged_in');
+      sessionStorage.removeItem('pawhub_redirect_after_login');
+      window.location.replace('login.html');
+    }
   };
 
-  function updateThemeIcon() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    document.querySelectorAll('.paw-theme-btn').forEach(btn => {
-      btn.innerHTML = isDark ? '☀️' : '🌙';
+  // ── 1. THEME ──────────────────────────────────────────────────────────────
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    refreshThemeIcons(theme === 'dark');
+  }
+
+  function refreshThemeIcons(isDark) {
+    document.querySelectorAll('.theme-icon-sun').forEach(function (el) {
+      el.style.display = isDark ? 'block' : 'none';
+    });
+    document.querySelectorAll('.theme-icon-moon').forEach(function (el) {
+      el.style.display = isDark ? 'none' : 'block';
+    });
+    document.querySelectorAll('.paw-theme-btn').forEach(function (btn) {
       btn.title = isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
     });
   }
 
-  // 2. WISHLIST MANAGER
-  let favorites = JSON.parse(localStorage.getItem('pawhub_favorites') || '[]');
+  window.togglePawTheme = function () {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var next = isDark ? 'light' : 'dark';
+    localStorage.setItem('pawhub_theme', next);
+    applyTheme(next);
+  };
+
+  var savedTheme = localStorage.getItem('pawhub_theme') || 'light';
+  applyTheme(savedTheme);
+
+  // ── 2. DOM CONTENT LOADED ─────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    // Highlight current nav link
+    document.querySelectorAll('.pawhub-link').forEach(function (link) {
+      var href = link.getAttribute('href') || '';
+      if (href === currentFile || (currentFile === '' && href === 'home.html') || (currentFile === 'index.html' && href === 'home.html')) {
+        link.classList.add('active');
+      }
+    });
+
+    // Update user display in navbar if logged in
+    var user = getCurrentUser();
+    var navUserName = document.getElementById('navUserName');
+    if (navUserName) {
+      if (user) {
+        var displayName = user.name ? user.name.split(' ')[0] : (user.email ? user.email.split('@')[0] : 'User');
+        navUserName.textContent = displayName + ' 🚪';
+      } else {
+        navUserName.textContent = 'Sign In';
+      }
+    }
+
+    // Clean any example phone numbers from session
+    if (user && (user.phone === '+91 99999 88888' || user.phone === '+91 98765 43210')) {
+      user.phone = '';
+      try { localStorage.setItem('loggedInUser', JSON.stringify(user)); } catch (e) {}
+    }
+
+    refreshThemeIcons(document.documentElement.getAttribute('data-theme') === 'dark');
+    updateWishlistUI();
+  });
+
+  // ── 3. MOBILE TOGGLE ──────────────────────────────────────────────────────
+  window.togglePawMobile = function () {
+    var menu = document.getElementById('pawMobileMenu');
+    if (!menu) return;
+    menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'flex' : 'none';
+  };
+
+  // ── 4. WISHLIST ───────────────────────────────────────────────────────────
+  var favorites = [];
+  try {
+    favorites = JSON.parse(localStorage.getItem('pawhub_favorites') || '[]');
+  } catch (e) {
+    favorites = [];
+  }
+
+  function updateWishlistUI() {
+    var badge = document.querySelector('.paw-fav-count');
+    if (!badge) return;
+    badge.textContent = favorites.length;
+    badge.style.display = favorites.length > 0 ? 'flex' : 'none';
+  }
 
   window.toggleFavorite = function (petName, petBreed, petImg) {
-    const idx = favorites.findIndex(f => f.name === petName);
+    var idx = favorites.findIndex(function (f) { return f.name === petName; });
     if (idx > -1) {
       favorites.splice(idx, 1);
     } else {
@@ -41,208 +140,120 @@
     updateWishlistUI();
   };
 
-  window.removeFavorite = function (petName) {
-    favorites = favorites.filter(f => f.name !== petName);
-    localStorage.setItem('pawhub_favorites', JSON.stringify(favorites));
-    updateWishlistUI();
-  };
+  function spawnHeartAnimation() {
+    var heart = document.createElement('div');
+    heart.textContent = '❤️';
+    heart.style.cssText = 'position:fixed; right:60px; bottom:60px; font-size:32px; z-index:9999; pointer-events:none; animation:pawHeartFloat 1.2s ease-out forwards;';
+    document.body.appendChild(heart);
+    setTimeout(function () { heart.remove(); }, 1300);
+  }
 
   window.openWishlist = function () {
-    const overlay = document.getElementById('paw-wishlist-overlay');
-    const drawer = document.getElementById('paw-wishlist-drawer');
-    if (overlay && drawer) {
-      overlay.classList.add('open');
-      drawer.classList.add('open');
-      renderWishlistItems();
+    var overlay = document.getElementById('paw-wishlist-overlay');
+    var drawer = document.getElementById('paw-wishlist-drawer');
+    var list = document.getElementById('paw-wishlist-items');
+    if (!drawer) return;
+
+    if (list) {
+      if (favorites.length === 0) {
+        list.innerHTML = '<div style="text-align:center; padding:40px 10px; color:#64748b;">🐾 No saved pets yet.<br><small>Click ❤️ on pets to add them here!</small></div>';
+      } else {
+        list.innerHTML = favorites.map(function (f, i) {
+          return '<div style="display:flex; align-items:center; gap:12px; padding:10px; border-bottom:1px solid #e2e8f0;">' +
+                 '<img src="' + (f.img || 'images/dog1.png') + '" style="width:50px; height:50px; border-radius:10px; object-fit:cover;" onerror="this.src=\'images/dog1.png\'">' +
+                 '<div style="flex:1;"><b>' + f.name + '</b><br><small style="color:#64748b;">' + (f.breed || 'Pet') + '</small></div>' +
+                 '<button onclick="removeFavorite(' + i + ')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;" title="Remove">✕</button>' +
+                 '</div>';
+        }).join('');
+      }
     }
+
+    if (overlay) overlay.style.display = 'block';
+    drawer.style.right = '0';
   };
 
   window.closeWishlist = function () {
-    const overlay = document.getElementById('paw-wishlist-overlay');
-    const drawer = document.getElementById('paw-wishlist-drawer');
-    if (overlay && drawer) {
-      overlay.classList.remove('open');
-      drawer.classList.remove('open');
-    }
+    var overlay = document.getElementById('paw-wishlist-overlay');
+    var drawer = document.getElementById('paw-wishlist-drawer');
+    if (drawer) drawer.style.right = '-380px';
+    if (overlay) overlay.style.display = 'none';
   };
 
-  function updateWishlistUI() {
-    const badges = document.querySelectorAll('.paw-fav-count');
-    badges.forEach(b => {
-      b.textContent = favorites.length;
-      b.style.display = favorites.length > 0 ? 'inline-block' : 'none';
-    });
+  window.removeFavorite = function (index) {
+    favorites.splice(index, 1);
+    localStorage.setItem('pawhub_favorites', JSON.stringify(favorites));
+    updateWishlistUI();
+    openWishlist();
+  };
 
-    // Update heart icons on cards
-    document.querySelectorAll('[data-pet-name]').forEach(btn => {
-      const name = btn.getAttribute('data-pet-name');
-      const isFav = favorites.some(f => f.name === name);
-      btn.classList.toggle('active', isFav);
-      btn.innerHTML = isFav ? '❤️' : '🤍';
-    });
+  // ── 5. PAWMATCH QUIZ ──────────────────────────────────────────────────────
+  var quizState = { step: 1, answers: {} };
 
-    renderWishlistItems();
-  }
-
-  function renderWishlistItems() {
-    const list = document.getElementById('paw-wishlist-items');
-    if (!list) return;
-
-    if (favorites.length === 0) {
-      list.innerHTML = `
-        <div style="text-align: center; padding: 40px 10px; color: var(--paw-text-muted);">
-          <div style="font-size: 48px; margin-bottom: 12px;">🐾</div>
-          <p style="font-weight: 600; font-size: 16px; margin: 0 0 6px 0;">No favorite pets yet!</p>
-          <p style="font-size: 13px; margin: 0;">Click the ❤️ on any puppy or kitten to save them here.</p>
-        </div>
-      `;
-      return;
-    }
-
-    list.innerHTML = favorites.map(f => `
-      <div class="paw-fav-card">
-        <img src="${f.img || 'images/puppy1.jpg'}" alt="${f.name}">
-        <div class="paw-fav-info">
-          <h4>${f.name}</h4>
-          <p>${f.breed || 'Adorable Pet'}</p>
-        </div>
-        <a href="adoption.html" style="padding: 6px 12px; background: var(--paw-primary); color: white; border-radius: 12px; text-decoration: none; font-size: 12px; font-weight: 600;">Adopt</a>
-        <button class="paw-fav-remove" onclick="removeFavorite('${f.name}')" title="Remove">&times;</button>
-      </div>
-    `).join('');
-  }
-
-  function spawnHeartAnimation() {
-    const heart = document.createElement('div');
-    heart.textContent = '💖';
-    heart.style.position = 'fixed';
-    heart.style.left = '50%';
-    heart.style.top = '50%';
-    heart.style.fontSize = '32px';
-    heart.style.zIndex = '10020';
-    heart.style.pointerEvents = 'none';
-    heart.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-      heart.style.transform = 'translate(180px, -280px) scale(1.6)';
-      heart.style.opacity = '0';
-    }, 20);
-
-    setTimeout(() => heart.remove(), 850);
-  }
-
-  // 3. PAWMATCH QUIZ CONTROLLER
   window.openPawMatchQuiz = function () {
-    const modal = document.getElementById('paw-quiz-modal');
-    if (modal) {
-      modal.classList.add('open');
-      showQuizStep(1);
-    }
+    var modal = document.getElementById('paw-match-modal');
+    if (!modal) return;
+    quizState = { step: 1, answers: {} };
+    showQuizStep(1);
+    modal.style.display = 'flex';
   };
 
   window.closePawMatchQuiz = function () {
-    const modal = document.getElementById('paw-quiz-modal');
-    if (modal) modal.classList.remove('open');
+    var modal = document.getElementById('paw-match-modal');
+    if (modal) modal.style.display = 'none';
   };
 
-  let quizAnswers = {};
-
   window.recordQuizAnswer = function (step, value) {
-    quizAnswers[step] = value;
+    quizState.answers['step' + step] = value;
     if (step < 3) {
       showQuizStep(step + 1);
     } else {
-      calculateQuizResult();
+      showQuizResult();
     }
   };
 
-  function showQuizStep(stepNum) {
-    document.querySelectorAll('.paw-quiz-step').forEach(s => s.classList.remove('active'));
-    const target = document.getElementById(`paw-quiz-step-${stepNum}`);
-    if (target) target.classList.add('active');
+  function showQuizStep(step) {
+    for (var i = 1; i <= 3; i++) {
+      var el = document.getElementById('paw-quiz-step-' + i);
+      if (el) el.style.display = (i === step) ? 'block' : 'none';
+    }
+    var resEl = document.getElementById('paw-quiz-step-result');
+    if (resEl) resEl.style.display = 'none';
   }
 
-  function calculateQuizResult() {
-    const pets = [
-      { name: "Luna", breed: "Beagle", type: "Dog", img: "images/puppy3.jpg", desc: "Curious, affectionate and great for active homes!" },
-      { name: "Charlie", breed: "Labrador", type: "Dog", img: "images/puppy2.jpg", desc: "Loyal, playful family dog who adores walks and play." },
-      { name: "Milo", breed: "Persian Cat", type: "Cat", img: "images/cat1.jpg", desc: "Fluffy, calm cuddlebug ideal for apartments and quiet spaces." },
-      { name: "Snow", breed: "Husky", type: "Dog", img: "images/puppy5.jpg", desc: "Energetic adventurer ready for outdoor marathons!" },
-      { name: "Coco", breed: "Ragdoll Cat", type: "Cat", img: "images/cat4.jpg", desc: "Gentle lap cat that loves cuddles, naps and cozy vibes." }
-    ];
+  function showQuizResult() {
+    for (var i = 1; i <= 3; i++) {
+      var el = document.getElementById('paw-quiz-step-' + i);
+      if (el) el.style.display = 'none';
+    }
+    var resEl = document.getElementById('paw-quiz-step-result');
+    if (!resEl) return;
 
-    let match = pets[1]; // default Labrador
-    if (quizAnswers[1] === 'apartment') {
-      match = quizAnswers[2] === 'couch' ? pets[2] : pets[4];
-    } else if (quizAnswers[2] === 'runner') {
-      match = pets[3]; // Husky
-    } else if (quizAnswers[2] === 'couch') {
-      match = pets[4]; // Ragdoll
-    } else {
-      match = pets[0]; // Beagle
+    var space = quizState.answers.step1;
+    var matchName = 'Bella the Golden Retriever';
+    var matchDesc = 'Playful, affectionate, and great with families!';
+    var matchImg = 'images/dog1.png';
+
+    if (space === 'apartment') {
+      matchName = 'Milo the French Bulldog';
+      matchDesc = 'Calm, compact, and perfectly happy in an apartment!';
+      matchImg = 'images/dog2.png';
+    } else if (space === 'farm') {
+      matchName = 'Rocky the German Shepherd';
+      matchDesc = 'Active, loyal, and thrives with lots of open space!';
+      matchImg = 'images/dog3.png';
     }
 
-    const target = document.getElementById('paw-quiz-step-result');
-    if (target) {
-      target.innerHTML = `
-        <div style="font-size: 50px; margin-bottom: 10px;">🎉🐾</div>
-        <h3 style="font-size: 24px; color: var(--paw-primary); margin: 0 0 8px 0;">It's a Match!</h3>
-        <p style="margin-bottom: 18px; font-size: 15px;">Based on your lifestyle, your paw soulmate is:</p>
-        
-        <div style="background: var(--paw-bg); border: 2px solid var(--paw-border); border-radius: 18px; padding: 16px; margin-bottom: 20px;">
-          <img src="${match.img}" alt="${match.name}" style="width: 110px; height: 110px; border-radius: 14px; object-fit: cover; box-shadow: 0 8px 20px rgba(0,0,0,0.12); margin-bottom: 10px;">
-          <h4 style="margin: 0; font-size: 20px; color: var(--paw-text);">${match.name}</h4>
-          <span style="font-size: 13px; font-weight: 600; color: var(--paw-primary);">${match.breed} • ${match.type}</span>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--paw-text-muted);">${match.desc}</p>
-        </div>
-
-        <div style="display: flex; gap: 10px; justify-content: center;">
-          <a href="adoption.html" style="padding: 12px 24px; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;">Adopt ${match.name} Now →</a>
-          <button type="button" onclick="showQuizStep(1)" style="padding: 12px 18px; border: 1px solid var(--paw-border); background: var(--paw-card-bg); color: var(--paw-text); border-radius: 14px; font-weight: 600; cursor: pointer;">Retake Quiz</button>
-        </div>
-      `;
-      showQuizStep('result');
-      triggerConfetti();
-    }
+    resEl.innerHTML = '<div style="text-align:center; padding:20px 10px;">' +
+      '<div style="font-size:42px; margin-bottom:10px;">🎉</div>' +
+      '<h3 style="font-size:22px; color:#1e293b; margin:0 0 8px;">Your Perfect Paw Match!</h3>' +
+      '<img src="' + matchImg + '" style="width:140px; height:140px; border-radius:24px; object-fit:cover; margin:14px auto; box-shadow:0 8px 24px rgba(0,0,0,0.12);" onerror="this.src=\'images/dog1.png\'">' +
+      '<h4 style="font-size:18px; color:#2563eb; margin:6px 0;">' + matchName + '</h4>' +
+      '<p style="font-size:13.5px; color:#64748b; margin:0 0 18px;">' + matchDesc + '</p>' +
+      '<div style="display:flex; gap:10px; justify-content:center;">' +
+      '<a href="adoption.html" style="background:#2563eb; color:#fff; padding:10px 20px; border-radius:12px; text-decoration:none; font-weight:700; font-size:13.5px;">Meet Your Match 🐾</a>' +
+      '<button onclick="closePawMatchQuiz()" style="background:#f1f5f9; color:#475569; border:none; padding:10px 16px; border-radius:12px; cursor:pointer; font-weight:600; font-size:13.5px;">Close</button>' +
+      '</div></div>';
+    resEl.style.display = 'block';
   }
-
-  function triggerConfetti() {
-    const colors = ['#2563eb', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6'];
-    for (let i = 0; i < 45; i++) {
-      const c = document.createElement('div');
-      c.className = 'paw-confetti';
-      c.style.left = Math.random() * 100 + 'vw';
-      c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      c.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
-      c.style.animationDelay = (Math.random() * 0.3) + 's';
-      c.style.width = (Math.random() * 8 + 6) + 'px';
-      c.style.height = (Math.random() * 8 + 6) + 'px';
-      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 3200);
-    }
-  }
-
-  // 4. MOBILE DRAWER
-  window.togglePawMobile = function () {
-    const drawer = document.getElementById('paw-mobile-drawer');
-    if (drawer) drawer.classList.toggle('open');
-  };
-
-  // INITIALIZE ON LOAD
-  window.addEventListener('DOMContentLoaded', () => {
-    updateThemeIcon();
-    updateWishlistUI();
-
-    // Highlight current nav item
-    const currentPath = window.location.pathname.split('/').pop() || 'home.html';
-    document.querySelectorAll('.paw-nav-item a').forEach(a => {
-      const href = a.getAttribute('href');
-      if (href === currentPath || (currentPath === '' && href === 'home.html') || (currentPath === 'index.html' && href === 'home.html')) {
-        a.parentElement.classList.add('active');
-      }
-    });
-  });
 
 })();

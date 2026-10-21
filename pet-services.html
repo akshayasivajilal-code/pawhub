@@ -1181,12 +1181,13 @@ function openBooking(serviceName) {
 
     /* PREFILL USER DETAILS */
     const userNameInput = document.getElementById("userName");
-    if (userNameInput && loggedInUser.name && !userNameInput.value) {
+    if (userNameInput && loggedInUser.name && !userNameInput.value && loggedInUser.name !== 'Guest Pet Lover') {
         userNameInput.value = loggedInUser.name;
     }
+    // Do not prefill example/dummy phone numbers: keep clean for user
     const phoneInput = document.getElementById("phone");
-    if (phoneInput && loggedInUser.phone && !phoneInput.value) {
-        phoneInput.value = loggedInUser.phone;
+    if (phoneInput) {
+        phoneInput.value = "";
     }
 
     /* SHOW MODAL */
