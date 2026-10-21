@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -418,8 +418,10 @@
                                 <input
                                     type="number"
                                     id="age"
-                                    placeholder="Age in years"
-                                    min="0">
+                                    placeholder="e.g. 0.5 for 6 months"
+                                    min="0"
+                                    max="30"
+                                    step="0.1">
 
                             </div>
 
@@ -615,7 +617,13 @@
 
                     /* Pet details */
 
+                    const ageRaw = document.getElementById("age").value;
+
                     const pet = {
+
+                        id: Date.now(),
+
+                        userId: loggedInUser.id,
 
                         name:
                             document
@@ -633,14 +641,8 @@
                                 .value,
 
                         age:
-                            document
-                                .getElementById("age")
-                                .value
-                                ? parseInt(
-                                    document
-                                        .getElementById("age")
-                                        .value
-                                )
+                            ageRaw
+                                ? parseFloat(ageRaw)
                                 : null,
 
                         gender:
@@ -659,64 +661,52 @@
                                 .value,
 
                         status:
-                            "My Pet"
+                            "My Pet",
+
+                        addedAt: new Date().toISOString()
 
                     };
 
 
+                    /* ── 1. SAVE TO LOCALSTORAGE FIRST (works on GitHub Pages) ── */
+
                     try {
+                        const existing = JSON.parse(
+                            localStorage.getItem("pawhub_my_pets") || "[]"
+                        );
+                        existing.push(pet);
+                        localStorage.setItem("pawhub_my_pets", JSON.stringify(existing));
+                    } catch (lsErr) {
+                        console.warn("localStorage save failed:", lsErr);
+                    }
 
-                        const response =
+                    /* Show success right away */
+                    alert("Pet added successfully! 🐶🐱❤️");
+                    document.getElementById("petForm").reset();
+
+                    /* ── 2. BACKGROUND SYNC TO SPRING BOOT (only when running locally) ── */
+
+                    const isStaticHost =
+                        window.location.hostname.includes("github.io") ||
+                        window.location.protocol === "file:";
+
+                    if (!isStaticHost) {
+                        try {
                             await fetch(
-                                "/api/pets?userId=" +
-                                loggedInUser.id,
+                                "/api/pets?userId=" + loggedInUser.id,
                                 {
-
                                     method: "POST",
-
                                     headers: {
                                         "Content-Type":
                                             "application/json"
                                     },
-
                                     body:
                                         JSON.stringify(pet)
-
                                 }
                             );
-
-
-                        if (response.ok) {
-
-                            alert(
-                                "Pet added successfully! 🐶🐱❤️"
-                            );
-
-
-                            document
-                                .getElementById("petForm")
-                                .reset();
-
+                        } catch (apiErr) {
+                            console.log("Backend sync skipped (offline/static).");
                         }
-
-                        else {
-
-                            alert(
-                                "Failed to add pet. Please try again."
-                            );
-
-                        }
-
-                    }
-
-                    catch (error) {
-
-                        console.error(error);
-
-                        alert(
-                            "Cannot connect to server. Please check Spring Boot."
-                        );
-
                     }
 
                 }
